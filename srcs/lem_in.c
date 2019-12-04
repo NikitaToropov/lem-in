@@ -32,12 +32,13 @@ int		main(void)
 
 	}
 	write(1, line, ft_strlen(line));
-		write(1, "\n", 1);
+	write(1, "\n", 1);
 	free(line);
 	if (num_of_ants > 0)
 	{
 		ft_read_input(&rooms);
 		print_rooms(rooms);
+		ft_free_rooms(&rooms);
 	}
 	return (0);
 }

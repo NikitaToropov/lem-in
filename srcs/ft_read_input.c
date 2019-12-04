@@ -38,8 +38,6 @@ int		ft_parse_room(t_vert **rooms, char *line, char *marker)
 	int		x;
 	int		y;
 
-	// if (ft_strchr(ft_strchr(line, ' ') + 1, ' ') &&
-	// !ft_strchr(ft_strchr(ft_strchr(line, ' ') + 1, ' ') + 1, ' '))
 	if ((tmp = ft_strchr(line, ' ')) && ft_strchr(tmp + 1, ' '))
 	{
 		tmp = ft_strchr(line, ' ');
@@ -77,7 +75,6 @@ void		ft_read_input(t_vert **rooms)
 		}
 		else if (!ft_strcmp(line, "##start"))
 		{
-
 			marker = START;
 		}
 		else if (!ft_strcmp(line, "##end"))
@@ -95,9 +92,6 @@ void		ft_read_input(t_vert **rooms)
 		}
 		free(line);
 	}
-	if (links)
-	{
-
-		print_links(links);
-	}
+	print_links(links);
+	ft_free_links(&links);
 }
