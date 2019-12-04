@@ -3,10 +3,9 @@
 int		main(void)
 {
 	// int		**adj_matrix;
-	t_vert	*verts;
-	t_links	*links;
-	char	*line;
-	int		num_of_ants;
+	t_vert		*rooms;
+	char		*line;
+	int			num_of_ants;
 
 	if (!ft_get_next_line(0, &line) || (num_of_ants = ft_atoi(line)) <= 0 ||
 	!ft_strcmp(line, ft_itoa(num_of_ants)))
@@ -14,7 +13,7 @@ int		main(void)
 	free(line);
 	if (num_of_ants > 0)
 	{
-		ft_read_input();
+		ft_read_input(&rooms);
 	}
 	return (0);
 }
