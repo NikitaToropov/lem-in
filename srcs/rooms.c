@@ -1,8 +1,8 @@
 #include <lem_in.h>
 
-void		ft_free_rooms(t_vert **first)
+void		ft_free_rooms(t_verts **first)
 {
-	t_vert		*tmp;
+	t_verts		*tmp;
 
 	while (*first)
 	{
@@ -15,12 +15,13 @@ void		ft_free_rooms(t_vert **first)
 	first = NULL;
 }
 
-t_vert		*ft_make_room(char *name, int x, int y, char mark)
+t_verts		*ft_make_room(char *name, int x, int y, char mark)
 {
-	t_vert		*vert;
+	t_verts		*vert;
 
-	if (!(vert = malloc(sizeof(t_vert))))
+	if (!(vert = malloc(sizeof(t_verts))))
 		exit(1);
+	vert->num = 0;
 	vert->name = name;
 	vert->x = x;
 	vert->y = y;
@@ -29,14 +30,18 @@ t_vert		*ft_make_room(char *name, int x, int y, char mark)
 	return (vert);
 }
 
-void		ft_push_room_back(t_vert **first, t_vert *room)
+void		ft_push_room_back(t_verts **first, t_verts *room)
 {
+	t_verts			*tmp;
+
+
 	if (*first)
 	{
-		if ((*first)->next)
-			ft_push_room_back(&(*first)->next, room);
-		else
-			(*first)->next = room;
+		tmp = *first;
+		while (tmp->next)
+			tmp = tmp->next;
+		room->num = tmp->num + 1;
+		tmp->next = room;
 	}
 	else
 		*first = room;

@@ -1,11 +1,12 @@
 #include <lem_in.h>
 
-void		print_rooms(t_vert *rooms)
+void		print_rooms(t_verts *rooms)
 {
 	while (rooms)
 	{
 		printf("-------------------------------\n");
 		printf("name    %s\n", rooms->name);
+		printf("num     %i\n", rooms->num);
 		printf("x       %i\n", rooms->x);
 		printf("y       %i\n", rooms->y);
 		printf("marker  %i\n", (int)(rooms->marker));
@@ -17,7 +18,7 @@ void		print_rooms(t_vert *rooms)
 int		main(void)
 {
 	// int		**adj_matrix;
-	t_vert		*rooms;
+	t_verts		*rooms;
 	char		*line;
 	int			num_of_ants;
 	
