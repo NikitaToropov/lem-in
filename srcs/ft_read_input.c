@@ -93,6 +93,6 @@ void		ft_read_input(t_verts **rooms)
 		free(line);
 	}
 	print_links(links);
-	// ft_make_matrix(links, rooms);
+	ft_make_matrix(*rooms, links);
 	ft_free_links(&links);
 }

@@ -1,9 +1,27 @@
 #include <lem_in.h>
 
+void	print_matrix(t_matrix *m_list)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < m_list->len)
+	{
+		j = 0;
+		printf("|");
+		while (j < m_list->len)
+		{
+			printf("%i", m_list->mtrx[i][j]);
+			j++;
+		}
+		printf("|\n");
+		i++;
+	}
+}
+
 void		ft_free_mtrx(t_matrix **m_list)
 {
-	t_matrix *tmp;
-
 	(*m_list)->len -=1;
 	while ((*m_list)->len >= 0)
 		free((*m_list)->mtrx[(*m_list)->len]);
@@ -23,7 +41,7 @@ int			ft_find_room_num(t_verts *rooms, char *name)
 	return (-1);
 }
 
-t_matrix	*ft_fill_matrix(t_matrix *m_list, t_verts *rooms, t_edges *link)
+void		ft_fill_matrix(t_matrix *m_list, t_verts *rooms, t_edges *link)
 {
 	int		i;
 	int		j;
@@ -36,7 +54,6 @@ t_matrix	*ft_fill_matrix(t_matrix *m_list, t_verts *rooms, t_edges *link)
 		m_list->mtrx[j][i] |= 1;
 		link = link->next;
 	}
-	return (m_list);
 }
 
 int			ft_matrix_len(t_verts *rooms)
@@ -72,5 +89,7 @@ t_matrix	*ft_make_matrix(t_verts *rooms, t_edges *links)
 		}
 		i++;
 	}
-	return (ft_fill_matrix(list, rooms, links));
+	ft_fill_matrix(list, rooms, links);
+	print_matrix(list);
+	return (list);
 }
