@@ -13,6 +13,8 @@ DIR_O = objs
 # files
 C_FILES = lem_in.c\
 		ft_read_input.c\
+		links.c\
+		rooms.c\
 
 SRCS = $(addprefix $(DIR_S)/,$(C_FILES))
 OBJS = $(addprefix $(DIR_O)/,$(C_FILES:.c=.o))
@@ -27,14 +29,12 @@ INC_HEADERS = -I $(INCLUDES) -I $(LIB_DIR)
 
 all: $(NAME)
 
-$(NAME): $(DIR_O) $(LIB_DIR) $(OBJS)
+$(NAME): $(DIR_O) $(OBJS)
+	make -C $(LIB_DIR)
 	$(CC) $(FLAGS) $(OBJS) $(INC_HEADERS) $(INC_LIBS) -o $@
 
 $(DIR_O):
 	mkdir -p objs
-
-$(LIB_DIR):
-	make -C $(LIB_DIR)
 
 $(DIR_O)/%.o: $(DIR_S)/%.c $(HEADER)
 	$(CC) $(FLAGS) -I $(INCLUDES) -I $(LIB_DIR) -c ./$< -o $@

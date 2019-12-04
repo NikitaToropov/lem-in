@@ -34,7 +34,7 @@ void		ft_push_link_back(t_edges **links, t_edges *link)
 	if (*links)
 	{
 		if ((*links)->next)
-			ft_list_room_back(&(*links)->next, link);
+			ft_push_link_back(&(*links)->next, link);
 		else
 			(*links)->next = link;
 	}

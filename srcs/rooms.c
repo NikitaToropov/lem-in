@@ -34,7 +34,7 @@ void		ft_push_room_back(t_vert **first, t_vert *room)
 	if (*first)
 	{
 		if ((*first)->next)
-			ft_list_room_back(&(*first)->next, room);
+			ft_push_room_back(&(*first)->next, room);
 		else
 			(*first)->next = room;
 	}
