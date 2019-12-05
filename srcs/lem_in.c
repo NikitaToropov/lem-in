@@ -17,7 +17,7 @@ void		print_rooms(t_verts *rooms)
 
 int		main(void)
 {
-	// int		**adj_matrix;
+	t_matrix	*m_list;
 	t_verts		*rooms;
 	char		*line;
 	int			num_of_ants;
@@ -37,9 +37,10 @@ int		main(void)
 	free(line);
 	if (num_of_ants > 0)
 	{
-		ft_read_input(&rooms);
+		m_list = ft_read_input(&rooms);
 		print_rooms(rooms);
 		ft_free_rooms(&rooms);
+		ft_free_mtrx(&m_list);
 	}
 	return (0);
 }

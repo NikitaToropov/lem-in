@@ -6,6 +6,7 @@ void	print_matrix(t_matrix *m_list)
 	int		j;
 
 	i = 0;
+	printf("++++++++++++++++++++++++++++++++\n");
 	while (i < m_list->len)
 	{
 		j = 0;
@@ -18,13 +19,32 @@ void	print_matrix(t_matrix *m_list)
 		printf("|\n");
 		i++;
 	}
+	printf("len = %i\n", m_list->len);
+	printf(". . . . . . . . . . . . . . . .\n");
+	printf("start  = %i\n", m_list->start);
+	printf("finish = %i\n", m_list->finish);
+	printf("++++++++++++++++++++++++++++++++\n");
+}
+
+int			ft_find_room_by_mark(t_verts *rooms, char mark)
+{
+	while (rooms)
+	{
+		if (rooms->marker == mark)
+			return (rooms->num);
+		rooms = rooms->next;
+	}
+	return (-1);
 }
 
 void		ft_free_mtrx(t_matrix **m_list)
 {
 	(*m_list)->len -=1;
 	while ((*m_list)->len >= 0)
+	{
 		free((*m_list)->mtrx[(*m_list)->len]);
+		(*m_list)->len -= 1;
+	}
 	free((*m_list)->mtrx);
 	free(*m_list);
 	m_list = NULL;
@@ -90,6 +110,8 @@ t_matrix	*ft_make_matrix(t_verts *rooms, t_edges *links)
 		i++;
 	}
 	ft_fill_matrix(list, rooms, links);
+	list->start = ft_find_room_by_mark(rooms, START);
+	list->finish = ft_find_room_by_mark(rooms, FINISH);
 	print_matrix(list);
 	return (list);
 }

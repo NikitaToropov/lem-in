@@ -13,6 +13,8 @@ typedef struct		s_matrix
 {
 	char			**mtrx;
 	int				len;
+	int				start;
+	int				finish;
 }					t_matrix;
 
 typedef struct		s_edges
@@ -31,7 +33,7 @@ typedef struct		s_verts
 	struct s_verts	*next;
 }					t_verts;
 
-void				ft_read_input(t_verts **rooms);
+t_matrix			*ft_read_input(t_verts **rooms);
 
 void				ft_free_mtrx(t_matrix **m_list);
 t_matrix			*ft_make_matrix(t_verts *rooms, t_edges *links);

@@ -54,12 +54,13 @@ int		ft_parse_room(t_verts **rooms, char *line, char *marker)
 	return (0);
 }
 
-void		ft_read_input(t_verts **rooms)
+t_matrix	*ft_read_input(t_verts **rooms)
 {
 	// int			**adj_matrix;
 	char		*line;
 	t_edges		*links;
 	char		marker;
+	t_matrix	*m_list;
 
 	marker = NONE;
 	links = NULL;
@@ -93,6 +94,7 @@ void		ft_read_input(t_verts **rooms)
 		free(line);
 	}
 	print_links(links);
-	ft_make_matrix(*rooms, links);
+	m_list = ft_make_matrix(*rooms, links);
 	ft_free_links(&links);
+	return(m_list);
 }
