@@ -9,20 +9,6 @@
 # define START		1
 # define FINISH		2
 
-typedef struct		s_matrix
-{
-	char			**mtrx;
-	int				len;
-	int				start;
-	int				finish;
-}					t_matrix;
-
-typedef struct		s_edges
-{
-	char			*pair[2];
-	struct s_edges	*next;
-}					t_edges;
-
 typedef struct		s_verts
 {
 	char			*name;
@@ -32,6 +18,27 @@ typedef struct		s_verts
 	char			marker; // 0/1/2
 	struct s_verts	*next;
 }					t_verts;
+
+typedef struct		s_edges
+{
+	char			*pair[2];
+	struct s_edges	*next;
+}					t_edges;
+
+typedef struct		s_matrix
+{
+	char			**mtrx;
+	int				len;
+	int				start;
+	int				finish;
+}					t_matrix;
+
+typedef struct		s_path
+{
+	int				step;
+	int				room;
+	struct s_path	**next;
+}					t_path;
 
 t_matrix			*ft_read_input(t_verts **rooms);
 
