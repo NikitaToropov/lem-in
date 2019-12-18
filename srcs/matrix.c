@@ -13,7 +13,7 @@ void	print_matrix(t_matrix *m_list)
 		printf("|");
 		while (j < m_list->len)
 		{
-			printf("%i", m_list->mtrx[i][j]);
+			printf("%c", m_list->mtrx[i][j]);
 			j++;
 		}
 		printf("|\n");
@@ -70,8 +70,8 @@ void		ft_fill_matrix(t_matrix *m_list, t_verts *rooms, t_edges *link)
 	{
 		i = ft_find_room_num(rooms, link->pair[0]);
 		j = ft_find_room_num(rooms, link->pair[1]);
-		m_list->mtrx[i][j] |= 1;
-		m_list->mtrx[j][i] |= 1;
+		m_list->mtrx[i][j] = '1';
+		m_list->mtrx[j][i] = '1';
 		link = link->next;
 	}
 }
@@ -94,19 +94,20 @@ t_matrix	*ft_make_matrix(t_verts *rooms, t_edges *links)
 	if (!(list = malloc(sizeof(t_matrix))))
 		exit(1);
 	list->len = ft_matrix_len(rooms);
-	if (!(list->mtrx = malloc(sizeof(int*) * list->len)))
+	if (!(list->mtrx = malloc(sizeof(char*) * list->len)))
 		exit(1);
 	i = 0;
 	while (i < list->len)
 	{
-		if (!(list->mtrx[i] = malloc(sizeof(int) * list->len)))
+		if (!(list->mtrx[i] = malloc(sizeof(char) * (list->len + 1))))
 			exit(1);
 		j = 0;
 		while (j < list->len)
 		{
-			list->mtrx[i][j] = 0;
+			list->mtrx[i][j] = '0';
 			j++;
 		}
+		list->mtrx[i][j] = '\0';
 		i++;
 	}
 	ft_fill_matrix(list, rooms, links);

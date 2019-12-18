@@ -19,6 +19,7 @@ int		main(void)
 {
 	t_matrix	*m_list;
 	t_verts		*rooms;
+	// t_path		*path;
 	char		*line;
 	int			num_of_ants;
 	
@@ -41,6 +42,7 @@ int		main(void)
 		print_rooms(rooms);
 		ft_free_rooms(&rooms);
 		ft_free_mtrx(&m_list);
+		// path = ft_shorter_path(m_list);
 	}
 	return (0);
 }

@@ -9,6 +9,25 @@
 # define START		1
 # define FINISH		2
 
+	// typedef struct		s_graph
+	// {
+	// 	char			**mtrx;
+	// 	int				num_of_rooms;
+	// 	int				start;
+	// 	int				finish;
+	// 	int				num_of_links;
+	// 	struct s_verts	*rooms;
+	// }					t_graph;
+
+typedef struct		s_path
+{
+	char			a;
+	char			b;
+	int				lvl; // distance from start
+	int				num_of_links;
+	struct s_path	**links;
+}					t_path;
+
 typedef struct		s_verts
 {
 	char			*name;
@@ -33,12 +52,12 @@ typedef struct		s_matrix
 	int				finish;
 }					t_matrix;
 
-typedef struct		s_path
-{
-	int				step;
-	int				room;
-	struct s_path	**next;
-}					t_path;
+// typedef struct		s_path
+// {
+// 	int				step;
+// 	int				room;
+// 	struct s_path	**next;
+// }					t_path;
 
 t_matrix			*ft_read_input(t_verts **rooms);
 
