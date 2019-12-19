@@ -26,6 +26,34 @@ void	print_matrix(t_matrix *m_list)
 	printf("++++++++++++++++++++++++++++++++\n");
 }
 
+t_matrix		*ft_copy_matrix(t_matrix *first)
+{
+	t_matrix	*new;
+	int			i;
+	int			j;
+
+	if (!(new = malloc(sizeof(t_matrix))))
+		exit(1);
+	new->len = first->len;
+	i = 0;
+	while (i < new->len)
+	{
+		if (!(new->mtrx[i] = malloc(sizeof(char) * (new->len + 1))))
+			exit(1);
+		j = 0;
+		while (j <= new->len)
+		{
+			new->mtrx[i][j] = first->mtrx[i][j];
+			j++;
+		}
+		i++;
+	}
+	new->start = first->start;
+	new->finish = first->finish;
+	print_matrix(new);
+	return (new);
+}
+
 int			ft_find_room_by_mark(t_verts *rooms, char mark)
 {
 	while (rooms)

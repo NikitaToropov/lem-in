@@ -8,6 +8,7 @@
 # define NONE		0
 # define START		1
 # define FINISH		2
+# define FINISH		3
 
 	// typedef struct		s_graph
 	// {
@@ -21,11 +22,9 @@
 
 typedef struct		s_path
 {
-	char			a;
-	char			b;
-	int				lvl; // distance from start
+	int				room;
 	int				num_of_links;
-	struct s_path	**links;
+	struct s_path	**next;
 }					t_path;
 
 typedef struct		s_verts
@@ -34,7 +33,7 @@ typedef struct		s_verts
 	int				num;
 	int				x;
 	int				y;
-	char			marker; // 0/1/2
+	char			marker; // 0/1/2/(3 - if fill)
 	struct s_verts	*next;
 }					t_verts;
 
@@ -63,6 +62,8 @@ t_matrix			*ft_read_input(t_verts **rooms);
 
 void				ft_free_mtrx(t_matrix **m_list);
 t_matrix			*ft_make_matrix(t_verts *rooms, t_edges *links);
+t_matrix			*ft_copy_matrix(t_matrix *first);
+
 
 void				ft_free_links(t_edges **links);
 void				ft_push_link_back(t_edges **links, t_edges *link);
