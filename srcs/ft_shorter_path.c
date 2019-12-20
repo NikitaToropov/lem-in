@@ -23,10 +23,31 @@ int			ft_num_of_links(char *str, char c)
 			i++;
 		str++;
 	}
-	return (i)
+	return (i);
 }
 
-t_path		*ft_shorter_paths(t_matrix *matrix, t_verts *rooms, int current_room)
+t_path		*ft_find_shorter_path(t_path *start_room, t_matrix *matrix, int lvl)
+{
+	t_path		*tmp_room;
+	char		next_link;
+	int			i;
+
+	start_room = ft_add_room(matrix, matrix->start);
+	tmp_room = start_room;
+	while (tmp_room->room != matrix->finish)
+	{
+		i = 0;
+		next_link = matrix->mtrx[tmp_room->room]
+		while (i < tmp_room->num_of_links && (next_link = ft_strchr(next_link, '1')))
+		{
+			i++;
+		}
+		
+	}
+	
+}
+
+t_path		*ft_add_room(t_matrix *matrix, int current_room)
 {
 	t_path		*step;
 	int			i;
@@ -34,12 +55,10 @@ t_path		*ft_shorter_paths(t_matrix *matrix, t_verts *rooms, int current_room)
 	if (!(step = malloc(sizeof(t_path))))
 		exit (1);
 	step->room = current_room;
-	ft_del_links_to(matrix, current_room);
+	if (current_room != matrix->finish)
+		ft_del_links_to(matrix, current_room);
 	step->num_of_links = ft_num_of_links(matrix->mtrx[matrix->start], '1');
-	i = 0;
-	while (i < step->num_of_links)
-	{
-		if (!(step->next[i] = malloc(sizeof(t_path))))
-			exit (1);
-	}
+	if (!(step->next = malloc(sizeof(t_path*) * step->num_of_links)))
+		exit (1);
+	return (step);
 }
