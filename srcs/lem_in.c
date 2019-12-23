@@ -26,7 +26,7 @@ int		main(void)
 	line = NULL;
 	rooms = NULL;
 	num_of_ants = 0;
-	if (!ft_get_next_line(0, &line) || (num_of_ants = ft_atoi(line)) <= 0)
+	if (!get_next_line(0, &line) || (num_of_ants = ft_atoi(line)) <= 0)
 	// !ft_strcmp(line, ft_itoa(num_of_ants)))
 	{
 		write(1, "Error\n", 6);
@@ -40,6 +40,7 @@ int		main(void)
 	{
 		m_list = ft_read_input(&rooms);
 		print_rooms(rooms);
+		dijkstra(m_list);
 		ft_free_rooms(&rooms);
 		ft_free_mtrx(&m_list);
 		// path = ft_shorter_path(m_list);

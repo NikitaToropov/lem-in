@@ -8,7 +8,7 @@
 # define NONE		0
 # define START		1
 # define FINISH		2
-# define FINISH		3
+# define INT_MAX	2147483647
 
 	// typedef struct		s_graph
 	// {
@@ -65,6 +65,13 @@ typedef struct		s_matrix
 // 	int				room;
 // 	struct s_path	**next;
 // }					t_path;
+
+void	dijkstra(t_matrix *matrix);
+
+
+
+
+
 
 t_matrix			*ft_read_input(t_verts **rooms);
 

@@ -64,7 +64,7 @@ t_matrix	*ft_read_input(t_verts **rooms)
 
 	marker = NONE;
 	links = NULL;
-	while (ft_get_next_line(0, &line))
+	while (get_next_line(0, &line))
 	{
 		write(1, line, ft_strlen(line));
 		write(1, "\n", 1);
