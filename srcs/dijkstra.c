@@ -1,15 +1,39 @@
 #include <lem_in.h>
 
-void	restore_the_path(t_matrix *matrix, int *dist)
+int		*make_arr(int num_of_vertices, int *ver)
+{
+	int		*way;
+	int		i;
+	int		j;
+
+	if (!(way = malloc(sizeof(int) * (num_of_vertices + 1))))
+		exit(1);
+	way[0] = num_of_vertices;
+	i = 1;
+	j = num_of_vertices - 1;
+	while (i <= num_of_vertices)
+	{
+		way[i++] = ver[j--];
+	}
+	printf("\nВывод кратчайшего пути\n");
+	printf("num_of_vertices = %i\n", way[0]);
+	for (int i = 1; i <= num_of_vertices; i++)
+		printf("%d ", way[i]);
+	return (way);
+}
+
+void	restore_the_path(t_matrix *matrix, int *distance)
 {
 	int		ver[matrix->len]; // массив посещенных вершин
-	int		end = matrix->finish; // индекс конечной вершины
-	int		k = 1; // индекс предыдущей вершины
-	int		weight = dist[end]; // вес конечной вершины
+	int		end; // индекс конечной вершины
+	int		k; // индекс предыдущей вершины
+	int		weight; // вес конечной вершины
 	int		i;
-	int		temp;
 
+	end = matrix->finish;
 	ver[0] = end;
+	k = 1;
+	weight = distance[end];
 	while (end != matrix->start) // пока не дошли до начальной вершины
 	{
 		i = 0;
@@ -17,81 +41,71 @@ void	restore_the_path(t_matrix *matrix, int *dist)
 		{
 			if (matrix->mtrx[end][i] == '1')   // если связь есть
 			{
-				// write(1, "WHYYYYYY\n", 9);
-				temp =  weight - 1;
-				if (temp == dist[i]) // если вес совпал с рассчитанным
+				if ((weight - 1) == distance[i]) // если вес совпал с рассчитанным
 				{                 // значит из этой вершины и был переход
-					weight = temp; // сохраняем новый вес
+					weight -= 1; // сохраняем новый вес
 					end = i;       // сохраняем предыдущую вершину
-					ver[k] = i; // и записываем ее в массив
-					k++;
+					ver[k++] = i; // и записываем ее в массив
 				}
 			}
 			i++;
 		}
 	}
-
-	printf("\nВывод кратчайшего пути\n");
-	for (int i = k - 1; i >= 0; i--)
-		printf("%3d ", ver[i]);
+	make_arr(k, ver);
 }
-
 
 void	dijkstra(t_matrix *matrix)
 {
-	int		dist[matrix->len];
-	int		visit[matrix->len];
-	int		temp;
-	int		minindex;
-	int		min;
+	int		distance[matrix->len]; // минимальное расстояние
+	int		visit[matrix->len]; // посещенные вершины
+	int		min_index;
+	int		min_dist;
 	int		i;
 
-	
 	i = 0;
 	while(i < matrix->len)
 	{
-		dist[i] = INT_MAX;
+		distance[i] = INT_MAX;
 		visit[i] = 1;
 		i++;
 	}
-	dist[matrix->start] = 0;
-	printf("\n\n\n\nstart = %i\n", matrix->start);
-	printf("finish = %i\n", matrix->finish);
-
 	
-	minindex = 0;
-	while (minindex < INT_MAX)
+	distance[matrix->start] = 0;
+	min_index = 0;
+	while (min_index < INT_MAX)
 	{
-		minindex = INT_MAX;
-		min = INT_MAX;
+		min_index = INT_MAX;
+		min_dist = INT_MAX;
 		i = 0;
-		for (int i = 0; i < matrix->len; i++)
+		while (i < matrix->len)
 		{
-			if (visit[i] == 1 && dist[i] < min)
+			if (visit[i] == 1 && distance[i] < min_dist)
 			{
-				min = dist[i];
-				minindex = i;
+				min_dist = distance[i];
+				min_index = i;
 			}
+			i++;
 		}
-		if (minindex != INT_MAX)
+		if (min_index != INT_MAX)
 		{
-			for (int i = 0; i<matrix->len; i++)
+			i = 0;
+			while (i < matrix->len)
 			{
-				if (matrix->mtrx[minindex][i] > '0')
-				{
-					temp = min + 1;
-					if (temp < dist[i])
-						dist[i] = temp;
-				}
+				if (matrix->mtrx[min_index][i] > '0')
+					if ((min_dist + 1) < distance[i])
+						distance[i] = min_dist + 1;
+				i++;
 			}
-			visit[minindex] = 0;
+			visit[min_index] = 0;
 		}
 	}
+	if (distance[matrix->finish == INT_MAX])
+		return ; // важно для случая когда все пути найдены
 	// Вывод кратчайших расстояний до вершин
 	printf("\nКратчайшие расстояния до вершин: \n");
 	i = 0;
 	while (i < matrix->len)
-		printf("%d ", dist[i++]);
+		printf("%d ", distance[i++]);
 
-	restore_the_path(matrix, dist);
+	restore_the_path(matrix, distance);
 }
