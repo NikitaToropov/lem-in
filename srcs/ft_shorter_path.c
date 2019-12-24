@@ -26,14 +26,34 @@ void		free_way(t_path **way)
 
 int			output_line_length(t_path *way, int num_of_ants)
 {
-	int		res;
+	int		arr_len[way->num_of_paths];
+	int		result;
 	int		i;
 
-	i = way->num_of_paths;
-	while (i)
+	i = 0;
+	result = way->path[0];
+	while (i < way->num_of_paths)
 	{
+		if (way->path[i][0] < result)
+			result = way->path[i][0];
+		arr_len[i] = way->path[i][0];
+		i++;
 	}
-	
+	while (num_of_ants)
+	{
+		i = 0;
+		while (i < way->num_of_paths && num_of_ants)
+		{
+			if (arr_len[i] <= result)
+			{
+				arr_len[i]++;
+				num_of_ants--;
+			}
+			i++;
+		}
+		result++;
+	}
+	return (result);
 }
 
 void		modify_matrix(t_matrix *matrix, int *arr)
@@ -66,7 +86,7 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 	{
 		modify_matrix(matrix, new_arr);
 		tmp_way = make_new_way(way, new_arr);
-		if (output_line_length(*way, num_of_ants) < output_line_length(*tmp_way, num_of_ants))
+		if (output_line_length(way, num_of_ants) < output_line_length(tmp_way, num_of_ants))
 		{
 			free_way(&tmp_way);
 			break ;
