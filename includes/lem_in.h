@@ -20,19 +20,18 @@
 	// 	struct s_verts	*rooms;
 	// }					t_graph;
 
-typedef struct		s_graph
-{
-	int				room;
-	int				level;
-	int				num_of_links;
-	struct s_path	**next_rooms;
-}					t_graph;
+// typedef struct		s_graph
+// {
+// 	int				room;
+// 	int				level;
+// 	int				num_of_links;
+// 	struct s_path	**next_rooms;
+// }					t_graph;
 
 typedef struct		s_path
 {
-	int				room;
-	int				num_of_links;
-	struct s_path	*next;
+	int				num_of_paths;
+	int				**path;
 }					t_path;
 
 typedef struct		s_verts
@@ -66,7 +65,7 @@ typedef struct		s_matrix
 // 	struct s_path	**next;
 // }					t_path;
 
-void	dijkstra(t_matrix *matrix);
+int			*dijkstra(t_matrix *matrix);
 
 
 

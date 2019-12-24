@@ -22,7 +22,7 @@ int		*make_arr(int num_of_vertices, int *ver)
 	return (way);
 }
 
-void	restore_the_path(t_matrix *matrix, int *distance)
+int		*restore_the_path(t_matrix *matrix, int *distance)
 {
 	int		ver[matrix->len]; // массив посещенных вершин
 	int		end; // индекс конечной вершины
@@ -51,10 +51,10 @@ void	restore_the_path(t_matrix *matrix, int *distance)
 			i++;
 		}
 	}
-	make_arr(k, ver);
+	return (make_arr(k, ver));
 }
 
-void	dijkstra(t_matrix *matrix)
+int		*dijkstra(t_matrix *matrix)
 {
 	int		distance[matrix->len]; // минимальное расстояние
 	int		visit[matrix->len]; // посещенные вершины
@@ -100,12 +100,12 @@ void	dijkstra(t_matrix *matrix)
 		}
 	}
 	if (distance[matrix->finish == INT_MAX])
-		return ; // важно для случая когда все пути найдены
+		return (NULL); // важно для случая когда все пути найдены
 	// Вывод кратчайших расстояний до вершин
 	printf("\nКратчайшие расстояния до вершин: \n");
 	i = 0;
 	while (i < matrix->len)
 		printf("%d ", distance[i++]);
 
-	restore_the_path(matrix, distance);
+	return (restore_the_path(matrix, distance));
 }

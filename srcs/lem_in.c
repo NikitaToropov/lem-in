@@ -30,8 +30,6 @@ int		main(void)
 	// !ft_strcmp(line, ft_itoa(num_of_ants)))
 	{
 		write(1, "Error\n", 6);
-		write(1, "Error\n", 6);
-
 	}
 	write(1, line, ft_strlen(line));
 	write(1, "\n", 1);

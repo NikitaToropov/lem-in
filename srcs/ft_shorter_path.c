@@ -1,64 +1,78 @@
 #include <lem_in.h>
 
-void		ft_del_links_to(t_matrix *matrix, int room)
+t_path		*make_new_way(t_path *way, int *new_path)
+{
+	t_path		*new;
+
+	if (!(new = malloc(sizeof(t_path))))
+		exit(1);
+	if (!(new->path = malloc(sizeof(int*) * (way->num_of_paths + 1))))
+		exit(1);
+	
+}
+
+
+void		free_way(t_path **way)
 {
 	int		i;
 
 	i = 0;
-	while (i < matrix->len)
-	{
-		matrix->mtrx[i][room] = '0';
-		i++;
-	}
+	while (i < (*way)->num_of_paths)
+		free((*way)->path[i++]);
+	free((*way)->path);
+	free(*way);
+	way = NULL;
 }
 
-int			ft_num_of_links(char *str, char c)
+int			output_line_length(t_path *way, int num_of_ants)
 {
+	int		res;
 	int		i;
 
-	i = 0;
-	while (*str)
+	i = way->num_of_paths;
+	while (i)
 	{
-		if (*str == c)
-			i++;
-		str++;
-	}
-	return (i);
-}
-
-t_path		*ft_find_shorter_path(t_path *start_room, t_matrix *matrix, int lvl)
-{
-	t_path		*tmp_room;
-	char		next_link;
-	int			i;
-
-	start_room = ft_add_room(matrix, matrix->start);
-	tmp_room = start_room;
-	while (tmp_room->room != matrix->finish)
-	{
-		i = 0;
-		next_link = matrix->mtrx[tmp_room->room]
-		while (i < tmp_room->num_of_links && (next_link = ft_strchr(next_link, '1')))
-		{
-			i++;
-		}
-		
 	}
 	
 }
 
-t_path		*ft_add_room(t_matrix *matrix, int current_room)
+void		modify_matrix(t_matrix *matrix, int *arr)
 {
-	t_path		*step;
-	int			i;
+	int		i;
 
-	if (!(step = malloc(sizeof(t_path))))
-		exit (1);
-	step->room = current_room;
-	if (current_room != matrix->finish)
-		ft_del_links_to(matrix, current_room);
-	step->num_of_links = ft_num_of_links(matrix->mtrx[matrix->start], '1');
-	if (!(step->next = malloc(sizeof(t_path*) * step->num_of_links)))
-		exit (1);
-	return (step);
+	i = 1;
+	while (i < arr[0])
+	{
+		matrix->mtrx[i + 1][i] = '1';
+		matrix->mtrx[i][i + 1] = '0';
+		i++;
+	}
+}
+
+t_path		*bhandari(t_matrix *matrix, int num_of_ants)
+{
+	t_path		*way;
+	t_path		*tmp_way;
+	int			*new_arr;
+
+	if (!(way = malloc(sizeof(t_path))))
+		exit(1);
+	if (!(way->path = malloc(sizeof(int*))))
+		exit(1);
+	way->num_of_paths = 1;
+	way->path[1] = dijkstra;
+	modify_matrix(matrix, way);
+	while ((new_arr = dijkstra))
+	{
+		modify_matrix(matrix, new_arr);
+		tmp_way = make_new_way(way, new_arr);
+		if (output_line_length(*way, num_of_ants) < output_line_length(*tmp_way, num_of_ants))
+		{
+			free_way(&tmp_way);
+			break ;
+		}
+		free(&way);
+		way = tmp_way;
+	}
+	return(way);
 }
