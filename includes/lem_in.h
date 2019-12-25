@@ -52,7 +52,7 @@ typedef struct		s_edges
 
 typedef struct		s_matrix
 {
-	char			**mtrx;
+	int			**mtrx;
 	int				len;
 	int				start;
 	int				finish;
@@ -66,7 +66,13 @@ typedef struct		s_matrix
 // }					t_path;
 
 int			*dijkstra(t_matrix *matrix);
+int		*bellman_ford(t_matrix *matrix);
 
+
+
+void	print_matrix(t_matrix *m_list);
+
+void		modify_matrix(t_matrix *matrix, int *arr);
 
 
 

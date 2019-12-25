@@ -1,5 +1,18 @@
 #include <lem_in.h>
 
+void		modify_matrix(t_matrix *matrix, int *arr)
+{
+	int		i;
+
+	i = 1;
+	while ((i + 1) < arr[0])
+	{
+		matrix->mtrx[arr[i]][arr[i + 1]] = -1;
+		matrix->mtrx[arr[i + 1]][arr[i]] = 0;
+		i++;
+	}
+}
+
 int		*make_arr(int num_of_vertices, int *ver)
 {
 	int		*way;
@@ -39,7 +52,7 @@ int		*restore_the_path(t_matrix *matrix, int *distance)
 		i = 0;
 		while (i < matrix->len)
 		{
-			if (matrix->mtrx[end][i] == '1')   // если связь есть
+			if (matrix->mtrx[end][i] == 1)   // если связь есть
 			{
 				if ((weight - 1) == distance[i]) // если вес совпал с рассчитанным
 				{                 // значит из этой вершины и был переход
@@ -54,7 +67,7 @@ int		*restore_the_path(t_matrix *matrix, int *distance)
 	return (make_arr(k, ver));
 }
 
-int		*dijkstra(t_matrix *matrix)
+int		*bellman_ford(t_matrix *matrix)
 {
 	int		distance[matrix->len]; // минимальное расстояние
 	int		visit[matrix->len]; // посещенные вершины
@@ -91,7 +104,7 @@ int		*dijkstra(t_matrix *matrix)
 			i = 0;
 			while (i < matrix->len)
 			{
-				if (matrix->mtrx[min_index][i] > '0')
+				if (matrix->mtrx[min_index][i] > 0)
 					if ((min_dist + 1) < distance[i])
 						distance[i] = min_dist + 1;
 				i++;

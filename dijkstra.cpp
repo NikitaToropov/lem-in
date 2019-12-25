@@ -4,7 +4,7 @@
 #define SIZE 6
 int main()
 {
-  int a[SIZE][SIZE]; // матрица связей
+	int a[SIZE][SIZE]; // матрица связей
   int d[SIZE]; // минимальное расстояние
   int v[SIZE]; // посещенные вершины
   int temp, minindex, min;

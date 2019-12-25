@@ -56,19 +56,6 @@ int			output_line_length(t_path *way, int num_of_ants)
 	return (result);
 }
 
-void		modify_matrix(t_matrix *matrix, int *arr)
-{
-	int		i;
-
-	i = 1;
-	while (i < arr[0])
-	{
-		matrix->mtrx[i + 1][i] = '1';
-		matrix->mtrx[i][i + 1] = '0';
-		i++;
-	}
-}
-
 t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 {
 	t_path		*way;
