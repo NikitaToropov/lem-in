@@ -71,8 +71,9 @@ int		*bellman_ford(t_matrix *matrix);
 
 
 void	print_matrix(t_matrix *m_list);
-
 void		modify_matrix(t_matrix *matrix, int *arr);
+t_path		*bhandari(t_matrix *matrix, int num_of_ants);
+
 
 
 
