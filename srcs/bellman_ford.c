@@ -1,16 +1,37 @@
 #include <lem_in.h>
 
+// void		modify_matrix(t_matrix *matrix, int *arr)
+// {
+// 	int		i;
+
+// 	i = 1;
+// 	while ((i + 1) < arr[0])
+// 	{
+// 		matrix->mtrx[arr[i]][arr[i + 1]] = -1;
+// 		matrix->mtrx[arr[i + 1]][arr[i]] = 0;
+// 		i++;
+// 	}
+// 	print_matrix(matrix);
+// }
+
 void		modify_matrix(t_matrix *matrix, int *arr)
 {
 	int		i;
 
+	// i = 1;
+	// while (i < arr[0])
+	// {
+	// 	printf("%i ", arr[i++]);
+	// }
+	
 	i = 1;
-	while ((i + 1) < arr[0])
+	while ((i + 1) <= arr[0])
 	{
-		matrix->mtrx[arr[i]][arr[i + 1]] = -1;
-		matrix->mtrx[arr[i + 1]][arr[i]] = 0;
+		matrix->mtrx[arr[i]][arr[i + 1]] = 0;
+		matrix->mtrx[arr[i + 1]][arr[i]] = -20;
 		i++;
 	}
+	print_matrix(matrix);
 }
 
 int		*make_arr(int num_of_vertices, int *ver)
@@ -54,7 +75,7 @@ int		*restore_the_path(t_matrix *matrix, int *distance)
 		{
 			if (matrix->mtrx[end][i] == 1)   // если связь есть
 			{
-				if ((weight - 1) == distance[i]) // если вес совпал с рассчитанным
+				if ((weight - 1) == distance[i]) // если вес совпал	 с рассчитанным
 				{                 // значит из этой вершины и был переход
 					weight -= 1; // сохраняем новый вес
 					end = i;       // сохраняем предыдущую вершину
@@ -63,8 +84,10 @@ int		*restore_the_path(t_matrix *matrix, int *distance)
 			}
 			i++;
 		}
+
 	}
 	return (make_arr(k, ver));
+	// return (NULL);
 }
 
 int		*bellman_ford(t_matrix *matrix)
@@ -73,6 +96,7 @@ int		*bellman_ford(t_matrix *matrix)
 	int		visit[matrix->len]; // посещенные вершины
 	int		min_index;
 	int		min_dist;
+	int		dist;
 	int		i;
 
 	i = 0;
@@ -83,6 +107,7 @@ int		*bellman_ford(t_matrix *matrix)
 		i++;
 	}
 	
+	dist = 0;
 	distance[matrix->start] = 0;
 	min_index = 0;
 	while (min_index < INT_MAX)

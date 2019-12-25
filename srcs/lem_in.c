@@ -38,12 +38,13 @@ int		main(void)
 	{
 		m_list = ft_read_input(&rooms);
 		print_rooms(rooms);
-		printf("\n+++++++++++++++++++++++++++++++++++\n\n");
+		printf("\n\n+++++++++++++++++++++++++++++++++++\n\n");
 		tmp_way = bellman_ford(m_list);
+		printf("\n\n+++++++++++++++++++++++++++++++++++\n\n");
 		modify_matrix(m_list, tmp_way);
 		tmp_way = bellman_ford(m_list);
-		modify_matrix(m_list, tmp_way);
-		tmp_way = bellman_ford(m_list);
+		// modify_matrix(m_list, tmp_way);
+		// tmp_way = bellman_ford(m_list);
 		// bellman_ford(m_list);
 		ft_free_rooms(&rooms);
 		ft_free_mtrx(&m_list);

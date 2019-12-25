@@ -1,16 +1,24 @@
 #include <lem_in.h>
 
-void	change_common_edges(t_path *old, t_path *new)
+void	change_common_edges(t_path *way)
 {
 	int		*tmp;
 	int		i;
 	int		j;
+	int		k;
+	int		*first;
+	int		*second;
 
-	i = 0;
+	i = way->num_of_paths - 1;
 	j = 0;
-	while (i < old->num_of_paths)
+	while (j > 0)
 	{
-		if (old)
+		k = 1;
+		while (k < way->path[j][0])
+		{
+			if (ft_arrint())
+			k++;
+		}
 	}
 }
 
@@ -33,11 +41,11 @@ t_path		*make_new_way(t_path *way, int *new_path)
 		exit(1);
 	new->num_of_paths = way->num_of_paths + 1;
 	i = 0;
-	new->path[new->num_of_paths - 1] = new_path
 	while (i < way->num_of_paths)
 	{
-		new[i] = ft_memccpy(int);
+		new->path[i] = way->path[i];
 	}
+	new->path[i] = new_path;
 }
 
 void	free_way(t_path **way)
