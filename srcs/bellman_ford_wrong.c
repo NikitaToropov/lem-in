@@ -18,17 +18,11 @@ void		modify_matrix(t_matrix *matrix, int *arr)
 {
 	int		i;
 
-	// i = 1;
-	// while (i < arr[0])
-	// {
-	// 	printf("%i ", arr[i++]);
-	// }
-	
 	i = 1;
 	while ((i + 1) <= arr[0])
 	{
 		matrix->mtrx[arr[i]][arr[i + 1]] = 0;
-		matrix->mtrx[arr[i + 1]][arr[i]] = -1;
+		matrix->mtrx[arr[i + 1]][arr[i]] = 1;
 		i++;
 	}
 	print_matrix(matrix);

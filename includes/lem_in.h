@@ -65,8 +65,10 @@ typedef struct		s_matrix
 // 	struct s_path	**next;
 // }					t_path;
 
-int			*dijkstra(t_matrix *matrix);
+int		*dijkstra(t_matrix *matrix);
+
 int		*bellman_ford(t_matrix *matrix);
+
 
 
 

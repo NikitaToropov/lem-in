@@ -17,6 +17,7 @@ C_FILES = lem_in.c\
 		rooms.c\
 		matrix.c\
 		bellman_ford_wrong.c\
+		dijkstra.c\
 		# bellman_ford.c\
 		# paths.c\s
 		# bhandari.c\
