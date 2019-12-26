@@ -18,7 +18,7 @@ int		*dijkstra(t_matrix *matrix)
 	while (j != matrix->finish)
 	{
 		if (j > matrix->len || d[j] == INT_MAX)
-			break;
+			return (NULL);
 		u[j] = 1;
 		i = 0;
 		while (i < matrix->len)
