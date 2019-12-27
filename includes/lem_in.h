@@ -65,16 +65,16 @@ typedef struct		s_matrix
 // 	struct s_path	**next;
 // }					t_path;
 
-int		*dijkstra(t_matrix *matrix);
+int		*dijkstra(t_matrix *matrix, int *visit);
+void	fill_parents(int *parents, t_path *way, t_matrix *matrix);
 
-int		*bellman_ford(t_matrix *matrix);
 
 
 
 
 void	print_matrix(t_matrix *m_list);
-void		modify_matrix(t_matrix *matrix, int *arr);
-// t_path		*bhandari(t_matrix *matrix, int num_of_ants);
+void		modify_matrix(t_matrix *matrix, t_path *way);
+t_path		*bhandari(t_matrix *matrix, int num_of_ants);
 
 
 

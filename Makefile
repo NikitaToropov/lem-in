@@ -16,11 +16,11 @@ C_FILES = lem_in.c\
 		links.c\
 		rooms.c\
 		matrix.c\
-		bellman_ford_wrong.c\
 		dijkstra.c\
+		bhandari.c\
 		# bellman_ford.c\
+		# bellman_ford_wrong.c\
 		# paths.c\s
-		# bhandari.c\
 
 SRCS = $(addprefix $(DIR_S)/,$(C_FILES))
 OBJS = $(addprefix $(DIR_O)/,$(C_FILES:.c=.o))

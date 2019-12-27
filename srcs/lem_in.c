@@ -19,7 +19,6 @@ int		main(void)
 {
 	t_matrix	*m_list;
 	t_verts		*rooms;
-	int			tmp_way[] = {5, 0, 2, 6, 8, 13};
 	char		*line;
 	int			num_of_ants;
 	
@@ -38,16 +37,11 @@ int		main(void)
 	{
 		m_list = ft_read_input(&rooms);
 		print_rooms(rooms);
-		printf("\n\n+++++++++++++++++++++++++++++++++++\n\n");
-		dijkstra(m_list);
-		// bellman_ford(m_list);
-		printf("\n\n+++++++++++++++++++++++++++++++++++\n\n");
-		modify_matrix(m_list, tmp_way);
-		// dijkstra(m_list);
-		// bellman_ford(m_list);
-		// modify_matrix(m_list, tmp_way);
-		// tmp_way = bellman_ford(m_list);
-		// bellman_ford(m_list);
+printf("\n\n\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n");
+		bhandari(m_list, num_of_ants);
+
+printf("\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n");
+
 		ft_free_rooms(&rooms);
 		ft_free_mtrx(&m_list);
 		// path = ft_shorter_path(m_list);

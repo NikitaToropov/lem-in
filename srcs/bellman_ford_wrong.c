@@ -1,31 +1,25 @@
 #include <lem_in.h>
 
-// void		modify_matrix(t_matrix *matrix, int *arr)
-// {
-// 	int		i;
-
-// 	i = 1;
-// 	while ((i + 1) < arr[0])
-// 	{
-// 		matrix->mtrx[arr[i]][arr[i + 1]] = -1;
-// 		matrix->mtrx[arr[i + 1]][arr[i]] = 0;
-// 		i++;
-// 	}
-// 	print_matrix(matrix);
-// }
-
-void		modify_matrix(t_matrix *matrix, int *arr)
+void		modify_matrix(t_matrix *matrix, t_path *way)
 {
 	int		i;
+	int		j;
+	int		*arr;
 
-	i = 1;
-	while ((i + 1) <= arr[0])
+	j = 0;
+	while (j < way->num_of_paths)
 	{
-		matrix->mtrx[arr[i]][arr[i + 1]] = 0;
-		matrix->mtrx[arr[i + 1]][arr[i]] = 1;
-		i++;
+		i = 1;
+		arr = way->path[j];
+		while ((i + 1) <= arr[0])
+		{
+			matrix->mtrx[arr[i]][arr[i + 1]] = 0;
+			matrix->mtrx[arr[i + 1]][arr[i]] = 1;
+			i++;
+		}
+		j++;
 	}
-	print_matrix(matrix);
+	// print_matrix(matrix);
 }
 
 // int		*make_arr(int num_of_vertices, int *ver)
