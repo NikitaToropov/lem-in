@@ -10,7 +10,7 @@ void	print_int_arr(int *arr, int len)
 	printf("\n");
 }
 
-int		swap_tails(int *new, int *old)
+int		swap_tails(int **new, int **old)
 {
 	int		i;
 	int		j;
@@ -23,22 +23,22 @@ int		swap_tails(int *new, int *old)
 	tail_for_new = NULL;
 	tail_for_old = NULL;
 	i = 2;
-	while (i < old[0])
+	while (i < *old[0])
 	{
 		j = 2;
-		while (j < new[0])
+		while (j < *new[0])
 		{
-			if (old[i] == new[j])
+			if (*old[i] == *new[j])
 			{
 				if (!tail_for_old)
 				{
-					tail_for_old = &new[j] + 1;
-					cut_old = &old[i];
+					tail_for_old = &(*new[j]) + 1;
+					cut_old = &(*old[i]);
 				}
 				else
 				{
-					tail_for_new = &old[i] + 1;
-					cut_new = &new[j];
+					tail_for_new = &(*old[i]) + 1;
+					cut_new = &(*new[j]);
 				}
 			}
 			j++;
@@ -57,43 +57,41 @@ int		swap_tails(int *new, int *old)
 	printf("tail_for_new = %i%i\n", tail_for_new[0], tail_for_new[1]);
 
 
-	tmp = new;
-	i = cut_new - new + (old[0] - (cut_old - old));
+	tmp = *new;
+	i = cut_new - *new + (*old[0] - (cut_old - *old));
 	printf("len of new = %i  vs  7\n", i);
-	new = malloc(sizeof(int) * i);
-	new[0] = i - 1;
+	*new = malloc(sizeof(int) * i);
+	*new[0] = i - 1;
 	j = 1;
 	while (j < i)
 	{
 		if (&tmp[j] <= cut_new)
-			new[j] = tmp[j];
+			*new[j] = tmp[j];
 		else
 		{
-			new[j] = *tail_for_new;
+			*new[j] = *tail_for_new;
 			tail_for_new++;
 		}
 		j++;
 	}
-	print_int_arr(new, new[0] + 1);
 
 
-	i = cut_old - old + (tmp[0] - (cut_new - tmp));
-	tmp = old;
-	old = malloc(sizeof(int) * i);
-	old[0] = i - 1;
+	i = cut_old - *old + (tmp[0] - (cut_new - tmp));
+	tmp = *old;
+	*old = malloc(sizeof(int) * i);
+	*old[0] = i - 1;
 	j = 1;
 	while (j < i)
 	{
 		if (&tmp[j] <= cut_old)
-			old[j] = tmp[j];
+			*old[j] = tmp[j];
 		else
 		{
-			old[j] = *tail_for_old;
+			*old[j] = *tail_for_old;
 			tail_for_old++;
 		}
 		j++;
 	}
-	print_int_arr(old, old[0] + 1);
 
 
 
@@ -110,6 +108,8 @@ int		main()
 
 	old = a;
 	new = b;
-	swap_tails(new, old);
+	swap_tails(&new, &old);
+	print_int_arr(old, old[0] + 1);
+	print_int_arr(new, new[0] + 1);
 	return (0);
 }
