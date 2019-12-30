@@ -10,92 +10,75 @@ void	print_int_arr(int *arr, int len)
 	printf("\n");
 }
 
+void	make_new_arr(int **new, int *old_tail, int *new_tail, int new_tail_len)
+{
+	int		j;
+	int		len;
+	int		*tmp;
+
+	tmp = *new;
+	len = old_tail - tmp + (new_tail_len);
+	*new = malloc(sizeof(int) * len);
+	*new[0] = len - 1;
+	j = 1;
+	while (j < len)
+	{
+		if (&tmp[j] <= old_tail)
+			(*new)[j] = tmp[j];
+		else
+		{
+			(*new)[j] = *new_tail;
+			new_tail++;
+		}
+		j++;
+	}
+}
+
 int		swap_tails(int **new, int **old)
 {
 	int		i;
 	int		j;
-	int		*tail_for_new;
-	int		*tail_for_old;
-	int		*cut_new;
-	int		*cut_old;
-	int		*tmp;
+	int		*new_arr;
+	int		*old_arr;
+	int		*new_tail;
+	int		*old_tail;
 
-	tail_for_new = NULL;
-	tail_for_old = NULL;
+	new_tail = NULL;
+	old_tail = NULL;
+	new_arr= *new;
+	old_arr = *old;
 	i = 2;
-	while (i < *old[0])
+	while (i < old_arr[0])
 	{
 		j = 2;
-		while (j < *new[0])
+		while (j < new_arr[0])
 		{
-			if (*old[i] == *new[j])
+			if (old[i] == new[j])
 			{
-				if (!tail_for_old)
+				if (!new_tail)
 				{
-					tail_for_old = &(*new[j]) + 1;
-					cut_old = &(*old[i]);
+					old_tail = &old_arr[i + 1];
+					new_tail = &new_arr[j + 1];
+					// make_new_arr(old, old_tail, new_tail, (new_arr[0] - (new_tail - new_arr - 1)));
 				}
 				else
 				{
-					tail_for_new = &(*old[i]) + 1;
-					cut_new = &(*new[j]);
+					new_tail = &old_arr[i + 1];
+					old_tail = &new_arr[j + 1];
 				}
 			}
 			j++;
 		}
 		i++;
 	}
-	if (!tail_for_new || !tail_for_old)
+	if (!new_tail)
 	{
-		if (!tail_for_new)
-			printf("no tail_for_new\n");
-		if (!tail_for_old)
-			printf("no tail_for_old\n");
 		return (0);
 	}
-	printf("tail_for_old = %i%i\n", tail_for_old[0], tail_for_old[1]);
-	printf("tail_for_new = %i%i\n", tail_for_new[0], tail_for_new[1]);
+	// make_new_arr(new, old_tail, new_tail, (new_arr[0] - (new_tail - new_arr - 1)));
+	print_int_arr(*old, (*old)[0] + 1);
+	print_int_arr(*new, (*new)[0] + 1);
 
-
-	tmp = *new;
-	i = cut_new - *new + (*old[0] - (cut_old - *old));
-	printf("len of new = %i  vs  7\n", i);
-	*new = malloc(sizeof(int) * i);
-	*new[0] = i - 1;
-	j = 1;
-	while (j < i)
-	{
-		if (&tmp[j] <= cut_new)
-			*new[j] = tmp[j];
-		else
-		{
-			*new[j] = *tail_for_new;
-			tail_for_new++;
-		}
-		j++;
-	}
-
-
-	i = cut_old - *old + (tmp[0] - (cut_new - tmp));
-	tmp = *old;
-	*old = malloc(sizeof(int) * i);
-	*old[0] = i - 1;
-	j = 1;
-	while (j < i)
-	{
-		if (&tmp[j] <= cut_old)
-			*old[j] = tmp[j];
-		else
-		{
-			*old[j] = *tail_for_old;
-			tail_for_old++;
-		}
-		j++;
-	}
-
-
-
-	// printf("len of old = %i  vs  6\n", i);
 	return (1);
 }
 
@@ -108,8 +91,9 @@ int		main()
 
 	old = a;
 	new = b;
-	swap_tails(&new, &old);
 	print_int_arr(old, old[0] + 1);
 	print_int_arr(new, new[0] + 1);
+	printf("after swap\n");
+	swap_tails(&new, &old);
 	return (0);
 }
