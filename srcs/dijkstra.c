@@ -41,7 +41,8 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	int		i = 0;
 	int		j = 0;
 
-	// children[matrix->start] = -1;	
+	// children[matrix->start] = -1;
+
 	while (i < matrix->len)
 	{
 		d[i] = INT_MAX;
@@ -53,12 +54,16 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	while (j != matrix->finish)
 	{
 			printf(" %d", j);
-		if (j > matrix->len || d[j] == INT_MAX)
+		if (j >= matrix->len || d[j] == INT_MAX)
 			return (NULL);
 		u[j] = 1;
 		i = 0;
+		write (1, "AFTER THAT MAYBE???\n", 20);
 		while (i < matrix->len)
 		{
+			printf("j = %i\n", j);
+			printf("matrix->len = %i\n", matrix->len);
+		write (1, "HOW MUCH TIMES???\n", 18);
 			if (matrix->mtrx[j][i] && d[i] > matrix->mtrx[j][i] + d[j])
 			{
 				d[i] = matrix->mtrx[j][i] + d[j];

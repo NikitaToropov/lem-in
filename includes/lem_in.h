@@ -65,16 +65,28 @@ typedef struct		s_matrix
 // 	struct s_path	**next;
 // }					t_path;
 
-int		*dijkstra(t_matrix *matrix, int *visit);
-void	fill_parents(int *parents, t_path *way, t_matrix *matrix);
+// operations with int array
+int					swap_tails(int **new, int **old);
 
+// operations with t_path struct
+t_path				*make_new_way(t_path *way, int *new_path);
+void				free_way(t_path **way);
+void				change_common_edges(t_path *way);
+void				print_int_arr(int *arr, int len);
+
+// algorithms for serching shortest ways
+int					*dijkstra(t_matrix *matrix, int *visit);
+t_path				*bhandari(t_matrix *matrix, int num_of_ants);
+
+// secondary operations
+void				fill_parents(int *parents, t_path *way, t_matrix *matrix);
+void				modify_matrix(t_matrix *matrix, t_path *way);
+// int			output_line_length(t_path *way, int num_of_ants)
 
 
 
 
 void	print_matrix(t_matrix *m_list);
-void		modify_matrix(t_matrix *matrix, t_path *way);
-t_path		*bhandari(t_matrix *matrix, int num_of_ants);
 
 
 

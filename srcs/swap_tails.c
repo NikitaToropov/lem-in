@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <lem_in.h>
 
 void	print_int_arr(int *arr, int len)
 {
@@ -10,7 +9,27 @@ void	print_int_arr(int *arr, int len)
 	printf("\n");
 }
 
-void	make_new_arr(int **new, int *old_tail, int *new_tail, int new_tail_len)
+int			*int_arr_copy(int *old)
+{
+	int		i;
+	int		len;
+	int		*new;
+
+	i = 0;
+	len = old[0];
+	if (!(new = malloc(sizeof(int) * (len + 1))))
+		exit(1);
+	while (i <= len)
+	{
+		new[i] = old[i];
+		i++;
+	}
+	return (new);
+}
+
+
+
+static void		make_new_arr(int **new, int *old_tail, int *new_tail, int new_tail_len)
 {
 	int		j;
 	int		len;
@@ -42,6 +61,7 @@ int		swap_tails(int **new, int **old)
 	int		*old_arr;
 	int		*new_tail;
 	int		*old_tail;
+	int		*tmp;
 
 	new_tail = NULL;
 	old_tail = NULL;
@@ -73,26 +93,11 @@ int		swap_tails(int **new, int **old)
 	}
 	if (!new_tail)
 	{
+		*old = int_arr_copy(*old);
 		return (0);
 	}
+	tmp = *new;
 	make_new_arr(new, old_tail, new_tail, (old_arr[0] + 1 - (new_tail - old_arr)));
+	free(tmp);
 	return (1);
-}
-
-int		main()
-{
-	int		a[] = {5, 0, 2, 6, 8, 13}; // old
-	int		b[] = {8, 0, 1, 4, 7, 8, 6, 11, 13}; // new
-	int		*old;
-	int		*new;
-
-	old = a;
-	new = b;
-	print_int_arr(old, old[0] + 1);
-	print_int_arr(new, new[0] + 1);
-	printf("after swap\n");
-	swap_tails(&new, &old);
-	print_int_arr(old, old[0] + 1);
-	print_int_arr(new, new[0] + 1);
-	return (0);
 }

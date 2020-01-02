@@ -18,9 +18,10 @@ C_FILES = lem_in.c\
 		matrix.c\
 		dijkstra.c\
 		bhandari.c\
+		swap_tails.c\
+		paths.c\
 		# bellman_ford.c\
 		# bellman_ford_wrong.c\
-		# paths.c\s
 
 SRCS = $(addprefix $(DIR_S)/,$(C_FILES))
 OBJS = $(addprefix $(DIR_O)/,$(C_FILES:.c=.o))
