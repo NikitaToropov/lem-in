@@ -21,20 +21,25 @@ t_path		*make_new_way(t_path *way, int *new_path)
 {
 	t_path		*new;
 	int			i;
+	int			len;
 
 	if (!(new = malloc(sizeof(t_path))))
 		exit(1);
-	if (!(new->path = malloc(sizeof(int*) * (way->num_of_paths + 1))))
+	len = 1;
+	if (way)
+		len += way->num_of_paths;
+	if (!(new->path = malloc(sizeof(int*) * len)))
 		exit(1);
-	new->num_of_paths = way->num_of_paths + 1;
+	new->num_of_paths = len;
 	i = 0;
-	while (i < way->num_of_paths)
+	while (way && i < way->num_of_paths)
 	{
 		new->path[i] = way->path[i];
 		i++;
 	}
 	new->path[i] = new_path;
-	change_common_edges(new);
+	if (new->num_of_paths > 1)
+		change_common_edges(new);
 	return (new);
 }
 
