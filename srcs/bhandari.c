@@ -144,6 +144,7 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 		way = tmp_way;
 
 	}
-	print_all_ways(way);
+	if (way)
+		print_all_ways(way);
 	return(way);
 }
