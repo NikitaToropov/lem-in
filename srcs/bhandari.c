@@ -1,5 +1,25 @@
 #include <lem_in.h>
 
+void	print_all_ways(t_path *way)
+{
+	int			i;
+	int			j;
+
+	printf("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!! THIS ONR PATH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	i = 0;
+	while (i < way->num_of_paths)
+	{
+		j = 1;
+		printf("way #%i ---- ", i);
+		while (j <= way->path[i][0])
+			printf(" %i", way->path[i][j++]);
+		printf("\n");
+		i++;
+	}
+	printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+}
+
+
 void		modify_matrix(t_matrix *matrix, t_path *way)
 {
 	int		i;
@@ -59,12 +79,12 @@ int			output_line_length(t_path *way, int num_of_ants)
 	int		i;
 
 	i = 0;
-	result = way->path[0][0];
+	result = way->path[0][0] - 1;
 	while (i < way->num_of_paths)
 	{
-		if (way->path[i][0] < result)
-			result = way->path[i][0];
-		arr_len[i] = way->path[i][0];
+		if ((way->path[i][0] - 1) < result)
+			result = way->path[i][0] - 1;
+		arr_len[i] = way->path[i][0] - 1;
 		i++;
 	}
 	while (num_of_ants)
@@ -89,7 +109,7 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 	t_path		*way;
 	t_path		*tmp_way;
 	int			*new_arr;
-	int			i;
+	// int			i;
 	int			parents[matrix->len];
 
 	if (!num_of_ants)
@@ -97,7 +117,6 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 
 	if (!(way = malloc(sizeof(t_path))))
 		exit(1);
-
 	if (!(way->path = malloc(sizeof(int*))))
 		exit(1);
 	way->num_of_paths = 1;
@@ -105,27 +124,61 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 	way->path[0] = dijkstra(matrix, parents);
 	fill_parents(parents, way, matrix);
 	modify_matrix(matrix, way);
+	print_all_ways(way);
+
+	// way = make_new_way(way, dijkstra(matrix, parents));
+
+	// modify_matrix(matrix, way);
+	// fill_parents(parents, way, matrix);
+	// tmp_way = make_new_way(way, dijkstra(matrix, parents));
+	// print_all_ways(way);
+	// print_all_ways(tmp_way);
+	// printf("num of ants = %i\n", num_of_ants);
+	// printf("new path is shorter?\n way = %i\n tmp_way = %i\n", output_line_length(way, num_of_ants), output_line_length(tmp_way, num_of_ants));
+
 	while ((new_arr = dijkstra(matrix, parents)))
 	{
+		printf("TOOTOTOTOTOTOTOTOTOTTTOTOTOTOTTOTOTOTOTOTOOTOTOOTOTOTGKGFGLHGJFJF\n");
 		tmp_way = make_new_way(way, new_arr);
-		if (output_line_length(way, num_of_ants) < output_line_length(tmp_way, num_of_ants))
-		{
-			// free_way(&tmp_way);
-			break ;
-		}
 
-		// free(&way);
+		fill_parents(parents, tmp_way, matrix);
+		modify_matrix(matrix, tmp_way);
+		free_way(&way);
 		way = tmp_way;
-		fill_parents(parents, way, matrix);
-		modify_matrix(matrix, way);
-		write (1, "AFTER THAT???\n", 14);
+
+		print_all_ways(way);
 	}
-	i = way->num_of_paths - 1;
-	while (i >= 0)
-	{
-		print_int_arr(way->path[i], way->path[i][0] + 1);
-		i++;
-	}
+
+
+
+
+
+
+
+
+
+
+	// while ((new_arr = dijkstra(matrix, parents)))
+	// {
+	// 	tmp_way = make_new_way(way, new_arr);
+	// 	if (output_line_length(way, num_of_ants) < output_line_length(tmp_way, num_of_ants))
+	// 	{
+	// 		// free_way(&tmp_way);
+	// 		break ;
+	// 	}
+
+	// 	// free(&way);
+	// 	way = tmp_way;
+	// 	fill_parents(parents, way, matrix);
+	// 	modify_matrix(matrix, way);
+	// 	write (1, "AFTER THAT???\n", 14);
+	// }
+	// i = way->num_of_paths - 1;
+	// while (i >= 0)
+	// {
+	// 	print_int_arr(way->path[i], way->path[i][0] + 1);
+	// 	i++;
+	// }
 	
 	// return(way);
 	return(NULL);

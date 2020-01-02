@@ -1,5 +1,6 @@
 #include <lem_in.h>
 
+
 int		*make_arr(t_matrix *matrix, int *p)
 {
 	int		*arr;
@@ -13,7 +14,7 @@ int		*make_arr(t_matrix *matrix, int *p)
 	{
 		j = p[j];
 		len++;
-		write(1, "THETRTETRT\n", 11);
+		// write(1, "THETRTETRT\n", 11);
 	}
 	if (!(arr = malloc(sizeof(int) * (len + 1))))
 		return (arr);
@@ -53,17 +54,15 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	j = matrix->start;
 	while (j != matrix->finish)
 	{
-			printf(" %d", j);
+			// printf(" %d", j);
 		if (j >= matrix->len || d[j] == INT_MAX)
 			return (NULL);
 		u[j] = 1;
 		i = 0;
-		write (1, "AFTER THAT MAYBE???\n", 20);
+		// write (1, "AFTER THAT MAYBE???\n", 20);
 		while (i < matrix->len)
 		{
-			printf("j = %i\n", j);
-			printf("matrix->len = %i\n", matrix->len);
-		write (1, "HOW MUCH TIMES???\n", 18);
+		// write (1, "HOW MUCH TIMES???\n", 18);
 			if (matrix->mtrx[j][i] && d[i] > matrix->mtrx[j][i] + d[j])
 			{
 				d[i] = matrix->mtrx[j][i] + d[j];
@@ -77,19 +76,15 @@ int		*dijkstra(t_matrix *matrix, int *children)
 		while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
 			j++;
 	}
-					printf("\n");
+					// printf("\n");
 	if (d[matrix->finish] == INT_MAX)
 		return (NULL);
 
 
-	i = 0;
-	while (i < matrix->len)
-		printf(" %d", d[i++]);
-	printf("\n");
-	i = 0;
-	while (i < matrix->len)
-		printf(" %d", p[i++]);
-	printf("\n");
+	// i = 0;
+	// while (i < matrix->len)
+	// 	printf(" %d", p[i++]);
+	// printf("\n");
 
 
 	return (make_arr(matrix, p));
