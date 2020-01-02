@@ -48,7 +48,7 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	{
 		d[i] = INT_MAX;
 		u[i++] = 0;
-		p[j] = -1;
+		p[i] = -1;
 	}
 	d[matrix->start] = 0;
 	j = matrix->start;
@@ -71,12 +71,18 @@ int		*dijkstra(t_matrix *matrix, int *children)
 			i++;
 		}
 		if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1)
+		{
 			p[children[j]] = j;
-		j = 0;
-		while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
-			j++;
+			j = children[j];
+		}
+		else
+		{
+			j = 0;
+			while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
+				j++;
+		}
+		
 	}
-					// printf("\n");
 	if (d[matrix->finish] == INT_MAX)
 		return (NULL);
 
