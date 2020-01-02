@@ -109,14 +109,14 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 	t_path		*way;
 	t_path		*tmp_way;
 	int			*new_arr;
-	// int			parents[matrix->len];
-	int			*parents;
+	int			parents[matrix->len];
+	// int			*parents;
 
 	way = NULL;
 	tmp_way = NULL;
 	
-	if(!(parents = malloc(sizeof(matrix->len))))
-		exit(1);
+	// if(!(parents = malloc(sizeof(matrix->len))))
+	// 	exit(1);
 	fill_parents(parents, tmp_way, matrix);
 	while (num_of_ants > 0 && (new_arr = dijkstra(matrix, parents)))
 	{

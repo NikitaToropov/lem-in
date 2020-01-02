@@ -1,5 +1,30 @@
 #include <lem_in.h>
 
+// int		find_len(t_matrix *matrix, int *p)
+// {
+// 	int		len;
+// 	int		j;
+// 	// int		i;
+// 	int		tmp;
+
+// 	j = matrix->finish;
+// 	tmp = matrix->finish;
+// 	len = 1;
+
+// 	// i = 0;
+// 	while (j != matrix->start)
+// 	{
+// 		tmp = p[p[j]];
+// 		j = p[j];
+// 		len++;
+// 		// i++;
+// 		if (tmp == j)
+// 			return (0);
+// 		printf("\nTHETRTETRT     j = %i\nTHETRTETRT   tmp = %i\n", j, tmp);
+// 		printf("\nTHETRTETRT     j = %i\nTHETRTETRT   tmp = %i\n", j, tmp);
+// 	}
+// 	return (len);
+// }
 
 int		*make_arr(t_matrix *matrix, int *p)
 {
@@ -14,10 +39,11 @@ int		*make_arr(t_matrix *matrix, int *p)
 	{
 		j = p[j];
 		len++;
-		// write(1, "THETRTETRT\n", 11);
+		printf("THETRTETRT     j = %i\n", j);
 	}
+	// if (!(len = find_len(matrix, p)) || !(arr = malloc(sizeof(int) * (len + 1))))
 	if (!(arr = malloc(sizeof(int) * (len + 1))))
-		return (arr);
+		return (NULL);
 
 	arr[0] = len;
 	arr[1] = matrix->start;
@@ -52,17 +78,18 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	}
 	d[matrix->start] = 0;
 	j = matrix->start;
-	while (j != matrix->finish)
+	// while (j != matrix->finish)
+	while (j < matrix->len)
 	{
-			// printf(" %d", j);
-		if (j >= matrix->len || d[j] == INT_MAX)
-			return (NULL);
+		j = 0;
+		while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
+			j++;
+		// if (j >= matrix->len || d[j] == INT_MAX)
+		// 	return (NULL);
 		u[j] = 1;
 		i = 0;
-		// write (1, "AFTER THAT MAYBE???\n", 20);
 		while (i < matrix->len)
 		{
-		// write (1, "HOW MUCH TIMES???\n", 18);
 			if (matrix->mtrx[j][i] && d[i] > matrix->mtrx[j][i] + d[j])
 			{
 				d[i] = matrix->mtrx[j][i] + d[j];
@@ -71,16 +98,10 @@ int		*dijkstra(t_matrix *matrix, int *children)
 			i++;
 		}
 		if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1)
-		{
 			p[children[j]] = j;
-			j = children[j];
-		}
-		else
-		{
-			j = 0;
-			while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
-				j++;
-		}
+		j = 0;
+		while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
+			j++;
 		
 	}
 	if (d[matrix->finish] == INT_MAX)
