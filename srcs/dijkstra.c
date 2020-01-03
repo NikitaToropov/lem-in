@@ -33,6 +33,8 @@ int		*make_arr(t_matrix *matrix, int *p)
 	int		j;
 	int		i;
 
+
+	print_int_arr(p, matrix->len);
 	len = 1;
 	j = matrix->finish;
 	while (j != matrix->start)
@@ -55,8 +57,8 @@ int		*make_arr(t_matrix *matrix, int *p)
 		i = p[i];
 	}
 	i = 0;
-	while (i <= len)
-		printf(" %d", arr[i++]);
+	// while (i <= len)
+	// 	printf(" %d", arr[i++]);
 	return (arr);
 }
 
@@ -69,28 +71,28 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	int		j = 0;
 
 	// children[matrix->start] = -1;
-
 	while (i < matrix->len)
 	{
 		d[i] = INT_MAX;
-		u[i++] = 0;
-		p[i] = -1;
+		u[i] = 0;
+		p[i++] = -1;
 	}
 	d[matrix->start] = 0;
 	j = matrix->start;
 	// while (j != matrix->finish)
-	while (j < matrix->len)
+	while (j != matrix->finish)
 	{
-		j = 0;
-		while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
-			j++;
-		// if (j >= matrix->len || d[j] == INT_MAX)
-		// 	return (NULL);
+	// printf("KLDAHFLKAHDFAKHFLAHFKLDAHFLKAHDFAKHFLAHFKLDAHFLKAHDFAKHFLAHFKLDAHFLKAHDFAKHFLAHFKLDAHFLKAHDFAKHFLAHF\n");
+		// j = 0;
+		// while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
+		// 	j++;
+		if (j >= matrix->len || d[j] == INT_MAX)
+			return (NULL);
 		u[j] = 1;
 		i = 0;
 		while (i < matrix->len)
 		{
-			if (matrix->mtrx[j][i] && d[i] > matrix->mtrx[j][i] + d[j])
+			if (matrix->mtrx[j][i] && d[i] >= matrix->mtrx[j][i] + d[j])
 			{
 				d[i] = matrix->mtrx[j][i] + d[j];
 				p[i] = j;

@@ -80,7 +80,8 @@ t_path				*bhandari(t_matrix *matrix, int num_of_ants);
 
 // secondary operations
 void				fill_parents(int *parents, t_path *way, t_matrix *matrix);
-void				modify_matrix(t_matrix *matrix, t_path *way);
+// void				modify_matrix(t_matrix *matrix, t_path *way);
+// void				modify_matrix(t_matrix *matrix, t_path *way);
 // int			output_line_length(t_path *way, int num_of_ants)
 
 

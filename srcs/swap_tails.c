@@ -4,9 +4,10 @@ void	print_int_arr(int *arr, int len)
 {
 	int		i = 0;
 
+	printf("\n\n==================== ARR_LEN = %i ====================\n", len);
 	while (i < len)
 		printf(" %i", arr[i++]);
-	printf("\n");
+	printf("\n=======================================================\n\n");
 }
 
 int			*int_arr_copy(int *old)

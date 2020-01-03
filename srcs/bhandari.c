@@ -20,27 +20,40 @@ void	print_all_ways(t_path *way)
 }
 
 
-void		modify_matrix(t_matrix *matrix, t_path *way)
+void		modify_matrix(t_matrix *matrix, int *new)
 {
 	int		i;
-	int		j;
-	int		*arr;
+	// int		j;
 
-	j = 0;
-	while (j < way->num_of_paths)
+	i = 1;
+	while ((i + 1) <= new[0])
 	{
-		i = 1;
-		arr = way->path[j];
-		while ((i + 1) <= arr[0])
-		{
-			matrix->mtrx[arr[i]][arr[i + 1]] = 0;
-			matrix->mtrx[arr[i + 1]][arr[i]] = 1;
-			i++;
-		}
-		j++;
+		matrix->mtrx[new[i]][new[i + 1]] = 0;
+		matrix->mtrx[new[i + 1]][new[i]] = 1;
+		i++;
 	}
-	// print_matrix(matrix);
 }
+
+// void		modify_matrix(t_matrix *matrix, t_path *way)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		*arr;
+
+// 	j = 0;
+// 	while (j < way->num_of_paths)
+// 	{
+// 		i = 1;
+// 		arr = way->path[j];
+// 		while ((i + 1) <= arr[0])
+// 		{
+// 			matrix->mtrx[arr[i]][arr[i + 1]] = 0;
+// 			matrix->mtrx[arr[i + 1]][arr[i]] = 1;
+// 			i++;
+// 		}
+// 		j++;
+// 	}
+// }
 
 void	fill_parents(int *parents, t_path *way, t_matrix *matrix)
 {
@@ -61,14 +74,14 @@ void	fill_parents(int *parents, t_path *way, t_matrix *matrix)
 		}
 		i++;
 	}
-	// printf("\n!!!!!!!!!!!!!!  NEW PARENTS  !!!!!!!!!!!!!!\n");
+	// printf("\n--------------------  NEW PARENTS  --------------------\n");
 	// i = 0;
 	// while (i < matrix->len)
 	// {
 	// 	printf(" %d", parents[i++]);
 	// }
 	
-	// printf("---------------------------------------------\n\n");
+	// printf("\n-------------------------------------------------------\n\n");
 }
 
 int			num_of_output_lines(t_path *way, int num_of_ants)
@@ -118,8 +131,10 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 	// if(!(parents = malloc(sizeof(matrix->len))))
 	// 	exit(1);
 	fill_parents(parents, tmp_way, matrix);
+	
 	while (num_of_ants > 0 && (new_arr = dijkstra(matrix, parents)))
 	{
+		modify_matrix(matrix, new_arr);
 		tmp_way = make_new_way(way, new_arr);
 		if (way &&
 		num_of_output_lines(tmp_way, num_of_ants) >= num_of_output_lines(way, num_of_ants))
@@ -128,11 +143,13 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 			break ;
 		}
 		fill_parents(parents, tmp_way, matrix);
-		modify_matrix(matrix, tmp_way);
+		// print_matrix(matrix); ////////////////////////////////////////////////////////////
+		// modify_matrix(matrix, tmp_way);
 		if (way)
 			free_way(&way);
 		way = tmp_way;
 
+		// print_all_ways(way);
 	}
 	if (way)
 		print_all_ways(way);
