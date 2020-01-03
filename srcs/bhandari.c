@@ -135,6 +135,8 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 	while (num_of_ants > 0 && (new_arr = dijkstra(matrix, parents)))
 	{
 		modify_matrix(matrix, new_arr);
+		printf("\nnew_arr = ");
+		print_int_arr(&new_arr[1], new_arr[0]);
 		tmp_way = make_new_way(way, new_arr);
 		if (way &&
 		num_of_output_lines(tmp_way, num_of_ants) >= num_of_output_lines(way, num_of_ants))
@@ -149,7 +151,7 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 			free_way(&way);
 		way = tmp_way;
 
-		// print_all_ways(way);
+		print_all_ways(way);
 	}
 	if (way)
 		print_all_ways(way);

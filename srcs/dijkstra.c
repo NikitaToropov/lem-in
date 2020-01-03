@@ -34,16 +34,15 @@ int		*make_arr(t_matrix *matrix, int *p)
 	int		i;
 
 
-	print_int_arr(p, matrix->len);
+	// print_int_arr(p, matrix->len);
 	len = 1;
 	j = matrix->finish;
 	while (j != matrix->start)
 	{
 		j = p[j];
 		len++;
-		printf("THETRTETRT     j = %i\n", j);
+		// printf("THETRTETRT     j = %i\n", j);
 	}
-	// if (!(len = find_len(matrix, p)) || !(arr = malloc(sizeof(int) * (len + 1))))
 	if (!(arr = malloc(sizeof(int) * (len + 1))))
 		return (NULL);
 
@@ -56,7 +55,7 @@ int		*make_arr(t_matrix *matrix, int *p)
 		arr[j--] = i;
 		i = p[i];
 	}
-	i = 0;
+	// i = 0;
 	// while (i <= len)
 	// 	printf(" %d", arr[i++]);
 	return (arr);
@@ -75,7 +74,8 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	{
 		d[i] = INT_MAX;
 		u[i] = 0;
-		p[i++] = -1;
+		p[i] = -1;
+		i++;
 	}
 	d[matrix->start] = 0;
 	j = matrix->start;
@@ -90,17 +90,30 @@ int		*dijkstra(t_matrix *matrix, int *children)
 			return (NULL);
 		u[j] = 1;
 		i = 0;
-		while (i < matrix->len)
+		if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1 &&
+		matrix->mtrx[j][children[j]] + d[j])
 		{
-			if (matrix->mtrx[j][i] && d[i] >= matrix->mtrx[j][i] + d[j])
-			{
-				d[i] = matrix->mtrx[j][i] + d[j];
-				p[i] = j;
-			}
-			i++;
-		}
-		if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1)
 			p[children[j]] = j;
+			d[children[j]] = matrix->mtrx[j][children[j]] + d[j];
+		}
+		else
+		{
+			while (i < matrix->len)
+			{
+				if (matrix->mtrx[j][i] && d[i] > matrix->mtrx[j][i] + d[j])
+				{
+					d[i] = matrix->mtrx[j][i] + d[j];
+					p[i] = j;
+				}
+				i++;
+			}
+		}
+		
+		// if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1)
+		// {
+		// 	p[children[j]] = j;
+		// 	d[children[j]] = matrix->mtrx[j][children[j]] + d[j];
+		// }
 		j = 0;
 		while (j < matrix->len && !(!u[j] && d[j] != INT_MAX))
 			j++;
