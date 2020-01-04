@@ -1,21 +1,70 @@
 #include <lem_in.h>
 
+int			*int_arr_copy(int *old)
+{
+	int		i;
+	int		len;
+	int		*new;
+
+	i = 0;
+	len = old[0];
+	if (!(new = malloc(sizeof(int) * (len + 1))))
+		exit(1);
+	while (i <= len)
+	{
+		new[i] = old[i];
+		i++;
+	}
+	return (new);
+}
+
 void	change_common_edges(t_path *way)
 {
-	int		**tmp;
 	int		i;
+	int		j;
 
-	tmp = &(way->path[way->num_of_paths - 1]);
-	i = way->num_of_paths - 2;
+	i = way->num_of_paths - 1;
 	while (i >= 0)
 	{
-		if (swap_tails(tmp, &(way->path[i])))
+		j = way->num_of_paths - 1;
+		while (j >= 0)
 		{
-			tmp = &(way->path[i]);
+			if (j != i && swap_tails(&(way->path[i]), &(way->path[j])))
+				j = way->num_of_paths - 1;
+			else
+				j--;
 		}
 		i--;
 	}
 }
+
+// void	change_common_edges(t_path *way)
+// {
+// 	// int		*tmp;
+// 	int		i;
+// 	int		j;
+
+// 	j = way->num_of_paths - 1;
+// 	while (j >= 0)
+// 	{
+// 		i = way->num_of_paths - 1;
+// 		while (i >= 0)
+// 		{
+// 			if (i == j)
+// 			{
+// 				i--;
+// 				continue ;
+// 			}
+// 			// tmp = way->path[way->num_of_paths - 1];
+// 			if (swap_tails(&(way->path[j]), &(way->path[i])))
+// 			{
+// 				i = way->num_of_paths - 1;
+// 			}
+// 			i--;
+// 		}
+// 		j--;
+// 	}
+// }
 
 t_path		*make_new_way(t_path *way, int *new_path)
 {
@@ -34,7 +83,7 @@ t_path		*make_new_way(t_path *way, int *new_path)
 	i = 0;
 	while (way && i < way->num_of_paths)
 	{
-		new->path[i] = way->path[i];
+		new->path[i] = int_arr_copy(way->path[i]);
 		i++;
 	}
 	new->path[i] = new_path;

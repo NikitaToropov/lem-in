@@ -138,22 +138,31 @@ t_path		*bhandari(t_matrix *matrix, int num_of_ants)
 		printf("\nnew_arr = ");
 		print_int_arr(&new_arr[1], new_arr[0]);
 		tmp_way = make_new_way(way, new_arr);
+			print_all_ways(tmp_way);
 		if (way &&
 		num_of_output_lines(tmp_way, num_of_ants) >= num_of_output_lines(way, num_of_ants))
 		{
-			free_way(&tmp_way);
+			// print_all_ways(way);
+			// print_all_ways(tmp_way);
+			
+			// free_way(&tmp_way);
 			break ;
 		}
 		fill_parents(parents, tmp_way, matrix);
 		// print_matrix(matrix); ////////////////////////////////////////////////////////////
 		// modify_matrix(matrix, tmp_way);
-		if (way)
-			free_way(&way);
+		
+		
+		// if (way)
+		// 	free_way(&way);
 		way = tmp_way;
 
-		print_all_ways(way);
 	}
 	if (way)
+	{
+		 	// free_way(&way);
 		print_all_ways(way);
+
+	}
 	return(way);
 }

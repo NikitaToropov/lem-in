@@ -79,7 +79,6 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	}
 	d[matrix->start] = 0;
 	j = matrix->start;
-	// while (j != matrix->finish)
 	while (j != matrix->finish)
 	{
 	// printf("KLDAHFLKAHDFAKHFLAHFKLDAHFLKAHDFAKHFLAHFKLDAHFLKAHDFAKHFLAHFKLDAHFLKAHDFAKHFLAHFKLDAHFLKAHDFAKHFLAHF\n");
@@ -89,15 +88,14 @@ int		*dijkstra(t_matrix *matrix, int *children)
 		if (j >= matrix->len || d[j] == INT_MAX)
 			return (NULL);
 		u[j] = 1;
-		i = 0;
-		if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1 &&
-		matrix->mtrx[j][children[j]] + d[j])
-		{
+		if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1) // &&
+		{	
 			p[children[j]] = j;
 			d[children[j]] = matrix->mtrx[j][children[j]] + d[j];
 		}
 		else
 		{
+		i = 0;
 			while (i < matrix->len)
 			{
 				if (matrix->mtrx[j][i] && d[i] > matrix->mtrx[j][i] + d[j])
