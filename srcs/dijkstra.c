@@ -34,14 +34,12 @@ int		*make_arr(t_matrix *matrix, int *p)
 	int		i;
 
 
-	// print_int_arr(p, matrix->len);
 	len = 1;
 	j = matrix->finish;
 	while (j != matrix->start)
 	{
 		j = p[j];
 		len++;
-		// printf("THETRTETRT     j = %i\n", j);
 	}
 	if (!(arr = malloc(sizeof(int) * (len + 1))))
 		return (NULL);
@@ -55,9 +53,6 @@ int		*make_arr(t_matrix *matrix, int *p)
 		arr[j--] = i;
 		i = p[i];
 	}
-	// i = 0;
-	// while (i <= len)
-	// 	printf(" %d", arr[i++]);
 	return (arr);
 }
 

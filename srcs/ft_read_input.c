@@ -1,17 +1,5 @@
 #include <lem_in.h>
 
-void	print_links(t_edges *link)
-{
-	while (link)
-	{
-		printf("================================\n");
-		printf("room1      %s\n", link->pair[0]);
-		printf("room2      %s\n", link->pair[1]);
-		printf("================================\n");
-		link = link->next;
-	}
-}
-
 int		ft_parse_links(t_edges **links, char *line)
 {
 	char	*name1;
