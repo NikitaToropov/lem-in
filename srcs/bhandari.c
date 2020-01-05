@@ -29,7 +29,7 @@ void		modify_matrix(t_matrix *matrix, int *new)
 	while ((i + 1) <= new[0])
 	{
 		matrix->mtrx[new[i]][new[i + 1]] = 0;
-		matrix->mtrx[new[i + 1]][new[i]] = 1;
+		matrix->mtrx[new[i + 1]][new[i]] = -1;
 		i++;
 	}
 }
