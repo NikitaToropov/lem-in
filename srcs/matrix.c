@@ -112,6 +112,6 @@ t_matrix	*ft_make_matrix(t_verts *rooms, t_edges *links)
 	ft_fill_matrix(list, rooms, links);
 	list->start = ft_find_room_by_mark(rooms, START);
 	list->finish = ft_find_room_by_mark(rooms, FINISH);
-	print_matrix(list);
+	// print_matrix(list);
 	return (list);
 }
