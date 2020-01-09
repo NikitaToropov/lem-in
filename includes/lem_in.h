@@ -38,6 +38,11 @@ typedef struct		s_edges
 	struct s_edges	*next;
 }					t_edges;
 
-
+typedef struct		s_match
+{
+	int				number_of_room;
+	char			*name_of_room;
+	struct t_match	*next;
+}					t_match;
 
 #endif
