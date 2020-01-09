@@ -15,18 +15,14 @@ void		print_rooms(t_verts *rooms)
 	}
 }
 
-int		main(void)
+int		main(int c, char v)
 {
-	char		*input;
-	t_matrix	*m_list;
-	t_verts		*rooms;
-	int			num_of_ants;
-	
-	line = NULL;
-	rooms = NULL;
-	num_of_ants = 0;
-	
-	input = ft_read_input(&rooms);
-	print_rooms(rooms);
+	t_graph		*graph;
+
+	if (!(graph = ft_read_input()))
+	{
+		write (1, "Error\n", 6);
+		return(0);
+	}
 	return (0);
 }
