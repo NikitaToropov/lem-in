@@ -29,31 +29,10 @@ void		modify_matrix(t_matrix *matrix, int *new)
 	while ((i + 1) <= new[0])
 	{
 		matrix->mtrx[new[i]][new[i + 1]] = 0;
-		matrix->mtrx[new[i + 1]][new[i]] = -1;
+		matrix->mtrx[new[i + 1]][new[i]] = 1;
 		i++;
 	}
 }
-
-// void		modify_matrix(t_matrix *matrix, t_path *way)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		*arr;
-
-// 	j = 0;
-// 	while (j < way->num_of_paths)
-// 	{
-// 		i = 1;
-// 		arr = way->path[j];
-// 		while ((i + 1) <= arr[0])
-// 		{
-// 			matrix->mtrx[arr[i]][arr[i + 1]] = 0;
-// 			matrix->mtrx[arr[i + 1]][arr[i]] = 1;
-// 			i++;
-// 		}
-// 		j++;
-// 	}
-// }
 
 void	fill_parents(int *parents, t_path *way, t_matrix *matrix)
 {

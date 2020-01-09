@@ -16,10 +16,11 @@ C_FILES = lem_in.c\
 		links.c\
 		rooms.c\
 		matrix.c\
-		dijkstra.c\
 		bhandari.c\
 		swap_tails.c\
 		paths.c\
+		dijkstra_copy.c\
+		# dijkstra.c\
 		# bellman_ford.c\
 		# bellman_ford_wrong.c\
 

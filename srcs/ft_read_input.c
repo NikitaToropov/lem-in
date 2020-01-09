@@ -57,18 +57,19 @@ int		ft_parse_room(t_verts **rooms, char *line, char *marker)
 t_matrix	*ft_read_input(t_verts **rooms)
 {
 	// int			**adj_matrix;
+	char		*input;
 	char		*line;
 	t_edges		*links;
 	char		marker;
 	t_matrix	*m_list;
+	int			num_of_ants;
 
 	marker = NONE;
 	links = NULL;
+	get_next_line(0, &input);
+	num_of_ants = ft_atoi(input)
 	while (get_next_line(0, &line))
 	{
-		write(1, line, ft_strlen(line));
-		write(1, "\n", 1);
-
 		if (line[0] != '#' && 
 		(ft_parse_room(rooms, line, &marker) || ft_parse_links(&links, line)))
 		{
@@ -91,7 +92,7 @@ t_matrix	*ft_read_input(t_verts **rooms)
 			write(1, "PROBLEMS\n", 9);
 			exit(1); // just FISH
 		}
-		free(line);
+		input = ft_strjoin_free(input, line);
 	}
 	print_links(links);
 	m_list = ft_make_matrix(*rooms, links);
