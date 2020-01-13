@@ -7,29 +7,6 @@ int			height(t_verts *node)
 	return (node->height);
 }
 
-int			max(int a, int b)
-{
-	return ((a > b)? a : b);
-}
-
-t_verts		*new_node(int key, char *str)
-{
-	t_verts		*node;
-
-	if (!(node = malloc(sizeof(t_verts))))
-		exit (1);
-	node->key = key;
-	node->height = 1; // new node is initially added at leaf 
-	node->name = str;
-	
-	node->edge = NULL;
-	node->reserve = NULL;
-
-	node->left = NULL;
-	node->right = NULL;
-	return (node);
-}
-
 t_verts		*right_rotate(t_verts *y)
 {
 	t_verts		*x = y->left;
@@ -37,8 +14,8 @@ t_verts		*right_rotate(t_verts *y)
 
 	x->right = y;
 	y->left = T2;
-	y->height = max(height(y->left), height(y->right))+1;
-	x->height = max(height(x->left), height(x->right))+1;
+	y->height = ft_max(height(y->left), height(y->right))+1;
+	x->height = ft_max(height(x->left), height(x->right))+1;
 	return (x);
 }
 
@@ -49,8 +26,8 @@ t_verts		*left_rotate(t_verts *x)
 
 	y->left = x;
 	x->right = T2;
-	x->height = max(height(x->left), height(x->right))+1;
-	y->height = max(height(y->left), height(y->right))+1;
+	x->height = ft_max(height(x->left), height(x->right))+1;
+	y->height = ft_max(height(y->left), height(y->right))+1;
 	return (y);
 }
 
@@ -66,14 +43,14 @@ t_verts		*insert(t_verts *node, int key, char *str)
 	int		balance;
 
 	if (node == NULL)
-		return(new_node(key, str));
+		return(new_vertex(key, str));
 	if (key < node->key)
 		node->left = insert(node->left, key, str);
 	else if (key > node->key)
 		node->right = insert(node->right, key, str);
 	else
 		return (node);
-	node->height = 1 + max(height(node->left), height(node->right));
+	node->height = 1 + ft_max(height(node->left), height(node->right));
 	balance = get_balance(node);
 	if (balance > 1 && key < node->left->key)
 		return (right_rotate(node));
@@ -92,15 +69,15 @@ t_verts		*insert(t_verts *node, int key, char *str)
 	return (node);
 }
 
-void 		pre_order(t_verts *root)
-{
-	if(root != NULL)
-	{
-		printf("%d  - %s\n", root->key, root->name);
-		pre_order(root->left);
-		pre_order(root->right);
-	}
-}
+// void 		pre_order(t_verts *root)
+// {
+// 	if(root != NULL)	
+// 	{
+// 		printf("%d  - %s\n", root->key, root->name);
+// 		pre_order(root->left);
+// 		pre_order(root->right);
+// 	}
+// }
 
 // /* Drier program to test above function*/
 // // int main() 

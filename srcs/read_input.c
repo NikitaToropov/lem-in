@@ -1,34 +1,4 @@
 #include <lem_in.h>
-void	print_t_match(t_match *rooms)
-{
-	t_match		*tmp;
-
-	printf("\n___________PRINT T_MATCH GO___________\n");
-	tmp = rooms;
-	while (tmp)
-	{
-		
-		printf("name room %s|\n", tmp->name_of_room);
-		tmp = tmp->next;
-	}
-	printf("___________PRINT T_MATCH STOP_________\n");
-}
-
-int		num_by_name(t_match *rooms, char *name)
-{
-	t_match		*tmp;
-
-	// printf("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n");
-	tmp = rooms;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->name_of_room, name))
-			return (tmp->number_of_room);
-		tmp = tmp->next;
-	}
-
-	return (-1);
-}
 
 int			is_it_a_room(t_graph *graph, char *line, char marker, int num_room)
 {
@@ -37,17 +7,9 @@ int			is_it_a_room(t_graph *graph, char *line, char marker, int num_room)
 	int		x;
 	int		y;
 
-		// printf("marker = %i\n", marker);
-		// printf("graph->start = %i\n", graph->start);
-		// printf("graph->finish = %i\n", graph->finish);
 	if ((marker == START && graph->start >= 0) ||
 	(marker == FINISH && graph->finish >= 0))
-	{
-		// printf("PROBLEM\n");
-		// printf("marker = %i\n", marker);
-
 		return (0);
-	}
 	
 	x_in_str = NULL;
 	y_in_str = NULL;
@@ -79,34 +41,14 @@ int			is_it_a_link(char *line, t_match *rooms)
 	*second = '\0';
 	second++;
 	first = line;
-	if (num_by_name(rooms, first) < 0 || num_by_name(rooms, second) < 0)
+	if (number_and_name_match(rooms, first) < 0 ||
+	number_and_name_match(rooms, second) < 0)
 	{
 		second[-1] = '-';
 		return (0);
 	}
 	second[-1] = '-';
 	return (1);
-}
-
-void		push_back_t_match(t_match **room, char *name, int num_room)
-{
-	t_match		*new;
-	t_match		*tmp;
-
-	if (!(new = malloc(sizeof(t_match))))
-		exit(1);
-	new->name_of_room = name;
-	new->number_of_room = num_room;
-	new->next = NULL;
-	if (*room == NULL)
-		*room = new;
-	else
-	{
-		tmp = *room;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
 }
 
 void		put_the_room(t_graph *graph, char *line, int num_room, t_match **room)
@@ -122,7 +64,35 @@ void		put_the_room(t_graph *graph, char *line, int num_room, t_match **room)
 	push_back_t_match(room, name, num_room);
 }
 
-t_graph		*ft_read_input(void)
+void		put_the_link(t_graph *graph, char *line, t_match *rooms)
+{
+	char		*first;
+	char		*second;
+	int			first_num;
+	int			second_num;
+	t_verts		*first_vert;
+	t_verts		*second_vert;
+
+	first = line;
+	second = ft_strchr(first, '-');
+	*second = '\0';
+	second++;
+	first_num = number_and_name_match(rooms, first);
+	second_num = number_and_name_match(rooms, second);
+	if (!(first_vert = find_vertex(graph->rooms, first_num)) ||
+	!(second_vert = find_vertex(graph->rooms, second_num)))
+	{
+		printf("first = %i\n", first_num);
+		printf("second = %i\n", second_num);
+		write(1, "__________SHIIIIT!!!!________\n", 30);
+		exit(1);
+	}
+	push_edge_back(&first_vert->edge, second_vert);
+	push_edge_back(&second_vert->edge, first_vert);
+	second[-1] = '-';
+}
+
+t_graph		*read_input(void)
 {
 	t_graph		*graph;
 	t_match		*rooms;
@@ -134,45 +104,38 @@ t_graph		*ft_read_input(void)
 		return (NULL);
 	num_room = 0;
 	rooms = NULL;
-	// printf("num_of_antsn = %i\n", graph->num_of_ants);
 	marker = 0;
-	// printf("%s\n", graph->input);
-
 	while (get_next_line(0, &line))
 	{
+		push_line_back(graph->input, line);
 		if (!ft_strcmp(line, "##start"))
-		{
-
 			marker = START;
-		}
 		else if (!ft_strcmp(line, "##end"))
 			marker = FINISH;
 		else if (line[0] == '#' && line[1] != '#')
 			marker = NONE;
-		else if (is_it_a_room(graph, line, marker, num_room) && num_room >= graph->length)
+		else if (is_it_a_room(graph, line, marker, num_room) && num_room >= graph->latest)
 		{
 			marker = 0;
 			put_the_room(graph, line, num_room, &rooms);
-			graph->length = num_room + 1;
+			graph->latest = num_room + 1;
 			num_room += 2;
 		}
 		else if (is_it_a_link(line, rooms) && !marker)
 		{
 			num_room = 0;
-			// put_the_link(graph, line, num_room, rooms);
+			put_the_link(graph, line, rooms);
 		}
 		else
 		{
 				write(1, "---------------------PROBLEMS------------------\n", 48);
-				// free_graph(graph);
-				free(line);
+				while (get_next_line(0, &line))
+					free(line);
+				free_t_match(&rooms);
+				free_graph(graph);
 				return (NULL);
 		}
-		// graph->input = ft_strjoin_free(graph->input, ft_strdup("\n"));
-		// graph->input = ft_strjoin_free(graph->input, line);
 	}
-		// printf("%s\n", graph->input);
-	// pre_order(graph->rooms);
-
+	free_t_match(&rooms);
 	return (graph);
 }

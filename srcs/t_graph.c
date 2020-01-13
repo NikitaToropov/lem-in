@@ -1,20 +1,30 @@
 #include <lem_in.h>
 
+void			free_graph(t_graph *graph)
+{
+	free_vertex(&(graph->rooms));
+	free_input_struct(&(graph->input));
+	free(graph);
+}
+
 void			print_graph(t_graph *graph)
 {
-	printf("len    = %i\n", graph->length);
+	printf("\n||||||||||||||||||||||||||| START GRAPH PRINTING |||||||||||||||||||||||||||\n");
+	tree_traversal(graph->rooms, *print_vertex);
+	printf("\nlen    = %i\n", graph->latest);
 	printf("start  = %i\n", graph->start);
 	printf("finish = %i\n", graph->finish);
-	printf("ants   = %i\n", graph->num_of_ants);
-	printf("%s\n", graph->input);
-	pre_order(graph->rooms);
+	printf("ants   = %i\n\n\n", graph->num_of_ants);
+	// print_input_struct(graph->input);
+	printf("||||||||||||||||||||||||||| END GRAPH PRINTING |||||||||||||||||||||||||||\n\n\n\n");
 }
 
 t_graph			*init_graph(char *line)
 {
 	t_graph		*graph;
 
-	if (!(graph = malloc(sizeof(t_graph))))
+	if (!(graph = malloc(sizeof(t_graph))) ||
+	!(graph->input = malloc(sizeof(t_input))))
 		exit(1);
 	if ((graph->num_of_ants = ft_atoi(line)) <= 0)
 	{
@@ -23,13 +33,9 @@ t_graph			*init_graph(char *line)
 	}
 	graph->start = -1;
 	graph->finish = -1;
-	graph->length = 0;
-	graph->input = NULL;
+	graph->latest = -1;
 	graph->rooms = NULL;
+	graph->input->line = line;
+	graph->input->next = NULL;
 	return (graph);
 }
-
-// void			free_graph(t_graph *s_graph)
-// {
-// 	if
-// }
