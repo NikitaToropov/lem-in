@@ -6,25 +6,27 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:15 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/13 22:20:36 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/13 22:35:50 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
-void			free_graph(t_graph *graph)
+void			free_graph(t_graph **graph)
 {
-	free_vertex(&(graph->rooms));
-	free_input_struct(&(graph->input));
-	free(graph);
-	// free_vertex(&(*graph)->rooms);
-	// free_input_struct(&(*graph)->input);
-	// free(*graph);
-	// *graph = NULL;
+	if (graph && *graph)
+	{
+		free_vertex(&(*graph)->rooms);
+		free_input_struct(&(*graph)->input);
+		free(*graph);
+		*graph = NULL;
+	}
 }
 
 void			print_graph(t_graph *graph)
 {
+	if (!graph)
+		return ;
 	printf("\n||||||||||||||||||||||||||| START GRAPH PRINTING |||||||||||||||||||||||||||\n");
 	tree_traversal(graph->rooms, *print_vertex);
 	printf("\nlen    = %i\n", graph->length);

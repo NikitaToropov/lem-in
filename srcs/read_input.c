@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:03:33 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/13 22:26:26 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/13 22:42:21 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,11 @@ t_graph	*read_input(void)
 	char		marker;
 
 	if (get_next_line(0, &line) <= 0 || !(graph = init_graph(line)))
-	{
-		write(1, "there\n", 6);
 		return (NULL);
-	}
 	num_room = 0;
 	rooms = NULL;
 	marker = 0;
-	while (get_next_line(0, &line) && graph)
+	while (graph && get_next_line(0, &line))
 	{
 		push_line_back(graph->input, line);
 		if (!ft_strcmp(line, "##start"))
@@ -125,21 +122,10 @@ t_graph	*read_input(void)
 		else if (is_it_a_link(line, rooms) && !marker)
 			put_the_link(graph, line, rooms, num_room);
 		else
-		{
-			write(1, "---------------------PROBLEMS------------------\n", 48);
-			while (get_next_line(0, &line))
-				free(line);
-			free_t_match(&rooms);
-			free_graph(graph);
-			// while (get_next_line(0, &line) || line)
-			// 	free(line);
-			// write(1, "---------------------PROBLEMS------------------\n", 48);
-			// // get_next_line(0, NULL);
-			// free_graph(&graph);
-		}
+			free_graph(&graph);
 	}
-	// while (get_next_line(0, &line))
-	// 	free(line);
+	while (get_next_line(0, &line))
+		free(line);
 	free_t_match(&rooms);
 	return (graph);
 }

@@ -71,7 +71,7 @@ t_verts		*insert(t_verts *node, int key, char *str);
 
 // t_graph:
 t_graph		*init_graph(char *line);
-void		free_graph(t_graph *graph);
+void		free_graph(t_graph **graph);
 void		print_graph(t_graph *graph);
 
 

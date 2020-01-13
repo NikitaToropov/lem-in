@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:44 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/13 22:19:23 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/13 22:36:13 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int		main(void)
 		return (0);
 	}
 	print_graph(graph);
-	free_graph(graph);
+	free_graph(&graph);
 	return (0);
 }
