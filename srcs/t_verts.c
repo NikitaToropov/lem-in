@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_verts.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/13 20:59:40 by cmissy            #+#    #+#             */
+/*   Updated: 2020/01/13 20:59:40 by cmissy           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <lem_in.h>
 
 void		print_vertex(t_verts *vert)
 {
 	t_edges		*tmp_edge;
 
-	printf("\n================ROOM #%i======================\n",  vert->key);
+	printf("\n================ROOM #%i======================\n", vert->key);
 	printf("name  =              %s\n", vert->name);
 	printf("visit =              %i\n", (int)vert->visit);
 	if (vert->parent)
@@ -59,18 +71,14 @@ t_verts		*new_vertex(int key, char *str)
 	t_verts		*node;
 
 	if (!(node = malloc(sizeof(t_verts))))
-		exit (1);
+		exit(1);
 	node->key = key;
 	node->height = 1;
-
 	node->name = str;
-
 	node->visit = 0;
 	node->parent = NULL;
-
 	node->edge = NULL;
 	node->reserve = NULL;
-
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
@@ -81,7 +89,7 @@ t_verts		*find_vertex(t_verts *root, int num)
 	t_verts		*vertex;
 
 	vertex = root;
-	while(vertex && vertex->key!= num)
+	while (vertex && vertex->key != num)
 	{
 		if (vertex->key < num)
 			vertex = vertex->right;
@@ -93,7 +101,7 @@ t_verts		*find_vertex(t_verts *root, int num)
 
 void		tree_traversal(t_verts *root, void f(t_verts *vertex))
 {
-	if(root != NULL)
+	if (root != NULL)
 	{
 		tree_traversal(root->left, f);
 		tree_traversal(root->right, f);

@@ -15,7 +15,7 @@ typedef struct		s_graph
 {
 	int				start;
 	int				finish;
-	int				latest;
+	int				length;
 	int				num_of_ants;
 	struct s_verts	*rooms;
 	struct s_input	*input;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_input.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/13 20:59:36 by cmissy            #+#    #+#             */
+/*   Updated: 2020/01/13 20:59:37 by cmissy           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <lem_in.h>
 
 void		print_input_struct(t_input *first_line)
@@ -22,8 +34,8 @@ void		free_input_struct(t_input **first_line)
 	while (input_list)
 	{
 		tmp = input_list->next;
-		free (input_list->line);
-		free (input_list);
+		free(input_list->line);
+		free(input_list);
 		input_list = tmp;
 	}
 	*first_line = NULL;

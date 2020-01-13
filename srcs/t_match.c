@@ -1,16 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_match.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/13 20:59:31 by cmissy            #+#    #+#             */
+/*   Updated: 2020/01/13 20:59:31 by cmissy           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <lem_in.h>
 
-void	free_t_match(t_match **rooms)
+void		free_t_match(t_match **rooms)
 {
 	if (!*rooms)
 		return ;
 	if ((*rooms)->next)
 		free_t_match(&((*rooms)->next));
-	free (*rooms);
+	free(*rooms);
 	*rooms = NULL;
 }
 
-int		number_and_name_match(t_match *rooms, char *name)
+int			number_and_name_match(t_match *rooms, char *name)
 {
 	t_match		*tmp;
 
