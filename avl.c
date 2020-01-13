@@ -1,21 +1,23 @@
 // C program to insert a node in AVL tree 
-#include<stdio.h> 
-#include<stdlib.h> 
+#include <lem_in.h>
+
+// #include<stdio.h> 
+// #include<stdlib.h> 
 
 // An AVL tree node 
-struct Node 
-{ 
-	int key; 
-	struct Node *left; 
-	struct Node *right; 
-	int height; 
-}; 
+// t_verts 
+// { 
+// 	int key; 
+// 	t_verts *left; 
+// 	t_verts *right; 
+// 	int height; 
+// }; 
 
 // A utility function to get maximum of two integers 
 int max(int a, int b); 
 
 // A utility function to get the height of the tree 
-int height(struct Node *N) 
+int height(t_verts *N) 
 { 
 	if (N == NULL) 
 		return 0; 
@@ -30,10 +32,10 @@ int max(int a, int b)
 
 /* Helper function that allocates a new node with the given key and 
 	NULL left and right pointers. */
-struct Node* newNode(int key) 
+t_verts* newNode(int key) 
 { 
-	struct Node* node = (struct Node*) 
-						malloc(sizeof(struct Node)); 
+	t_verts* node = (t_verts*) 
+						malloc(sizeof(t_verts)); 
 	node->key = key; 
 	node->left = NULL; 
 	node->right = NULL; 
@@ -43,10 +45,10 @@ struct Node* newNode(int key)
 
 // A utility function to right rotate subtree rooted with y 
 // See the diagram given above. 
-struct Node *rightRotate(struct Node *y) 
+t_verts *rightRotate(t_verts *y) 
 { 
-	struct Node *x = y->left; 
-	struct Node *T2 = x->right; 
+	t_verts *x = y->left; 
+	t_verts *T2 = x->right; 
 
 	// Perform rotation 
 	x->right = y; 
@@ -62,10 +64,10 @@ struct Node *rightRotate(struct Node *y)
 
 // A utility function to left rotate subtree rooted with x 
 // See the diagram given above. 
-struct Node *leftRotate(struct Node *x) 
+t_verts *leftRotate(t_verts *x) 
 { 
-	struct Node *y = x->right; 
-	struct Node *T2 = y->left; 
+	t_verts *y = x->right; 
+	t_verts *T2 = y->left; 
 
 	// Perform rotation 
 	y->left = x; 
@@ -80,7 +82,7 @@ struct Node *leftRotate(struct Node *x)
 } 
 
 // Get Balance factor of node N 
-int getBalance(struct Node *N) 
+int getBalance(t_verts *N) 
 { 
 	if (N == NULL) 
 		return 0; 
@@ -89,11 +91,14 @@ int getBalance(struct Node *N)
 
 // Recursive function to insert a key in the subtree rooted 
 // with node and returns the new root of the subtree. 
-struct Node* insert(struct Node* node, int key) 
+t_verts		*insert(t_verts* node, int key) 
 { 
 	/* 1. Perform the normal BST insertion */
-	if (node == NULL) 
+	if (node == NULL)
+	{
+		printf("FIRST TIME\n");
 		return(newNode(key)); 
+	}
 
 	if (key < node->key) 
 		node->left = insert(node->left, key); 
@@ -143,7 +148,7 @@ struct Node* insert(struct Node* node, int key)
 // A utility function to print preorder traversal 
 // of the tree. 
 // The function also prints height of every node 
-void preOrder(struct Node *root) 
+void preOrder(t_verts *root) 
 { 
 	if(root != NULL) 
 	{ 
@@ -153,30 +158,24 @@ void preOrder(struct Node *root)
 	} 
 } 
 
-/* Drier program to test above function*/
-int main() 
-{ 
-struct Node *root = NULL; 
+// /* Drier program to test above function*/
+// int main() 
+// { 
+// t_verts *root = NULL; 
 
-/* Constructing tree given in the above figure */
-root = insert(root, 10); 
-root = insert(root, 20); 
-root = insert(root, 30); 
-root = insert(root, 40); 
-root = insert(root, 50); 
-root = insert(root, 25); 
+// /* Constructing tree given in the above figure */
+// root = insert(root, 10); 
+// root = insert(root, 20); 
+// root = insert(root, 30); 
+// root = insert(root, 40); 
+// root = insert(root, 50); 
+// root = insert(root, 25); 
 
-/* The constructed AVL Tree would be 
-			30 
-		/ \ 
-		20 40 
-		/ \	 \ 
-	10 25 50 
-*/
 
-printf("Preorder traversal of the constructed AVL"
-		" tree is \n"); 
-preOrder(root); 
 
-return 0; 
-} 
+// printf("Preorder traversal of the constructed AVL"
+// 		" tree is \n"); 
+// preOrder(root); 
+
+// return 0; 
+// } 

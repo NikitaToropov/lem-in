@@ -12,17 +12,9 @@ DIR_O = objs
 
 # files
 C_FILES = lem_in.c\
-		ft_read_input.c\
-		links.c\
-		rooms.c\
-		matrix.c\
-		bhandari.c\
-		swap_tails.c\
-		paths.c\
-		dijkstra_copy.c\
-		# dijkstra.c\
-		# bellman_ford.c\
-		# bellman_ford_wrong.c\
+		avl.c\
+		t_graph.c\
+		new_read_input.c\
 
 SRCS = $(addprefix $(DIR_S)/,$(C_FILES))
 OBJS = $(addprefix $(DIR_O)/,$(C_FILES:.c=.o))
