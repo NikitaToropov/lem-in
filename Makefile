@@ -15,7 +15,6 @@ C_FILES = lem_in.c\
 		avl.c\
 		read_input.c\
 		dijkstra.c\
-		suurballe.c\
 		t_graph.c\
 		t_input.c\
 		t_verts.c\

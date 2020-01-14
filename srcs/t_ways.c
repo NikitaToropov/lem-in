@@ -1,5 +1,27 @@
 #include <lem_in.h>
 
+void		print_ways_struct(t_ways *way_struct)
+{
+	int			i;
+	t_edges		*tmp;
+
+	i = 0;
+	printf("\n****||****||****|| PRINT WAY STRUCT ||****||****||****||***\n");
+	printf("num_of_ways = %i\n", way_struct->num_of_ways);
+	while (i < way_struct->num_of_ways)
+	{
+		printf("edge #%i    = ", i);
+		tmp = way_struct->way[i];
+		while (tmp)
+		{
+			printf(" %i,", tmp->to->key);
+			tmp = tmp->next;
+		}
+		printf("\n");
+	}
+	printf("*****||****||****||****||****||****||****||****||****||****\n");
+}
+
 void		free_ways_struct(t_ways **old_struct)
 {
 	int		i;
@@ -19,6 +41,7 @@ void		copy_ways_by_the_edges(t_ways *old, t_ways *new)
 {
 	int		i;
 
+	i = 0;
 	while (i < old->num_of_ways)
 	{
 		new->way[i] = copy_edges_struct(old->way[i]);

@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:00:44 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 15:22:06 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/14 19:34:55 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_edges		*copy_edges_struct(t_edges *srcs)
 	tmp = srcs;
 	while (tmp)
 	{
-		push_edge_back(&new, tmp);
+		push_edge_back(&new, tmp->to);
 		tmp = tmp->next;
 	}
 	return (new);

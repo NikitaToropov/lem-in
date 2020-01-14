@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 16:34:57 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/14 19:30:38 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_edges		*restore_shortest_path(t_graph *graph)
 		push_edge_back(&path, vert);
 		vert = vert->parent;
 	}
+	if (vert)
+		push_edge_back(&path, vert);
 	printf("\n*********************PRINT SHORTEST PATH*********************\n");
 	tmp = path;
 	while (tmp)
