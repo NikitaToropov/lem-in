@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:00:44 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 14:06:15 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/14 15:22:06 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ void		free_edges_struct(t_edges **first_edge)
 	if ((*first_edge)->next)
 		free_edges_struct(&((*first_edge)->next));
 	free_edge(first_edge);
+}
+
+t_edges		*copy_edges_struct(t_edges *srcs)
+{
+	t_edges		*new;
+	t_edges		*tmp;
+
+	new = NULL;
+	tmp = srcs;
+	while (tmp)
+	{
+		push_edge_back(&new, tmp);
+		tmp = tmp->next;
+	}
+	return (new);
 }
 
 void		push_edge_back(t_edges **first_edge, t_verts *vertex)
