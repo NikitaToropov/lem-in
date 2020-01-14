@@ -69,16 +69,18 @@ typedef struct		s_match
 
 
 
-void		dijkstra(t_graph *graph);
-
-
 t_graph		*read_input(void);
-
 t_verts		*insert(t_verts *node, int key, char *str);
+t_edges		*dijkstra(t_graph *graph);
+
+
+
 /* t_graph: */
 t_graph		*init_graph(char *line);
 void		free_graph(t_graph **graph);
 void		print_graph(t_graph *graph);
+
+
 /* t_verts: */
 t_verts		*new_vertex(int key, char *str);
 t_verts		*find_vertex(t_verts *root, int num);
@@ -86,15 +88,27 @@ void		free_vertex(t_verts **node);
 void		tree_traversal(t_verts *root, void f(t_verts *vertex));
 void		print_vertex(t_verts *vert);
 void		restore_vertex(t_verts *vert);
+
+
 /* t_edges: */
 void		push_edge_back(t_edges **first_edge, t_verts *vertex);
 t_edges		*copy_edges_struct(t_edges *srcs);
 void		free_edge(t_edges **edge);
 void		free_edges_struct(t_edges **first_edge);
+
+
 /* t_input: */
 void		push_line_back(t_input *first_line, char *new_line);
 void		free_input_struct(t_input **first_line);
 void		print_input_struct(t_input *first_line);
+
+
+/* t_ways: */
+t_ways		*new_ways_struct(t_edges *new, t_ways *old_struct, int number);
+void		copy_ways_by_the_edges(t_ways *old, t_ways *new);
+void		free_ways_struct(t_ways **old_struct);	
+
+
 /* t_match: */
 void		push_back_t_match(t_match **room, char *name, int num_room);
 int			number_and_name_match(t_match *rooms, char *name);

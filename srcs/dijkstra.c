@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 14:29:52 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/14 16:34:57 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		relaxation_by_edges(t_verts *from)
 	}
 }
 
-void		dijkstra(t_graph *graph)
+t_edges		*dijkstra(t_graph *graph)
 {
 	t_verts		*vertex;
 
@@ -79,5 +79,5 @@ void		dijkstra(t_graph *graph)
 		relaxation_by_edges(vertex);
 		vertex = next_vert(graph->rooms);
 	}
-	restore_shortest_path(graph);
+	return (restore_shortest_path(graph));
 }

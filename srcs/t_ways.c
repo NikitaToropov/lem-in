@@ -36,5 +36,7 @@ t_ways		*new_ways_struct(t_edges *new, t_ways *old_struct, int number)
 	new_struct->num_of_ways = number;
 	new_struct->way[number - 1] = new;
 	if (number > 1)
-		copy_ways_by_the_edges(old_struct, new_struct)
+		copy_ways_by_the_edges(old_struct, new_struct);
+	// upgrade_ways(new_struct, graph);
+	return (new_struct);
 }

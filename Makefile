@@ -15,11 +15,13 @@ C_FILES = lem_in.c\
 		avl.c\
 		read_input.c\
 		dijkstra.c\
+		suurballe.c\
 		t_graph.c\
 		t_input.c\
 		t_verts.c\
 		t_edges.c\
 		t_match.c\
+		t_ways.c\
 
 SRCS = $(addprefix $(DIR_S)/,$(C_FILES))
 OBJS = $(addprefix $(DIR_O)/,$(C_FILES:.c=.o))
