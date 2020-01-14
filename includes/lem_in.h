@@ -81,6 +81,7 @@ t_verts		*find_vertex(t_verts *root, int num);
 void		free_vertex(t_verts **node);
 void		tree_traversal(t_verts *root, void f(t_verts *vertex));
 void		print_vertex(t_verts *vert);
+void		restore_vertex(t_verts *vert);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:44 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 12:29:08 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/14 14:25:30 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ int		main(void)
 	}
 	print_graph(graph);
 	dijkstra(graph);
+	print_graph(graph);
+	tree_traversal(graph->rooms, *restore_vertex);
+	print_graph(graph);
 	free_graph(&graph);
 	return (0);
 }

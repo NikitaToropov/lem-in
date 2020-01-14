@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:40 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 11:14:48 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/14 14:29:18 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void		print_vertex(t_verts *vert)
 	t_edges		*tmp_edge;
 
 	printf("\n================ROOM #%i======================\n", vert->key);
-	printf("name  =              %s\n", vert->name);
-	printf("visit =              %i\n", (int)vert->visit);
-	printf("dist  =              %i\n", (int)vert->distance);
+	printf("name    =            %s\n\n", vert->name);
+	printf("visit   =            %i\n", (int)vert->visit);
+	printf("dist    =            %i\n", (int)vert->distance);
 	if (vert->parent)
-		printf("paret num = %i\n", vert->parent->key);
+		printf("PARENTS ============ %i\n\n", vert->parent->key);
 	else
-		printf("paret num =          NO PARENT\n");
+		printf("PARENTS =            NO PARENT\n\n");
 	if (vert->edge)
 	{
 		tmp_edge = vert->edge;
@@ -51,6 +51,13 @@ void		print_vertex(t_verts *vert)
 	else
 		printf("RSRVD edges to:      NOBODY\n");
 	printf("==============================================\n");
+}
+
+void		restore_vertex(t_verts *vert)
+{
+	vert->visit = 0;
+	vert->distance = MAXIMUM;
+	vert->parent = NULL;
 }
 
 void		free_vertex(t_verts **node)

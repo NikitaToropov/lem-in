@@ -1,18 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dijkstra.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
+/*   Updated: 2020/01/14 14:29:52 by cmissy           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <lem_in.h>
 
-void		restore_shortest_path(t_graph *graph)
+t_edges		*restore_shortest_path(t_graph *graph)
 {
+	t_edges		*path;
+	t_edges		*tmp;
 	t_verts		*vert;
 
-	printf("\n*********************PRINT SHORTEST PATH*********************\n");
+	path = NULL;
 	vert = find_vertex(graph->rooms, graph->finish);
-	while (vert && vert->key != graph->start)
+	while (vert && vert->parent && vert->key != graph->start)
 	{
-		printf(" %s,", vert->name);
+		push_edge_back(&path, vert);
 		vert = vert->parent;
 	}
-	printf(" %s,", vert->name);
-	printf("\n*********************PRINT SHORTEST PATH*********************\n\n");
+	printf("\n*********************PRINT SHORTEST PATH*********************\n");
+	tmp = path;
+	while (tmp)
+	{
+		printf(" %s,", tmp->to->name);
+		tmp = tmp->next;
+	}
+	printf("\n*************************************************************\n\n");
+	return (path);
 }
 
 t_verts		*next_vert(t_verts *root)
@@ -54,17 +75,9 @@ void		dijkstra(t_graph *graph)
 	vertex->distance = 0;
 	while (vertex)
 	{
-		printf("YO\n");
-		printf("vert_num = %i\n", vertex->key);
 		vertex->visit = 1;
 		relaxation_by_edges(vertex);
 		vertex = next_vert(graph->rooms);
-		printf("NO\n");
-		// vertex = find_vertex(graph->rooms, 0);
-		// j = 1;
-		// while (j < graph->length && !vertex->visit &&
-		// vertex->distance < MAXIMUM)
-		// 	vertex = find_vertex(graph->rooms, j++);
 	}
 	restore_shortest_path(graph);
 }
