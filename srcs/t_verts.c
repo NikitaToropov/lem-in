@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:40 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/13 20:59:40 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/14 11:14:48 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		print_vertex(t_verts *vert)
 	printf("\n================ROOM #%i======================\n", vert->key);
 	printf("name  =              %s\n", vert->name);
 	printf("visit =              %i\n", (int)vert->visit);
+	printf("dist  =              %i\n", (int)vert->distance);
 	if (vert->parent)
 		printf("paret num = %i\n", vert->parent->key);
 	else
@@ -76,6 +77,7 @@ t_verts		*new_vertex(int key, char *str)
 	node->height = 1;
 	node->name = str;
 	node->visit = 0;
+	node->distance = MAXIMUM;
 	node->parent = NULL;
 	node->edge = NULL;
 	node->reserve = NULL;

@@ -15,13 +15,7 @@ int		*make_arr(t_matrix *matrix, int *p)
 	{
 		j = p[j];
 		len++;
-<<<<<<< HEAD
 		printf("THETRTETRT     j = %i\n", j);
-=======
-		// printf("THETsRTETRT     j = %i\n", j);
-		// if (j == 546)
-			// exit(1);
->>>>>>> matrix
 	}
 	if (!(arr = malloc(sizeof(int) * (len + 1))))
 		return (NULL);
@@ -58,21 +52,10 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	}
 	d[matrix->start] = 0;
 	j = matrix->start;
-<<<<<<< HEAD
 	while (j < matrix->len)
-=======
-	// while (j < matrix->len)
-	while (j != matrix->finish)
->>>>>>> matrix
 	{
 		u[j] = 1;
-<<<<<<< HEAD
 		if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1)
-=======
-		i = children[j];
-		// if (i != -1 && p[j] != -1 && children[p[j]] == -1)
-		if (i != -1 && p[j] != -1 && (children[p[j]] == -1 || (p[p[j]] != -1 && children[p[p[j]]] != -1)))
->>>>>>> matrix
 		{
 			p[children[j]] = j;
 			d[children[j]] = matrix->mtrx[j][children[j]] + d[j];
@@ -82,7 +65,6 @@ int		*dijkstra(t_matrix *matrix, int *children)
 			i = 0;
 			while (i < matrix->len)
 			{
-<<<<<<< HEAD
 				// if (children[j] != -1 && p[j] != -1 && children[p[j]] == -1)
 				// {
 				// 	p[children[j]] = j;
@@ -90,12 +72,6 @@ int		*dijkstra(t_matrix *matrix, int *children)
 				// }
 				if (!u[i] && matrix->mtrx[j][i] && d[i] > matrix->mtrx[j][i] + d[j] &&
 				(children[j] == -1 || (p[j] != -1 && p[p[j]] != -1 && children[p[p[j]]] == p[j])))
-=======
-				if (matrix->mtrx[j][i] && d[i] > matrix->mtrx[j][i] + d[j]
-				&& (u[i] == 0 || children[p[i]] == i))
-				// && (p[i] == -1 || children[p[i]] == j))
-				// && (children[i] == -1 || (p[i] != -1 && children[p[i]] != -1)))
->>>>>>> matrix
 				{
 					d[i] = matrix->mtrx[j][i] + d[j];
 					p[i] = j;
@@ -116,34 +92,5 @@ int		*dijkstra(t_matrix *matrix, int *children)
 	}
 	if (d[matrix->finish] == INT_MAX)
 		return (NULL);
-<<<<<<< HEAD
-=======
-
-
-	// i = 0;
-	// while (i < matrix->len)
-	// 	printf(" %d", p[i++]);
-	// printf("\n");
-
-	// i = 0;
-	// while (i < matrix->len)
-	// {
-	// 	if (children[i] == 911)
-	// 		break ;
-	// 	i++;
-	// }
-	// printf("\n\np[911] = %i\n", p[911]);
-	// printf("p[p[911]] = %i\n", p[p[911]]);
-	// printf("p[%i] = %i\n", i, p[i]);
-
-
-	// printf("\n\nmatrix 1163 x 911 = %i\n", matrix->mtrx[1163][911]);
-	// printf("\n\nmatrix 1163 x 911 = %i\n", matrix->mtrx[1163][911]);
-	// printf("xmatrix 911 x 1163 = %i\n", matrix->mtrx[911][1163]);
-	// printf("children[911] = %i\n", children[911]);
-	// printf("p[children[911]] = %i\n", p[children[911]]);
-	// printf("p[911] = %i\n", p[911]);
-	// printf("p[1163] = %i\n", p[1163]);
->>>>>>> matrix
 	return (make_arr(matrix, p));
 }

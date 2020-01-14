@@ -8,8 +8,7 @@
 # define NONE		0
 # define START		1
 # define FINISH		2
-// # define INT_MAX	2147483647
-
+# define MAXIMUM	2000000000
 
 typedef struct		s_graph
 {
@@ -35,6 +34,7 @@ typedef struct		s_verts
 	char			*name;
 
 	char			visit; // yes or no
+	int				distance; // shortea distance
 	struct s_verts	*parent; // for restore shortest path
 
 	struct s_edges	*edge;
@@ -61,7 +61,7 @@ typedef struct		s_match
 
 
 
-
+void		dijkstra(t_graph *graph);
 
 
 t_graph		*read_input(void);
