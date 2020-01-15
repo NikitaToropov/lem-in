@@ -18,6 +18,7 @@ void		print_ways_struct(t_ways *way_struct)
 			tmp = tmp->next;
 		}
 		printf("\n");
+		i++;
 	}
 	printf("*****||****||****||****||****||****||****||****||****||****\n");
 }
@@ -61,5 +62,6 @@ t_ways		*new_ways_struct(t_edges *new, t_ways *old_struct, int number)
 	if (number > 1)
 		copy_ways_by_the_edges(old_struct, new_struct);
 	// upgrade_ways(new_struct, graph);
+	print_ways_struct(new_struct);
 	return (new_struct);
 }

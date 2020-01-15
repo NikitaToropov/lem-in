@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 19:30:38 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/15 16:01:26 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ t_edges		*restore_shortest_path(t_graph *graph)
 	vert = find_vertex(graph->rooms, graph->finish);
 	while (vert && vert->parent && vert->key != graph->start)
 	{
-		push_edge_back(&path, vert);
+		push_edge_front(&path, new_edge(vert));
 		vert = vert->parent;
 	}
 	if (vert)
-		push_edge_back(&path, vert);
+		push_edge_front(&path, new_edge(vert));
 	printf("\n*********************PRINT SHORTEST PATH*********************\n");
 	tmp = path;
 	while (tmp)

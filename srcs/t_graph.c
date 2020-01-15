@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:15 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 13:59:24 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/15 18:28:42 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			print_graph(t_graph *graph)
 	printf("start  = %i\n", graph->start);
 	printf("finish = %i\n", graph->finish);
 	printf("ants   = %i\n\n\n", graph->num_of_ants);
-	// print_input_struct(graph->input);
+	print_input_struct(graph->input);
 	printf("||||||||||||||||||||||||||| END GRAPH PRINTING |||||||||||||||||||||||||||\n\n\n\n");
 }
 

@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:03:33 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/13 22:42:21 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/15 17:02:06 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,17 @@ void	put_the_room(t_graph *graph, char *line, int *num_room, t_match **room)
 {
 	char	*name;
 	char	*tmp;
+	t_verts *real;
+	t_verts *psevdo;
 
 	name = ft_strdup(line);
 	tmp = ft_strchr(name, ' ');
 	*tmp = '\0';
 	graph->rooms = insert(graph->rooms, *num_room, name);
 	graph->rooms = insert(graph->rooms, *num_room + 1, ft_strdup("psevdo"));
+	psevdo = find_vertex(graph->rooms, *num_room + 1);
+	real = find_vertex(graph->rooms, *num_room);
+	push_edge_front(&psevdo->edge, new_edge(real));
 	push_back_t_match(room, name, *num_room);
 	*num_room += 2;
 }
@@ -91,8 +96,8 @@ void	put_the_link(t_graph *graph, char *line, t_match *rooms, int num_room)
 	first_vert = find_vertex(graph->rooms, number_and_name_match(rooms, first));
 	second_vert = find_vertex(graph->rooms, number_and_name_match(rooms, second));
 	second[-1] = '-';
-	push_edge_back(&first_vert->edge, second_vert);
-	push_edge_back(&second_vert->edge, first_vert);
+	push_edge_back(&first_vert->edge, new_edge(second_vert));
+	push_edge_back(&second_vert->edge, new_edge(first_vert));
 }
 
 t_graph	*read_input(void)

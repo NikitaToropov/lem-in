@@ -67,12 +67,18 @@ typedef struct		s_match
 	struct s_match	*next;
 }					t_match;
 
+///////////////* TESTING */////////////////////
+
+void	suurballe(t_graph *graph);
+// void	turn_back_the_way(t_verts *root, t_edges *way);
+
+///////////////* TESTING */////////////////////
+
 
 
 t_graph		*read_input(void);
 t_verts		*insert(t_verts *node, int key, char *str);
 t_edges		*dijkstra(t_graph *graph);
-
 
 
 /* t_graph: */
@@ -91,10 +97,13 @@ void		restore_vertex(t_verts *vert);
 
 
 /* t_edges: */
-void		push_edge_back(t_edges **first_edge, t_verts *vertex);
+t_edges		*pull_edge(t_edges **first_edge, t_verts *vertex);
+void		push_edge_front(t_edges **first_edge, t_edges *new_edge);
+void		push_edge_back(t_edges **first_edge, t_edges *new_edge);
 t_edges		*copy_edges_struct(t_edges *srcs);
-void		free_edge(t_edges **edge);
+void		free_edge(t_edges **edge); 
 void		free_edges_struct(t_edges **first_edge);
+t_edges		*new_edge(t_verts *vertex);
 
 
 /* t_input: */
@@ -107,6 +116,7 @@ void		print_input_struct(t_input *first_line);
 t_ways		*new_ways_struct(t_edges *new, t_ways *old_struct, int number);
 void		copy_ways_by_the_edges(t_ways *old, t_ways *new);
 void		free_ways_struct(t_ways **old_struct);	
+void		print_ways_struct(t_ways *way_struct);
 
 
 /* t_match: */
@@ -114,6 +124,11 @@ void		push_back_t_match(t_match **room, char *name, int num_room);
 int			number_and_name_match(t_match *rooms, char *name);
 void		free_t_match(t_match **rooms);
 
+
+
+
+
+	// printf("\n\n\nTHIS SHIT\n\n\n\n");
 
 
 #endif
