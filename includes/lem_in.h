@@ -34,7 +34,7 @@ typedef struct		s_verts
 
 	char			*name;
 
-	char			visit; // yes or no
+	char			visit:1; // yes or no
 	int				distance; // shortea distance
 	struct s_verts	*parent; // for restore shortest path
 
@@ -70,7 +70,7 @@ typedef struct		s_match
 ///////////////* TESTING */////////////////////
 
 void	suurballe(t_graph *graph);
-// void	turn_back_the_way(t_verts *root, t_edges *way);
+void	turn_back_the_way(t_verts *root, t_edges *way);
 
 ///////////////* TESTING */////////////////////
 

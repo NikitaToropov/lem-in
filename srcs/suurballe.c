@@ -10,8 +10,8 @@ void	suurballe(t_graph *graph)
 	tree_traversal(graph->rooms, *restore_vertex);
 
 
-	// turn_back_the_way(graph->rooms, shortest_ways->way[0]); // RSERVED
-
+	turn_back_the_way(graph->rooms, shortest_ways->way[0]);
+	tree_traversal(graph->rooms, *print_vertex);
 
 	free_ways_struct(&shortest_ways);
 
@@ -31,11 +31,11 @@ void	suurballe(t_graph *graph)
 	// current_struct = new_ways_struct(new_way, NULL, 1);
 	// upgrade_graph(graph, current_struct);
 	// i = 2;
-	// while (i < graph->num_of_ants && (new_way = dijkstra(graph)))
+	// while (i <= graph->num_of_ants && (new_way = dijkstra(graph)))
 	// {
 	// 	new_struct = new_ways_struct(new_way, current_struct, i);
 	// 	// upgrade_ways_and_graph(graph, new_struct);
-	// 	// if (number_of_output_lines(new_struct) >= number_of_output_lines(current_struct))
+	// 	if (number_of_output_lines(new_struct) >= number_of_output_lines(current_struct))
 	// 	// {
 	// 	// 	free_ways_struct(&new_struct);
 	// 	// 	break ;

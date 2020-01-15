@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:40 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/14 19:28:47 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/15 19:23:40 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void		print_vertex(t_verts *vert)
 	printf("visit   =            %i\n", (int)vert->visit);
 	printf("dist    =            %i\n", (int)vert->distance);
 	if (vert->parent)
-		printf("PARENTS ============ %i\n\n", vert->parent->key);
+		printf("PARENT  ============ %i\n\n", vert->parent->key);
 	else
-		printf("PARENTS =            NO PARENT\n\n");
+		printf("PARENT  =            NO PARENT\n\n");
 	if (vert->edge)
 	{
 		tmp_edge = vert->edge;
