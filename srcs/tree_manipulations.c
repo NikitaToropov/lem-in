@@ -12,35 +12,22 @@ void	turn_back_the_way(t_verts *root, t_edges *way)
 	psevdo = NULL;
 	if (current)
 		from = current->to;
-	while (current && current->next)
+	while (current && current->next && current->next->next)
 	{
 		to = current->next->to;
 		if (psevdo)
-		{
 			tmp = pull_edge(&psevdo->edge, to); // tmp = from->to
-		}
 		else
-		{
 			tmp = pull_edge(&from->edge, to); // tmp = from->to
-		}
 		push_edge_back(&from->reserve, tmp);
 		to->reserve = pull_edge(&to->edge, from); // take edge "to -> from"
-
-
 		if (!psevdo)
-		{
 			tmp = new_edge(from); // tmp = from->to
-		}
 		else
-		{
-			// psevdo = find_vertex(root, (to->key + 1));
 			tmp = new_edge(psevdo); // tmp = from->to
-		}
-			psevdo = find_vertex(root, (to->key + 1));
+		psevdo = find_vertex(root, (to->key + 1));
 		psevdo->edge->next = to->edge; // add all edges from "from" to "psevdo" edge "from -> to" excluded
-
 		to->edge = tmp;
-
 		from = to;
 
 
