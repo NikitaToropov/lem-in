@@ -3,20 +3,18 @@
 void	suurballe(t_graph *graph)
 {
 	t_ways		*current_ways;
-	t_ways		*new_ways;
+	// t_ways		*new_ways;
 
 	// print_graph(graph);
 	tree_traversal(graph->rooms, *print_vertex);
 	current_ways = new_ways_struct(dijkstra(graph), NULL, 1);
-	restore_graph(graph);
 	reverse_the_way_in_graph(graph->rooms, current_ways->way[0]);
 	tree_traversal(graph->rooms, *print_vertex);
-	new_ways = new_ways_struct(dijkstra(graph), current_ways, 2);
-
+	restore_graph(graph);
+	tree_traversal(graph->rooms, *print_vertex);
+	// new_ways = new_ways_struct(dijkstra(graph), current_ways, 2);
 	
-	
-	
-	free_ways_struct(&new_ways);
+	// free_ways_struct(&new_ways);
 	free_ways_struct(&current_ways);
 
 

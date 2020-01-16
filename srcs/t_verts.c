@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:40 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/16 16:42:03 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/16 17:33:28 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,6 @@ void		print_vertex(t_verts *vert)
 		printf("RSRVD edges to:      NOBODY\n");
 	printf("==============================================\n");
 }
-
-// void		restore_vertex(t_verts *vert)
-// {
-// 	vert->visit = 0;
-// 	vert->distance = MAXIMUM;
-// 	vert->parent = NULL;
-// }
 
 void		free_vertex(t_verts **node)
 {
