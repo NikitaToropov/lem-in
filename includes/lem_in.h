@@ -70,7 +70,9 @@ typedef struct		s_match
 ///////////////* TESTING */////////////////////
 
 void	suurballe(t_graph *graph);
-void		upgrade_ways(t_ways *new_ways, t_ways *old_ways);
+void		upgrade_ways(t_ways *ways);
+int			swap_tails(t_edges *first , t_edges *second);
+
 
 
 ///////////////* TESTING */////////////////////

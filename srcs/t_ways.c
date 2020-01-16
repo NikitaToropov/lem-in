@@ -66,8 +66,7 @@ t_ways		*new_ways_struct(t_edges *new, t_ways *old_ways, int number)
 	if (number > 1)
 	{
 		copy_ways_by_the_edges(old_ways, new_ways);
-		clean_the_way(new_ways->way[number - 1]);
-		// upgrade_ways(new_ways, old_ways);
+		upgrade_ways(new_ways);
 	}
 	print_ways_struct(new_ways);
 	return (new_ways);

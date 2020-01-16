@@ -94,3 +94,58 @@ int		*dijkstra(t_matrix *matrix, int *children)
 		return (NULL);
 	return (make_arr(matrix, p));
 }
+
+int		swap_tails(int **new, int **old)
+{
+	int		i;
+	int		j;
+	int		*old_arr;
+	int		*new_arr;
+	// int		*new_tail;
+	// int		*old_tail;
+
+	old_arr = *old;
+	new_arr = *new;
+	i = 2;
+	while (i < old_arr[0])
+	{
+		j = 2;
+		while (j < new_arr[0])
+		{
+			if (old_arr[i] == new_arr[j])
+			{
+				// old_tail = &old_arr[i + 1];
+				// 	new_tail = &new_arr[j + 1];
+				// 	make_new_arr(old, old_tail, new_tail, (new_arr[0] + 1 - (new_tail - new_arr)));
+				make_new_arr(old, &old_arr[i + 1], &new_arr[j + 1], (new_arr[0] + 1 - (&new_arr[j + 1] - new_arr)));
+				break ;
+			}
+			j++;
+		}
+		if (j < new_arr[0])
+			break ;
+		i++;
+	}
+	if (i >= old_arr[0])
+		return (0);
+	while (j > 1 && i < old_arr[0] && old_arr[i] == new_arr[j])
+	{
+		j--;
+		i++;
+	}
+		i--;
+		j++;
+	// if (j == 2 || i == (old_arr[0] - 1) )
+	// {
+	// 	if (old_arr[i] == new_arr[j])
+	// 		printf("ZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPAZALZUPA\n");
+	// 	print_int_arr(&new_arr[1], new_arr[0]);
+	// 	print_int_arr(&old_arr[1], old_arr[0]);
+	// }
+	// old_tail = &new_arr[i + 1];
+	// new_tail = &old_arr[j + 1];
+	// make_new_arr(new, old_tail, new_tail, (old_arr[0] + 1 - (new_tail - old_arr))); // (old_arr[0] + 1 - (new_tail - old_arr)
+	make_new_arr(new, &new_arr[j + 1], &old_arr[i + 1], (old_arr[0] + 1 - (&old_arr[i + 1] - old_arr))); // (old_arr[0] + 1 - (new_tail - old_arr)
+	// free(new_arr);
+	return (1);
+}
