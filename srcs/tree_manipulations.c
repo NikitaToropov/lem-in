@@ -51,10 +51,10 @@ void		restore_vertex(t_verts *vert)
 
 void		restore_graph(t_graph *graph)
 {
-	t_verts 	*start;
-	t_verts 	*finish;
-	t_edges 	*real;
-	t_edges 	*for_del;
+	t_verts		*start;
+	t_verts		*finish;
+	t_edges		*real;
+	t_edges		*for_del;
 
 	start = find_vertex(graph->rooms, graph->start);
 	push_edge_back(&start->edge, start->reserve);
@@ -62,19 +62,26 @@ void		restore_graph(t_graph *graph)
 
 	finish = find_vertex(graph->rooms, graph->finish);
 	real = finish->edge;
-	while (real)
-	{
-		if (real->to->key % 2)
-		{
-			for_del = pull_edge(&finish->edge, real->to);
-			free_edge(&for_del);
-		}
+
+	while (real && real->next && (real->next->to->key % 2))
 		real = real->next;
-	}
+	for_del = finish->edge;
+	finish->edge = real->next;
+	real->next = NULL;
+	free_edges_struct(&for_del);
+	// 	if (real->to->key % 2)
+	// 	{
+	// 		for_del = real;
+	// 		real = real->next;
+	// 		for_del = pull_edge(&finish->edge, for_del->to);
+	// 		free_edge(&for_del);
+	// 	}
+	// 	else
+	// }
 	push_edge_back(&finish->edge, finish->reserve);
 	finish->reserve = NULL;
 
+
+
 	tree_traversal(graph->rooms, *restore_vertex);
-	tree_traversal(graph->rooms, *print_vertex);
-	
-}	
+}
