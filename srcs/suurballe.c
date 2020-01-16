@@ -5,12 +5,12 @@ void	suurballe(t_graph *graph)
 {
 	t_ways		*shortest_ways;
 
-	print_graph(graph);
+	// print_graph(graph);
 	shortest_ways = new_ways_struct(dijkstra(graph), NULL, 1);
 	tree_traversal(graph->rooms, *restore_vertex);
 
 
-	turn_back_the_way(graph->rooms, shortest_ways->way[0]);
+	reverse_the_way(graph->rooms, shortest_ways->way[0]);
 	tree_traversal(graph->rooms, *print_vertex);
 
 	free_ways_struct(&shortest_ways);

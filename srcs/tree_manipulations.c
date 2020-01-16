@@ -1,6 +1,6 @@
 #include <lem_in.h>
 
-void	turn_back_the_way(t_verts *root, t_edges *way)
+void	reverse_the_way(t_verts *root, t_edges *way)
 {
 	t_edges		*current;
 	t_edges		*tmp;
@@ -12,7 +12,7 @@ void	turn_back_the_way(t_verts *root, t_edges *way)
 	psevdo = NULL;
 	if (current)
 		from = current->to;
-	while (current && current->next && current->next->next)
+	while (current && current->next)
 	{
 		to = current->next->to;
 		if (psevdo)
@@ -25,20 +25,15 @@ void	turn_back_the_way(t_verts *root, t_edges *way)
 			tmp = new_edge(from); // tmp = from->to
 		else
 			tmp = new_edge(psevdo); // tmp = from->to
+		if (!current->next->next)
+			break ;
 		psevdo = find_vertex(root, (to->key + 1));
 		psevdo->edge->next = to->edge; // add all edges from "from" to "psevdo" edge "from -> to" excluded
 		to->edge = tmp;
 		from = to;
-
-
-
-
-
-
-
 		current = current->next;
 	}
-	
+	push_edge_front(&to->edge, new_edge(psevdo));
 }
 
 // psevdo->edge:			psevdo->real(to) | to->all(to->from excluded)

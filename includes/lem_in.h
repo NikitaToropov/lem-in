@@ -70,7 +70,8 @@ typedef struct		s_match
 ///////////////* TESTING */////////////////////
 
 void	suurballe(t_graph *graph);
-void	turn_back_the_way(t_verts *root, t_edges *way);
+void	reverse_the_way(t_verts *root, t_edges *way);
+
 
 ///////////////* TESTING */////////////////////
 
