@@ -1,6 +1,6 @@
 #include <lem_in.h>
 
-void	reverse_the_way(t_verts *root, t_edges *way)
+void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 {
 	t_edges		*current;
 	t_edges		*tmp;
@@ -21,12 +21,12 @@ void	reverse_the_way(t_verts *root, t_edges *way)
 			tmp = pull_edge(&from->edge, to); // tmp = from->to
 		push_edge_back(&from->reserve, tmp);
 		to->reserve = pull_edge(&to->edge, from); // take edge "to -> from"
+		if (!current->next->next)
+			break ;
 		if (!psevdo)
 			tmp = new_edge(from); // tmp = from->to
 		else
 			tmp = new_edge(psevdo); // tmp = from->to
-		if (!current->next->next)
-			break ;
 		psevdo = find_vertex(root, (to->key + 1));
 		psevdo->edge->next = to->edge; // add all edges from "from" to "psevdo" edge "from -> to" excluded
 		to->edge = tmp;
@@ -36,9 +36,45 @@ void	reverse_the_way(t_verts *root, t_edges *way)
 	push_edge_front(&to->edge, new_edge(psevdo));
 }
 
-// psevdo->edge:			psevdo->real(to) | to->all(to->from excluded)
+void		restore_vertex(t_verts *vert)
+{
+	if (vert->reserve)
+	{
+		free_edges_struct(&vert->edge);
+		vert->edge = vert->reserve;
+		vert->reserve = NULL;
+	}
+	vert->visit = 0;
+	vert->distance = MAXIMUM;
+	vert->parent = NULL;
+}
 
-// to(real)->edge:			new_edge(to->psevdo(froom))     !!!PSEVDO
-// to(real)->reserved:		to->from | to(next_from)->next_to
+void		restore_graph(t_graph *graph)
+{
+	t_verts 	*start;
+	t_verts 	*finish;
+	t_edges 	*real;
+	t_edges 	*for_del;
 
-// from(real)->edge:			new_edge(to->psevdo(froom)) | to-> |
+	start = find_vertex(graph->rooms, graph->start);
+	push_edge_back(&start->edge, start->reserve);
+	start->reserve = NULL;
+
+	finish = find_vertex(graph->rooms, graph->finish);
+	real = finish->edge;
+	while (real)
+	{
+		if (real->to->key % 2)
+		{
+			for_del = pull_edge(&finish->edge, real->to);
+			free_edge(&for_del);
+		}
+		real = real->next;
+	}
+	push_edge_back(&finish->edge, finish->reserve);
+	finish->reserve = NULL;
+
+	tree_traversal(graph->rooms, *restore_vertex);
+	tree_traversal(graph->rooms, *print_vertex);
+	
+}	

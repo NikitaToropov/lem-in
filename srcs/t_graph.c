@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:15 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/15 19:56:19 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/16 16:19:33 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void			free_graph(t_graph **graph)
 {
+
 	if (graph && *graph)
 	{
 		free_vertex(&(*graph)->rooms);

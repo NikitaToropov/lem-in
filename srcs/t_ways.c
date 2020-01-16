@@ -43,6 +43,7 @@ void		copy_ways_by_the_edges(t_ways *old, t_ways *new)
 	int		i;
 
 	i = 0;
+
 	while (i < old->num_of_ways)
 	{
 		new->way[i] = copy_edges_struct(old->way[i]);
@@ -54,13 +55,18 @@ t_ways		*new_ways_struct(t_edges *new, t_ways *old_struct, int number)
 {
 	t_ways		*new_struct;
 
+
 	if (!(new_struct = malloc(sizeof(t_ways))) ||
 	!(new_struct->way = malloc(sizeof(t_edges) * number)))
 		exit(1);
+		
 	new_struct->num_of_ways = number;
 	new_struct->way[number - 1] = new;
 	if (number > 1)
+	{
+
 		copy_ways_by_the_edges(old_struct, new_struct);
+	}
 	// upgrade_ways(new_struct, graph);
 	print_ways_struct(new_struct);
 	return (new_struct);

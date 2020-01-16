@@ -70,7 +70,7 @@ typedef struct		s_match
 ///////////////* TESTING */////////////////////
 
 void	suurballe(t_graph *graph);
-void	reverse_the_way(t_verts *root, t_edges *way);
+void		restore_graph(t_graph *graph);
 
 
 ///////////////* TESTING */////////////////////
@@ -81,6 +81,13 @@ t_graph		*read_input(void);
 t_verts		*insert(t_verts *node, int key, char *str);
 t_edges		*dijkstra(t_graph *graph);
 
+
+/* tree_manipulations: */
+/* psevdo->edge:			psevdo->real(to) | to->all(to->from excluded) */
+/* to(real)->edge:			new_edge(to->psevdo(froom))     !!!PSEVDO */
+/* to(real)->reserved:		to->from | to(next_from)->next_to */
+/* from(real)->edge:		new_edge(to->psevdo(froom)) | to-> | */
+void	reverse_the_way_in_graph(t_verts *root, t_edges *way);
 
 /* t_graph: */
 t_graph		*init_graph(char *line);
