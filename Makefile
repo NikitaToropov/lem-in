@@ -23,6 +23,7 @@ C_FILES = lem_in.c\
 		t_ways.c\
 		suurballe.c\
 		tree_manipulations.c\
+		ways_manipulations.c\
 
 SRCS = $(addprefix $(DIR_S)/,$(C_FILES))
 OBJS = $(addprefix $(DIR_O)/,$(C_FILES:.c=.o))

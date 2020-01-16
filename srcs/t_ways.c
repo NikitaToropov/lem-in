@@ -14,6 +14,7 @@ void		print_ways_struct(t_ways *way_struct)
 		tmp = way_struct->way[i];
 		while (tmp)
 		{
+			// printf(" %s,", tmp->to->name);
 			printf(" %i,", tmp->to->key);
 			tmp = tmp->next;
 		}
@@ -23,18 +24,18 @@ void		print_ways_struct(t_ways *way_struct)
 	printf("*****||****||****||****||****||****||****||****||****||****\n");
 }
 
-void		free_ways_struct(t_ways **old_struct)
+void		free_ways_struct(t_ways **old_ways)
 {
 	int		i;
 
 	i = 0;
-	if (old_struct && *old_struct)
+	if (old_ways && *old_ways)
 	{
-		while (i < (*old_struct)->num_of_ways)
-			free_edges_struct(&(*old_struct)->way[i++]);
-		free((*old_struct)->way);
-		free(*old_struct);
-		*old_struct = NULL;
+		while (i < (*old_ways)->num_of_ways)
+			free_edges_struct(&(*old_ways)->way[i++]);
+		free((*old_ways)->way);
+		free(*old_ways);
+		*old_ways = NULL;
 	}
 }
 
@@ -51,23 +52,23 @@ void		copy_ways_by_the_edges(t_ways *old, t_ways *new)
 	}
 }
 
-t_ways		*new_ways_struct(t_edges *new, t_ways *old_struct, int number)
+t_ways		*new_ways_struct(t_edges *new, t_ways *old_ways, int number)
 {
-	t_ways		*new_struct;
+	t_ways		*new_ways;
 
 
-	if (!(new_struct = malloc(sizeof(t_ways))) ||
-	!(new_struct->way = malloc(sizeof(t_edges) * number)))
+	if (!(new_ways = malloc(sizeof(t_ways))) ||
+	!(new_ways->way = malloc(sizeof(t_edges) * number)))
 		exit(1);
 		
-	new_struct->num_of_ways = number;
-	new_struct->way[number - 1] = new;
+	new_ways->num_of_ways = number;
+	new_ways->way[number - 1] = new;
 	if (number > 1)
 	{
-
-		copy_ways_by_the_edges(old_struct, new_struct);
+		copy_ways_by_the_edges(old_ways, new_ways);
+		clean_the_way(new_ways->way[number - 1]);
+		// upgrade_ways(new_ways, old_ways);
 	}
-	// upgrade_ways(new_struct, graph);
-	print_ways_struct(new_struct);
-	return (new_struct);
+	print_ways_struct(new_ways);
+	return (new_ways);
 }
