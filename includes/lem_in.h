@@ -116,6 +116,8 @@ t_edges		*copy_edges_struct(t_edges *srcs);
 void		free_edge(t_edges **edge); 
 void		free_edges_struct(t_edges **first_edge);
 t_edges		*new_edge(t_verts *vertex);
+void		print_edges_struct(t_edges *head);
+
 
 
 /* t_input: */

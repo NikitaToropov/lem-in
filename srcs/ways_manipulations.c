@@ -1,44 +1,65 @@
 #include <lem_in.h>
 
-int			swap_tails(t_edges *first , t_edges *second)
+static int	add_dst_new_tail(t_edges *destination, t_edges *source)
 {
-	t_edges		*one;
-	t_edges		*two;
-	t_edges		*tmp_one;
-	t_edges		*tmp_two;
+	t_edges		*dst;
+	t_edges		*src;
+	t_edges		*tmp;
 
-	one = first;
-	two = second;
-	tmp_one = NULL;
-	tmp_two = NULL;
-	while (one && one->next && one->next->next)
+	dst = destination;
+	while (dst && dst->next && dst->next)
 	{
 
-		while (two && two->next && two->next->next)
+		src = source;
+		while (src && src->next && src->next->next)
 		{
-	printf("\n\n\nTHIS SHIT\n\n\n\n");
-			if (one->next->to == two->next->to)
+			if (src->next->to == dst->next->to)
 			{
-				if (!tmp_one)
-					tmp_one = one->next;
-				else
-					tmp_two = one->next;
-				one->next = two->next;
-				two->next = NULL;
-				one = second;
-				if (tmp_two)
-				{
-					free_edges_struct(&tmp_one);
-					free_edges_struct(&tmp_two);
-					return (1);
-				}
-				two = tmp_one;
-				continue ;
+				tmp = src->next;
+				src->next = dst->next;
+				dst->next = tmp;
+				return (1);
 			}
-			two = two->next;
+			src = src->next;
 		}
-		one = second;
-		one = one->next;
+		dst = dst->next;
+	}
+	return (0);
+}
+
+static void		remove_duplicats(t_edges *source)
+{
+	t_edges		*first;
+	t_edges		*second;
+	t_edges		*tmp;
+
+	first = source;
+	while (first && first->next && first->next->next)
+	{
+		second = first->next;
+		while (second && second->next)
+		{
+			if (first->next->to == second->next->to)
+			{
+				tmp = first->next;
+				first->next = second->next;
+				second->next = NULL;
+				free_edges_struct(&tmp);
+				return ;
+			}
+			second = second->next;
+		}
+		first = first->next;
+	}
+}
+
+
+int			swap_tails(t_edges *destination, t_edges *source)
+{
+	if (add_dst_new_tail(destination, source))
+	{
+		remove_duplicats(source);
+		return (1);
 	}
 	return (0);
 }

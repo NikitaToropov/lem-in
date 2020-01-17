@@ -6,11 +6,25 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:00:44 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/15 16:04:51 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/17 14:39:14 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
+
+void		print_edges_struct(t_edges *head)
+{
+	t_edges		*edge;
+
+	edge = head;
+	printf("\n----------------PRINT EDGES STRUCT----------------\n");
+	while (edge)
+	{
+		printf(" %i,", edge->to->key);
+		edge = edge->next;
+	}
+	printf("\n----------------PRINT EDGES STRUCT----------------\n");
+}
 
 void		free_edge(t_edges **edge)
 {
