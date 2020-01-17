@@ -77,6 +77,7 @@ void		custom_graph(t_graph *graph, t_ways *ways);
 
 
 
+
 ///////////////* TESTING */////////////////////
 
 
