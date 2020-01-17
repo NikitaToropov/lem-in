@@ -72,6 +72,7 @@ typedef struct		s_match
 void	suurballe(t_graph *graph);
 void		upgrade_ways(t_ways *ways);
 int			swap_tails(t_edges *first , t_edges *second);
+void		custom_graph(t_graph *graph, t_ways *ways);
 
 
 

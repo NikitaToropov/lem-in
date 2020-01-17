@@ -9,7 +9,6 @@ static int	add_dst_new_tail(t_edges *destination, t_edges *source)
 	dst = destination;
 	while (dst && dst->next && dst->next)
 	{
-
 		src = source;
 		while (src && src->next && src->next->next)
 		{
@@ -90,13 +89,26 @@ void		upgrade_ways(t_ways *ways)
 
 	clean_the_way(ways->way[ways->num_of_ways - 1]);
 	i = ways->num_of_ways - 1;
+
 	while (i >= 0)
 	{
+
 		j = ways->num_of_ways - 1;
 		while (j >= 0)
 		{
+		// printf("\n\n\nTHIS SHIT\n\n\n\n");
 			if (j != i && swap_tails(ways->way[i], ways->way[j]))
+			{
+
+
+
+
+				
+				print_edges_struct(ways->way[i]);
+				print_edges_struct(ways->way[j]);
+				printf("\n\n");
 				j = ways->num_of_ways - 1;
+			}
 			else
 				j--;
 		}
