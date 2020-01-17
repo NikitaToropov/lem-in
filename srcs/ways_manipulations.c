@@ -6,8 +6,6 @@ static int	add_dst_new_tail(t_edges *destination, t_edges *source)
 	t_edges		*src;
 	t_edges		*tmp;
 
-	print_edges_struct(destination);
-	print_edges_struct(source);
 	dst = destination;
 	while (dst && dst->next && dst->next->next)
 	{
@@ -17,11 +15,13 @@ static int	add_dst_new_tail(t_edges *destination, t_edges *source)
 			if (src->next->to == dst->next->to)
 			{
 				
+	print_edges_struct(destination);
+	print_edges_struct(source);
 
 
 				// print_edges_struct(src->next);
 				// print_edges_struct(dst->next);
-				// printf("\n\n\n\n\n\n");
+				printf("\n\n\n\n\n\n");
 
 
 
