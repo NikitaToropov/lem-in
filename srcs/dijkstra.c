@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/17 20:10:08 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/17 21:13:09 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		relaxation_by_edges(t_verts *from)
 	edge = from->edge;
 	while (edge)
 	{
-		if (!edge->to->visit && (dist = from->distance + 1) < edge->to->distance)
+		if (!edge->to->visit && (dist = from->distance + edge->weight) < edge->to->distance)
 		{
 			edge->to->distance = dist;
 			edge->to->parent = from;
