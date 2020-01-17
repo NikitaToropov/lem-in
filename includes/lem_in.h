@@ -22,6 +22,7 @@ typedef struct		s_graph
 
 typedef struct		s_edges
 {
+	char			weight; // 1, -1, 0
 	struct s_verts	*to;
 	struct s_edges	*next;
 }					t_edges;
@@ -116,7 +117,7 @@ void		push_edge_back(t_edges **first_edge, t_edges *new_edge);
 t_edges		*copy_edges_struct(t_edges *srcs);
 void		free_edge(t_edges **edge); 
 void		free_edges_struct(t_edges **first_edge);
-t_edges		*new_edge(t_verts *vertex);
+t_edges		*new_edge(t_verts *vertex, int w);
 void		print_edges_struct(t_edges *head);
 
 

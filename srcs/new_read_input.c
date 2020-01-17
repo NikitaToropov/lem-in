@@ -17,7 +17,6 @@ void	print_t_match(t_match *rooms)
 {
 	t_match		*tmp;
 
-	// printf("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n");
 	tmp = rooms;
 	while (tmp)
 	{
@@ -36,17 +35,9 @@ int			is_it_a_room(t_graph *graph, char *line, char marker, int num_room)
 	int		x;
 	int		y;
 
-		// printf("marker = %i\n", marker);
-		// printf("graph->start = %i\n", graph->start);
-		// printf("graph->finish = %i\n", graph->finish);
 	if ((marker == START && graph->start >= 0) ||
 	(marker == FINISH && graph->finish >= 0))
-	{
-		// printf("PROBLEM\n");
-		// printf("marker = %i\n", marker);
-
 		return (0);
-	}
 	
 	x_in_str = NULL;
 	y_in_str = NULL;

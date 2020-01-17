@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/17 19:08:05 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/17 20:10:08 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,16 @@ t_edges		*restore_shortest_path(t_graph *graph)
 	vert = find_vertex(graph->rooms, graph->finish);
 	while (vert && vert->parent && vert->key != graph->start)
 	{
-
-
-
-
-		printf("vert->key = %i\n", vert->key);
-
-
-
-		
-		push_edge_front(&path, new_edge(vert));
+		push_edge_front(&path, new_edge(vert, 1));
 		vert = vert->parent;
 	}
 	if (vert && vert->key == graph->start)
 	{
-		push_edge_front(&path, new_edge(vert));
+		push_edge_front(&path, new_edge(vert, 1));
 		return (path);
 	}
-	// printf("\n\n\nTHIS SHIT\n\n\n\n");
 	free_edges_struct(&path);
 	return (NULL);
-	
-
 	// print_edges_struct(path);
 	// tree_traversal(graph->rooms, *print_vertex);
 }
@@ -69,11 +57,8 @@ void		relaxation_by_edges(t_verts *from)
 	edge = from->edge;
 	while (edge)
 	{
-		// if (!edge->to->visit && (dist = from->distance + 1) < edge->to->distance)
 		if (!edge->to->visit && (dist = from->distance + 1) < edge->to->distance)
 		{
-			if (from->key % 2 && from->key = (edge->to->key - 1))
-				dist = from->distance + 0
 			edge->to->distance = dist;
 			edge->to->parent = from;
 		}

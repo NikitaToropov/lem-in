@@ -10,10 +10,11 @@ void	suurballe(t_graph *graph)
 	
 	num_of_ways = 1;
 	current_ways = NULL;
-	tree_traversal(graph->rooms, *print_vertex);
+	// tree_traversal(graph->rooms, *print_vertex);
 
 	while ((new_way = dijkstra(graph)))
 	{
+
 		new_ways = new_ways_struct(new_way, current_ways, num_of_ways);
 		num_of_ways++;
 		if (current_ways)
@@ -27,10 +28,10 @@ void	suurballe(t_graph *graph)
 	printf("num_of_ways = %i\n", num_of_ways);
 
 	}
-	printf("\n\n\nTHIS SHIT\n\n\n\n");
 
 	restore_graph(graph);
-	tree_traversal(graph->rooms, *print_vertex);
+	print_ways_struct(current_ways);
+	// tree_traversal(graph->rooms, *print_vertex);
 	free_ways_struct(&current_ways);
 }
 

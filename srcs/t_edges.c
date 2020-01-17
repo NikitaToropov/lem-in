@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:00:44 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/17 14:39:14 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/17 21:02:20 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		print_edges_struct(t_edges *head)
 	printf("\n----------------PRINT EDGES STRUCT----------------\n");
 	while (edge)
 	{
-		printf(" %i,", edge->to->key);
+		printf(" %i", edge->to->key);
 		edge = edge->next;
 	}
 	printf("\n----------------PRINT EDGES STRUCT----------------\n");
@@ -50,7 +50,7 @@ t_edges		*copy_edges_struct(t_edges *srcs)
 	tmp = srcs;
 	while (tmp)
 	{
-		push_edge_back(&new, new_edge(tmp->to));
+		push_edge_back(&new, new_edge(tmp->to, tmp->weight));
 		tmp = tmp->next;
 	}
 	return (new);
@@ -105,7 +105,7 @@ void		push_edge_back(t_edges **first_edge, t_edges *new_edge)
 	}
 }
 
-t_edges		*new_edge(t_verts *vertex)
+t_edges		*new_edge(t_verts *vertex, int w)
 {
 	t_edges		*new_edge;
 
@@ -113,5 +113,6 @@ t_edges		*new_edge(t_verts *vertex)
 		exit(1);
 	new_edge->to = vertex;
 	new_edge->next = NULL;
+	new_edge->weight = w;
 	return (new_edge);
 }

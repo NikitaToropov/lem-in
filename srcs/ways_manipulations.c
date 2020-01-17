@@ -6,14 +6,26 @@ static int	add_dst_new_tail(t_edges *destination, t_edges *source)
 	t_edges		*src;
 	t_edges		*tmp;
 
+	print_edges_struct(destination);
+	print_edges_struct(source);
 	dst = destination;
-	while (dst && dst->next && dst->next)
+	while (dst && dst->next && dst->next->next)
 	{
 		src = source;
 		while (src && src->next && src->next->next)
 		{
 			if (src->next->to == dst->next->to)
 			{
+				
+
+
+				// print_edges_struct(src->next);
+				// print_edges_struct(dst->next);
+				// printf("\n\n\n\n\n\n");
+
+
+
+
 				tmp = src->next;
 				src->next = dst->next;
 				dst->next = tmp;
@@ -50,6 +62,8 @@ static void		remove_duplicats(t_edges *source)
 		}
 		first = first->next;
 	}
+	printf("\n\n\nTHIS SHIT\n\n\n\n");
+
 }
 
 
@@ -57,6 +71,7 @@ int			swap_tails(t_edges *destination, t_edges *source)
 {
 	if (add_dst_new_tail(destination, source))
 	{
+
 		remove_duplicats(source);
 		return (1);
 	}
@@ -96,7 +111,6 @@ void		upgrade_ways(t_ways *ways)
 		j = ways->num_of_ways - 1;
 		while (j >= 0)
 		{
-		// printf("\n\n\nTHIS SHIT\n\n\n\n");
 			if (j != i && swap_tails(ways->way[i], ways->way[j]))
 			{
 
@@ -104,9 +118,9 @@ void		upgrade_ways(t_ways *ways)
 
 
 				
-				print_edges_struct(ways->way[i]);
-				print_edges_struct(ways->way[j]);
-				printf("\n\n");
+				// print_edges_struct(ways->way[i]);
+				// print_edges_struct(ways->way[j]);
+				// printf("\n\n\n\n\n\n");
 				j = ways->num_of_ways - 1;
 			}
 			else

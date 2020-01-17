@@ -24,16 +24,16 @@ void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 		if (!current->next->next)
 			break ;
 		if (!psevdo)
-			tmp = new_edge(from); // tmp = from->to
+			tmp = new_edge(from, -1); // tmp = from->to
 		else
-			tmp = new_edge(psevdo); // tmp = from->to
+			tmp = new_edge(psevdo, -1); // tmp = from->to
 		psevdo = find_vertex(root, (to->key + 1));
 		psevdo->edge->next = to->edge; // add all edges from "from" to "psevdo" edge "from -> to" excluded
 		to->edge = tmp;
 		from = to;
 		current = current->next;
 	}
-	push_edge_front(&to->edge, new_edge(psevdo));
+	push_edge_front(&to->edge, new_edge(psevdo, -1));
 }
 
 void		restore_vertex(t_verts *vert)
