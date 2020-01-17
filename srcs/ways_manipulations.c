@@ -1,5 +1,33 @@
 #include <lem_in.h>
 
+void		check_way(t_edges *way)
+{
+	t_edges		*first;
+	t_edges		*second;
+	t_edges		*tmp;
+
+	first = way->next;
+	while (first->next && first->next)
+	{
+		second = first->next;
+		while (second->next && second->next->next)
+		{
+			if (first->next->to == second->next->to)
+			{
+	// printf("\n\n\nTHIS SHIT\n\n\n\n");
+
+				tmp = first->next;
+				first->next = second->next;
+				second->next = NULL;
+				free_edges_struct(&tmp);
+				break ;
+			}
+			second = second->next;
+		}
+		first = first->next;
+	}
+}
+
 static int	add_dst_new_tail(t_edges *destination, t_edges *source)
 {
 	t_edges		*dst;
@@ -62,13 +90,12 @@ static void		remove_duplicats(t_edges *source)
 		}
 		first = first->next;
 	}
-	// printf("\n\n\nTHIS SHIT\n\n\n\n");
-
 }
 
 
 int			swap_tails(t_edges *destination, t_edges *source)
 {
+
 	if (add_dst_new_tail(destination, source))
 	{
 
@@ -81,17 +108,21 @@ int			swap_tails(t_edges *destination, t_edges *source)
 void		clean_the_way(t_edges *way)
 {
 	t_edges		*current;
+	t_edges		*tmp;
 
 	current = way;
-	while (current && current->next)
+	while (current && current->next && current->next->next)
 	{
-		if (current->next->to->key % 2)
+		if (current->next->to->key % 2 && current->next->next->to->key + 1 == current->next->to->key)
 		{
-			if ((current->to->key + 1) == current->next->to->key &&
-			current->next->next)
-				pull_edge(&way, current->next->to);
-			else
-				current->next->to = current->next->to->edge->to;
+// printf("\n\n\nTHIS SHIT\n\n\n\n");
+			tmp = pull_edge(&way, current->next->to);
+			free_edge(&tmp);
+		}
+		else if (current->next->to->key % 2)
+		{
+			current->next->to = current->next->to->edge->to;
+			continue ;
 		}
 		current = current->next;
 	}
@@ -103,7 +134,13 @@ void		upgrade_ways(t_ways *ways)
 	int		j;
 
 	clean_the_way(ways->way[ways->num_of_ways - 1]);
+// print_ways_struct(ways);
+	check_way(ways->way[ways->num_of_ways - 1]);
+// print_ways_struct(ways);
+	// printf("\n\n\nTHIS SHIT\n\n\n\n");
+	
 	i = ways->num_of_ways - 1;
+
 
 	while (i >= 0)
 	{
@@ -111,6 +148,7 @@ void		upgrade_ways(t_ways *ways)
 		j = ways->num_of_ways - 1;
 		while (j >= 0)
 		{
+
 			if (j != i && swap_tails(ways->way[i], ways->way[j]))
 			{
 

@@ -12,6 +12,7 @@
 
 #include <lem_in.h>
 
+
 t_edges		*restore_shortest_path(t_graph *graph)
 {
 	t_edges		*path;
@@ -26,7 +27,9 @@ t_edges		*restore_shortest_path(t_graph *graph)
 	}
 	if (vert && vert->key == graph->start)
 	{
+
 		push_edge_front(&path, new_edge(vert, 1));
+		// check_way(path);
 		return (path);
 	}
 	free_edges_struct(&path);
@@ -41,7 +44,7 @@ t_verts		*next_vert(t_verts *root)
 
 	if (!root)
 		return (NULL);
-	if (!root->visit && root->distance < MAXIMUM)
+	if (!root->visit && root->distance < MAXIMUM && !(root->key % 2 && !root->edge->next))
 		return (root);
 	else if ((vertex = next_vert(root->left)) ||
 	(vertex = next_vert(root->right)))

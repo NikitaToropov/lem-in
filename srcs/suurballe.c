@@ -8,8 +8,8 @@ static int		caclulate_moves(t_edges *way)
 	moves = 0;
 	while (ptr)
 	{
-		ptr = ptr->next;
 		moves++;
+		ptr = ptr->next;
 	}
 	return (moves - 1);
 }
@@ -20,6 +20,7 @@ static int		num_of_output_lines(t_ways *ways, int num_of_ants)
 	int		result;
 	int		i;
 
+
 	arr_len[0] = caclulate_moves(ways->way[0]);
 	result = arr_len[1];
 	i = 1;
@@ -29,10 +30,10 @@ static int		num_of_output_lines(t_ways *ways, int num_of_ants)
 			result = arr_len[i];
 		i++;
 	}
-	while (num_of_ants)
+	while (num_of_ants > 0)
 	{
 		i = 0;
-		while (i < ways->num_of_ways)
+		while (i < ways->num_of_ways && num_of_ants > 0)
 		{
 			if (arr_len[i] <= result)
 			{
@@ -44,7 +45,7 @@ static int		num_of_output_lines(t_ways *ways, int num_of_ants)
 		result++;
 	}
 	printf("\n\nres = %i\n", (result - 1));
-	return (result);
+	return (result - 1);
 	
 }
 
@@ -62,12 +63,17 @@ void	suurballe(t_graph *graph)
 
 	while ((new_way = dijkstra(graph)))
 	{
+		// printf("num_of_way = %i\n", num_of_ways);
 
 		new_ways = new_ways_struct(new_way, current_ways, num_of_ways);
 		num_of_ways++;
+
 		if (current_ways)
 		{
-			if (num_of_output_lines(new_ways, graph->num_of_ants) >= num_of_output_lines(current_ways, graph->num_of_ants))
+		
+	printf("\n\n\nTHIS SHIT\n\n\n\n");
+
+			if (num_of_output_lines(new_ways, graph->num_of_ants) > num_of_output_lines(current_ways, graph->num_of_ants))
 			{
 				free_ways_struct(&new_ways);
 				break ;
@@ -80,7 +86,9 @@ void	suurballe(t_graph *graph)
 	}
 
 	restore_graph(graph);
-	print_ways_struct(current_ways);
+	// tree_traversal(graph->rooms, *prinzt_vertex);
+
+	// print_ways_struct(current_ways);
 	// tree_traversal(graph->rooms, *print_vertex);
 	free_ways_struct(&current_ways);
 }
