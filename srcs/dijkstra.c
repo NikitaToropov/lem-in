@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/20 16:02:08 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/20 18:06:17 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ t_edges		*restore_shortest_path(t_graph *graph)
 		// check_way(path);
 		return (path);
 	}
+	printf("\n\n\n\nSHITSHITSHITSHITSHITSHITSHITSHIT\n");
+	printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n");
+	printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n\n\n\n");
 	free_edges_struct(&path);
 	return (NULL);
 	// print_edges_struct(path);
@@ -44,7 +47,8 @@ t_verts		*next_vert(t_verts *root)
 
 	if (!root)
 		return (NULL);
-	if (!root->visit && root->distance < MAXIMUM && !(root->key % 2 && !root->edge->next))
+	// if (!root->visit && root->distance < MAXIMUM && !(root->key % 2 && !root->edge->next))
+	if (!root->visit && root->distance < MAXIMUM)
 		return (root);
 	else if ((vertex = next_vert(root->left)) ||
 	(vertex = next_vert(root->right)))

@@ -13,9 +13,9 @@ void		loop_detector(t_edges *way)
 		{
 			if (current->to == tmp->to)
 			{
-				printf("\n\n\n\nSHITSHITSHITSHITSHITSHITSHITSHIT\n");
-	printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n");
-	printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n\n\n\n");
+	// 			printf("\n\n\n\nSHITSHITSHITSHITSHITSHITSHITSHIT\n");
+	// printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n");
+	// printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n\n\n\n");
 			}
 			current = current->next;
 		}
