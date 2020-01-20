@@ -64,6 +64,7 @@ void	suurballe(t_graph *graph)
 	while ((new_way = dijkstra(graph)))
 	{
 		// printf("num_of_way = %i\n", num_of_ways);
+		// print_edges_struct(new_way);
 
 		new_ways = new_ways_struct(new_way, current_ways, num_of_ways);
 		num_of_ways++;
@@ -71,7 +72,7 @@ void	suurballe(t_graph *graph)
 		if (current_ways)
 		{
 		
-	printf("\n\n\nTHIS SHIT\n\n\n\n");
+	// printf("\n\n\nTHIS SHIT\n\n\n\n");
 
 			if (num_of_output_lines(new_ways, graph->num_of_ants) > num_of_output_lines(current_ways, graph->num_of_ants))
 			{

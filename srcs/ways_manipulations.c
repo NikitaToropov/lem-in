@@ -1,169 +1,127 @@
 #include <lem_in.h>
 
-void		check_way(t_edges *way)
+void		loop_detector(t_edges *way)
 {
-	t_edges		*first;
-	t_edges		*second;
 	t_edges		*tmp;
+	t_edges		*current;
 
-	first = way->next;
-	while (first->next && first->next)
+	tmp = way->next;
+	while (tmp->next)
 	{
-		second = first->next;
-		while (second->next && second->next->next)
+		current = tmp->next;
+		while (current)
 		{
-			if (first->next->to == second->next->to)
+			if (current->to == tmp->to)
 			{
-	// printf("\n\n\nTHIS SHIT\n\n\n\n");
-
-				tmp = first->next;
-				first->next = second->next;
-				second->next = NULL;
-				free_edges_struct(&tmp);
-				break ;
+				printf("\n\n\n\nSHITSHITSHITSHITSHITSHITSHITSHIT\n");
+	printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n");
+	printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n\n\n\n");
 			}
-			second = second->next;
+			current = current->next;
 		}
-		first = first->next;
+		tmp = tmp->next;
 	}
 }
 
-static int	add_dst_new_tail(t_edges *destination, t_edges *source)
-{
-	t_edges		*dst;
-	t_edges		*src;
-	t_edges		*tmp;
-
-	dst = destination;
-	while (dst && dst->next && dst->next->next)
-	{
-		src = source;
-		while (src && src->next && src->next->next)
-		{
-			if (src->next->to == dst->next->to)
-			{
-				
-	// print_edges_struct(destination);
-	// print_edges_struct(source);
-
-
-				// print_edges_struct(src->next);
-				// print_edges_struct(dst->next);
-				// printf("\n\n\n\n\n\n");
-
-
-
-
-				tmp = src->next;
-				src->next = dst->next;
-				dst->next = tmp;
-				return (1);
-			}
-			src = src->next;
-		}
-		dst = dst->next;
-	}
-	return (0);
-}
-
-static void		remove_duplicats(t_edges *source)
-{
-	t_edges		*first;
-	t_edges		*second;
-	t_edges		*tmp;
-
-	first = source;
-	while (first && first->next && first->next->next)
-	{
-		second = first->next;
-		while (second && second->next)
-		{
-			if (first->next->to == second->next->to)
-			{
-				tmp = first->next;
-				first->next = second->next;
-				second->next = NULL;
-				free_edges_struct(&tmp);
-				return ;
-			}
-			second = second->next;
-		}
-		first = first->next;
-	}
-}
-
-
-int			swap_tails(t_edges *destination, t_edges *source)
-{
-
-	if (add_dst_new_tail(destination, source))
-	{
-
-		remove_duplicats(source);
-		return (1);
-	}
-	return (0);
-}
-
-void		clean_the_way(t_edges *way)
+t_edges		*vert_before_first_common(t_edges *way)
 {
 	t_edges		*current;
-	t_edges		*tmp;
 
 	current = way;
 	while (current && current->next && current->next->next)
 	{
-		if (current->next->to->key % 2 && current->next->next->to->key + 1 == current->next->to->key)
+		if (current->next->next->to->key % 2)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+t_edges		*find_new_tail_and_cut(t_edges *way, t_edges *vert)
+{
+	t_edges		*current;
+	t_edges		*result;
+
+	current = way;
+
+	while (current->next)
+	{
+		if (current->next->to == vert->to)
 		{
-// printf("\n\n\nTHIS SHIT\n\n\n\n");
-			tmp = pull_edge(&way, current->next->to);
-			free_edge(&tmp);
-		}
-		else if (current->next->to->key % 2)
-		{
-			current->next->to = current->next->to->edge->to;
-			continue ;
+			result = current->next;
+			current->next = NULL;
+			return (result);
 		}
 		current = current->next;
 	}
+	return (NULL);
 }
 
-void		upgrade_ways(t_ways *ways)
+t_edges		*paste_and_cut(t_edges *end_of_tail, t_edges *insert)
 {
-	int		i;
-	int		j;
+	t_edges		*tmp;
 
-	clean_the_way(ways->way[ways->num_of_ways - 1]);
-// print_ways_struct(ways);
-	check_way(ways->way[ways->num_of_ways - 1]);
-// print_ways_struct(ways);
-	// printf("\n\n\nTHIS SHIT\n\n\n\n");
-	
-	i = ways->num_of_ways - 1;
+	tmp = end_of_tail->next;
+	end_of_tail->next = insert;
+	return (tmp);
+}
 
+void		insert_second_tail(t_edges *way, t_edges *insert)
+{
+	t_edges		*tmp_way;
+	t_edges		*tmp_ins;
+	t_edges		*way_for_del;
 
-	while (i >= 0)
+	tmp_way = way;
+	while (tmp_way && tmp_way)
 	{
-
-		j = ways->num_of_ways - 1;
-		while (j >= 0)
+		tmp_ins = insert;
+		while (tmp_ins)
 		{
-
-			if (j != i && swap_tails(ways->way[i], ways->way[j]))
+			if (!(tmp_way->to->key % 2) && tmp_way->to->key == (tmp_ins->to->key - 1))
 			{
-
-
-
-
-				
-				// print_edges_struct(ways->way[i]);
-				// print_edges_struct(ways->way[j]);
-				// printf("\n\n\n\n\n\n");
-				j = ways->num_of_ways - 1;
+				way_for_del = tmp_way->next;
+				tmp_way->next = tmp_ins->next;
+				tmp_ins->next = NULL;
+				free_edges_struct(&insert);
+				free_edges_struct(&way_for_del);
+				return ;
 			}
-			else
-				j--;
+			tmp_ins = tmp_ins->next;
 		}
-		i--;
+		tmp_way = tmp_way->next;
+	}
+	
+}
+
+
+
+void		swap_tails(t_ways *ways)
+{
+	t_edges		*end_of_tail;
+	t_edges		*insert;
+	int			i;
+	int			n;
+
+
+	n = ways->num_of_ways - 1;
+	loop_detector(ways->way[n]);
+	end_of_tail = vert_before_first_common(ways->way[n]);
+	i = 0;
+	while (i < ways->num_of_ways && end_of_tail)
+	{
+		if (i != n && (insert = find_new_tail_and_cut(ways->way[i], end_of_tail->next)))
+		{
+			insert = paste_and_cut(end_of_tail, insert);
+			insert_second_tail(ways->way[i], insert);
+			n = i;
+			end_of_tail = vert_before_first_common(ways->way[n]);
+			i = 0;
+
+// printf("\n\nYOLO!!!!\n\n");	
+// print_edges_struct(old_tail);
+			continue ;
+		}
+		i++;
 	}
 }
