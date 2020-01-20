@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/20 18:06:17 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/20 20:18:51 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,19 @@ t_edges		*restore_shortest_path(t_graph *graph)
 	while (vert && vert->parent && vert->key != graph->start)
 	{
 		push_edge_front(&path, new_edge(vert, 1));
+		
 		vert = vert->parent;
 	}
 	if (vert && vert->key == graph->start)
 	{
-
 		push_edge_front(&path, new_edge(vert, 1));
 		// check_way(path);
 		return (path);
 	}
-	printf("\n\n\n\nSHITSHITSHITSHITSHITSHITSHITSHIT\n");
-	printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n");
-	printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n\n\n\n");
+		// print_edges_struct(path);
+	// printf("\n\n\n\nSHITSHITSHITSHITSHITSHITSHITSHIT\n");
+	// printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n");
+	// printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n\n\n\n");
 	free_edges_struct(&path);
 	return (NULL);
 	// print_edges_struct(path);
@@ -79,11 +80,13 @@ t_edges		*dijkstra(t_graph *graph)
 
 	vertex = find_vertex(graph->rooms, graph->start);
 	vertex->distance = 0;
+	// while (vertex->key != graph->finish)
 	while (vertex)
 	{
 		vertex->visit = 1;
 		relaxation_by_edges(vertex);
 		vertex = next_vert(graph->rooms);
 	}
+	// relaxation_by_edges(vertex);
 	return (restore_shortest_path(graph));
 }

@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:15 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/17 17:14:05 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/20 19:40:04 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void			print_graph(t_graph *graph)
 		return ;
 	printf("\n||||||||||||||||||||||||||| START GRAPH PRINTING |||||||||||||||||||||||||||\n");
 	tree_traversal(graph->rooms, *print_vertex);
-	printf("\nlen    = %i\n", graph->length);
-	printf("start  = %i\n", graph->start);
-	printf("finish = %i\n", graph->finish);
-	printf("ants   = %i\n\n\n", graph->num_of_ants);
+	// printf("\nlen    = %i\n", graph->length);
+	// printf("start  = %i\n", graph->start);
+	// printf("finish = %i\n", graph->finish);
+	// printf("ants   = %i\n\n\n", graph->num_of_ants);
 	// print_input_struct(graph->input);
 	printf("||||||||||||||||||||||||||| END GRAPH PRINTING |||||||||||||||||||||||||||\n\n\n\n");
 }
