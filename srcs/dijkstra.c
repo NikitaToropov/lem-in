@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/21 18:24:41 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/21 19:22:06 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_edges		*restore_shortest_path(t_graph *graph)
 			vert = vert->parent;
 		}
 	}
-	print_edges_struct(path);
+	// print_edges_struct(path);
 	return (path);
 }
 

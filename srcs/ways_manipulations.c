@@ -21,20 +21,19 @@ void		swap_tails(t_edges *new, t_edges *tail)
 	t_edges		*new_for_del;
 	// t_edges		*old_for_del;
 
-	new_rev = new->prev;
-	new->prev = NULL;
-	new_for_del = new;
+	print_edges_struct(new);
+	print_edges_struct(tail);
 
-	new_rev->next = tail;
 	old_rev = tail->prev;
 	tail->prev->next = NULL;
 	tail->prev = NULL;
 
-	tail->prev->next = NULL;
-	tail->prev = NULL;
+	new_for_del = 
+	new_rev = 
 
-	new->prev->next = tail;
-	
+
+
+
 }
 
 
@@ -47,13 +46,15 @@ void		swap_all_common_tails(t_ways *ways)
 
 	n = ways->num_of_ways - 1;
 	new = ways->way[n]->next;
+				// print_edges_struct(new);
+				// print_edges_struct(ways->way[n]);
 	tail = NULL;
 	while (new->next)
 	{
 		i = 0;
 		while (i < ways->num_of_ways)
 		{
-			if ((tail = current_vertex(new, ways->way[i])))
+			if (i != n && (tail = current_vertex(new, ways->way[i])))
 			{
 				swap_tails(new, tail);
 			}
