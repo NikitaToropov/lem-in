@@ -6,12 +6,11 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/20 20:18:51 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/21 18:24:41 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
-
 
 t_edges		*restore_shortest_path(t_graph *graph)
 {
@@ -20,26 +19,28 @@ t_edges		*restore_shortest_path(t_graph *graph)
 
 	path = NULL;
 	vert = find_vertex(graph->rooms, graph->finish);
-	while (vert && vert->parent && vert->key != graph->start)
+	while (vert)
 	{
-		push_edge_front(&path, new_edge(vert, 1));
-		
-		vert = vert->parent;
+		if (vert->key % 2)
+		{
+			if (vert->parent->key + 1 == vert->key)
+			{
+				vert = vert->parent;
+			}
+			else
+			{
+				push_edge_front(&path, new_edge(vert->edge->to, 1));
+				vert = vert->parent;
+			}
+		}
+		else
+		{
+			push_edge_front(&path, new_edge(vert, 1));
+			vert = vert->parent;
+		}
 	}
-	if (vert && vert->key == graph->start)
-	{
-		push_edge_front(&path, new_edge(vert, 1));
-		// check_way(path);
-		return (path);
-	}
-		// print_edges_struct(path);
-	// printf("\n\n\n\nSHITSHITSHITSHITSHITSHITSHITSHIT\n");
-	// printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n");
-	// printf("SHITSHITSHITSHITSHITSHITSHITSHIT\n\n\n\n");
-	free_edges_struct(&path);
-	return (NULL);
-	// print_edges_struct(path);
-	// tree_traversal(graph->rooms, *print_vertex);
+	print_edges_struct(path);
+	return (path);
 }
 
 t_verts		*next_vert(t_verts *root)
@@ -48,7 +49,6 @@ t_verts		*next_vert(t_verts *root)
 
 	if (!root)
 		return (NULL);
-	// if (!root->visit && root->distance < MAXIMUM && !(root->key % 2 && !root->edge->next))
 	if (!root->visit && root->distance < MAXIMUM)
 		return (root);
 	else if ((vertex = next_vert(root->left)) ||

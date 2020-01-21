@@ -6,11 +6,25 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:00:44 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/17 21:02:20 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/21 17:30:55 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
+
+void		print_edges_struct_reverse(t_edges *tail)
+{
+	t_edges		*edge;
+
+	edge = tail;
+	printf("\n----------------PRINT EDGES STRUCT reverse----------------\n");
+	while (edge)
+	{
+		printf(" %i", edge->to->key);
+		edge = edge->prev;
+	}	
+	printf("\n----------------PRINT EDGES STRUCT reverse----------------\n");
+}
 
 void		print_edges_struct(t_edges *head)
 {
@@ -65,6 +79,8 @@ t_edges		*pull_edge(t_edges **first_edge, t_verts *vertex)
 	if (edge->to == vertex)
 	{
 		*first_edge = (*first_edge)->next;
+		if (*first_edge && (*first_edge)->next)
+			(*first_edge)->next->prev = NULL;
 		edge->next = NULL;
 		return (edge);
 	}
@@ -74,6 +90,9 @@ t_edges		*pull_edge(t_edges **first_edge, t_verts *vertex)
 		{
 			tmp = edge->next;
 			edge->next = tmp->next;
+			if (tmp->next)
+				tmp->next->prev = edge;
+			tmp->prev = NULL;
 			tmp->next = NULL;
 			return (tmp);
 		}
@@ -85,7 +104,10 @@ t_edges		*pull_edge(t_edges **first_edge, t_verts *vertex)
 void		push_edge_front(t_edges **first_edge, t_edges *new_edge)
 {
 	if (*first_edge)
+	{
 		new_edge->next = *first_edge;
+		(*first_edge)->prev = new_edge;
+	}
 	*first_edge = new_edge;
 }
 
@@ -93,7 +115,7 @@ void		push_edge_front(t_edges **first_edge, t_edges *new_edge)
 void		push_edge_back(t_edges **first_edge, t_edges *new_edge)
 {
 	t_edges		*tmp;
-	
+
 	if (!*first_edge)
 		*first_edge = new_edge;
 	else
@@ -102,6 +124,8 @@ void		push_edge_back(t_edges **first_edge, t_edges *new_edge)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_edge;
+		if (new_edge)
+			new_edge->prev = tmp;
 	}
 }
 
@@ -113,6 +137,7 @@ t_edges		*new_edge(t_verts *vertex, int w)
 		exit(1);
 	new_edge->to = vertex;
 	new_edge->next = NULL;
+	new_edge->prev = NULL;
 	new_edge->weight = w;
 	return (new_edge);
 }

@@ -25,6 +25,7 @@ typedef struct		s_edges
 	char			weight; // 1, -1, 0
 	struct s_verts	*to;
 	struct s_edges	*next;
+	struct s_edges	*prev;
 }					t_edges;
 
 /* avl tree for collect REAL_ROOMS + PSEVDO_ROOMS */
@@ -71,12 +72,12 @@ typedef struct		s_match
 ///////////////* TESTING */////////////////////
 
 void	suurballe(t_graph *graph);
-void		upgrade_ways(t_ways *ways);
-void		swap_tails(t_ways *ways);
+// void		upgrade_ways(t_ways *ways);
 
-// int			swap_tails(t_edges *first , t_edges *second);
 void		custom_graph(t_graph *graph, t_ways *ways);
 
+void		swap_all_common_tails(t_ways *ways);
+t_edges		*dijkstra(t_graph *graph);
 
 
 
@@ -86,7 +87,6 @@ void		custom_graph(t_graph *graph, t_ways *ways);
 
 t_graph		*read_input(void);
 t_verts		*insert(t_verts *node, int key, char *str);
-t_edges		*dijkstra(t_graph *graph);
 
 
 /* tree_manipulations: */
@@ -96,7 +96,7 @@ t_edges		*dijkstra(t_graph *graph);
 /* from(real)->edge:		new_edge(to->psevdo(froom)) | to-> | */
 void	reverse_the_way_in_graph(t_verts *root, t_edges *way);
 void		restore_graph(t_graph *graph);
-void		clean_the_way(t_edges *way);
+int			clean_the_way(t_edges *way);
 
 /* t_graph: */
 t_graph		*init_graph(char *line);
@@ -122,7 +122,7 @@ void		free_edge(t_edges **edge);
 void		free_edges_struct(t_edges **first_edge);
 t_edges		*new_edge(t_verts *vertex, int w);
 void		print_edges_struct(t_edges *head);
-
+void		print_edges_struct_reverse(t_edges *tail);
 
 
 /* t_input: */

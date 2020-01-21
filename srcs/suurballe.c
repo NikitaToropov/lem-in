@@ -1,5 +1,43 @@
 #include <lem_in.h>
 
+// // void			check_the_valid(t_graph *graph, t_ways *ways)
+// // {
+// // 	t_edges		*tmp;
+// // 	t_edges		*edges;
+// // 	t_verts		*from;
+// // 	t_verts		*to;
+// // 	int			i;
+
+// // 	i = 0;
+// // 	while (i < ways->num_of_ways)
+// // 	{
+// // 		tmp = ways->way[i];
+// // 		while (tmp->next)
+// // 		{
+// // 			from = find_vertex(graph->rooms, tmp->to->key);
+// // 			to = find_vertex(graph->rooms, tmp->next->to->key);
+// // 			edges = from->edge;
+// // 			while (edges)
+// // 			{
+// // 				if (edges->to == to)
+// // 				{
+// // 					break ;
+// // 				}
+// // 				edges = edges->next;
+// // 			}
+// // 			if (!edges)
+// // 			{
+// // 				printf("++++++++++++++++++++++ PROBLEMS ++++++++++++++++++++++\n");
+// // 				print_vertex(from);
+// // 				print_edges_struct(from->edge)
+// // 				printf("++++++++++++++++++++++ PROBLEMS ++++++++++++++++++++++\n");
+// // 			}
+// // 			tmp = tmp->next;
+// // 		}
+// // 		i++;
+// // 	}
+// // }
+
 static int		caclulate_moves(t_edges *way)
 {
 	int moves;
@@ -62,26 +100,18 @@ void	suurballe(t_graph *graph)
 
 	while ((new_way = dijkstra(graph)))
 	{
-		// printf("num_of_way = %i\n", num_of_ways);
-		// print_edges_struct(new_way);
 
 		new_ways = new_ways_struct(new_way, current_ways, num_of_ways);
 		num_of_ways++;
 
 		if (current_ways)
 		{
-		
-	// printf("\n\n\nTHIS SHIT\n\n\n\n");
-	num_of_output_lines(current_ways, graph->num_of_ants);
-	num_of_output_lines(new_ways, graph->num_of_ants);
-		// 	if (num_of_output_lines(new_ways, graph->num_of_ants) > num_of_output_lines(current_ways, graph->num_of_ants))
-		// 	{
-		// print_ways_struct(current_ways);
-		// print_ways_struct(new_ways);
-		// 	// 	free_ways_struct(&new_ways);
-		// 	// 	break ;
-		// 	}
-		// 	free_ways_struct(&current_ways);
+			if (num_of_output_lines(new_ways, graph->num_of_ants) > num_of_output_lines(current_ways, graph->num_of_ants))
+			{
+				free_ways_struct(&new_ways);
+				break ;
+			}
+			free_ways_struct(&current_ways);
 		}
 		current_ways = new_ways;
 		restore_graph(graph);
@@ -89,10 +119,8 @@ void	suurballe(t_graph *graph)
 	}
 
 	restore_graph(graph);
-	// tree_traversal(graph->rooms, *print_vertex);
 
 	// print_ways_struct(current_ways);
-	// tree_traversal(graph->rooms, *print_vertex);
 	free_ways_struct(&current_ways);
 }
 

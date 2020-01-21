@@ -61,6 +61,9 @@ void		restore_graph(t_graph *graph)
 	t_edges		*real;
 	t_edges		*for_del;
 
+
+
+
 	start = find_vertex(graph->rooms, graph->start);
 	push_edge_back(&start->edge, start->reserve);
 	start->reserve = NULL;
