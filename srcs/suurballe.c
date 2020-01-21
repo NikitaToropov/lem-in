@@ -100,6 +100,8 @@ void	suurballe(t_graph *graph)
 
 	while ((new_way = dijkstra(graph)))
 	{
+		printf("num_of_ways %i\n", num_of_ways);
+		// print_edges_struct(new_way);
 
 		new_ways = new_ways_struct(new_way, current_ways, num_of_ways);
 		num_of_ways++;

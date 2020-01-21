@@ -19,7 +19,7 @@ t_edges		*restore_shortest_path(t_graph *graph)
 
 	path = NULL;
 	vert = find_vertex(graph->rooms, graph->finish);
-	while (vert)
+	while (vert && vert->parent)
 	{
 		if (vert->key % 2)
 		{
@@ -39,6 +39,8 @@ t_edges		*restore_shortest_path(t_graph *graph)
 			vert = vert->parent;
 		}
 	}
+	if (path)
+		push_edge_front(&path, new_edge(vert, 1));
 	// print_edges_struct(path);
 	return (path);
 }
