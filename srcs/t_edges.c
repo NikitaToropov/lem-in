@@ -17,13 +17,11 @@ void		print_edges_struct_reverse(t_edges *tail)
 	t_edges		*edge;
 
 	edge = tail;
-	printf("\n----------------PRINT EDGES STRUCT reverse----------------\n");
 	while (edge)
 	{
 		printf(" %i", edge->to->key);
 		edge = edge->prev;
 	}	
-	printf("\n----------------PRINT EDGES STRUCT reverse----------------\n");
 }
 
 void		print_edges_struct(t_edges *head)
@@ -32,11 +30,14 @@ void		print_edges_struct(t_edges *head)
 
 	edge = head;
 	printf("\n----------------PRINT EDGES STRUCT----------------\n");
-	while (edge)
+	while (edge->next)
 	{
 		printf(" %i", edge->to->key);
 		edge = edge->next;
 	}
+	printf(" %i", edge->to->key);
+	printf("\n\n");
+	print_edges_struct_reverse(edge);
 	printf("\n----------------PRINT EDGES STRUCT----------------\n");
 }
 

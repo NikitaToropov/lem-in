@@ -35,7 +35,6 @@ void		swap_tails(t_edges *new, t_edges *tail)
 
 
 	old_rev = tail->prev;
-	printf("=========== THERE =============\n");
 	cut_there_before(tail);
 
 	new_for_insert = new->prev;
@@ -53,6 +52,7 @@ void		swap_tails(t_edges *new, t_edges *tail)
 	// print_edges_struct(old_rev);
 	// print_edges_struct_reverse(old_rev);
 	// print_edges_struct(new_tmp);
+
 	old_for_insert = old_rev->prev;
 	cut_there_before(new_tmp);
 	cut_there_before(old_rev);
@@ -69,6 +69,7 @@ void		swap_all_common_tails(t_ways *ways)
 	int			n;
 	int			i;
 
+	print_ways_struct(ways);
 	n = ways->num_of_ways - 1;
 	new = ways->way[n]->next;
 				// print_edges_struct(new);
@@ -81,8 +82,18 @@ void		swap_all_common_tails(t_ways *ways)
 		{
 			if ((tail = current_vertex(new, ways->way[i])))
 			{
-
+				printf("\n\n0000000000000 BEFORE 0000000000000\n\n");
+				printf("\n\n=========%i++++++++++++++\n", n);
+				print_edges_struct(ways->way[n]);
+				printf("\n\n=========%i++++++++++++++\n", i);
+				print_edges_struct(ways->way[i]);
+				
 				swap_tails(new, tail);
+				printf("\n\n0000000000000 AFTER 0000000000000\n\n");
+				printf("=========%i++++++++++++++\n", n);
+				print_edges_struct(ways->way[n]);
+				printf("\n\n=========%i++++++++++++++\n", i);
+				print_edges_struct(ways->way[i]);
 				n = i;
 				i = 0;
 				new = ways->way[n];
@@ -92,4 +103,5 @@ void		swap_all_common_tails(t_ways *ways)
 		}
 		new = new->next;
 	}
+
 }
