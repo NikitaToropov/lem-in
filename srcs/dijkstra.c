@@ -12,6 +12,28 @@
 
 #include <lem_in.h>
 
+void		loop_check(t_edges *way)
+{
+	t_edges		*edge1;
+	t_edges		*edge2;
+
+	edge1 = way;
+	while (edge1->next)
+	{
+		edge2 = edge1->next;
+		while (edge2)
+		{
+			if (edge2 == edge1)
+			{
+				printf("LOOOOOOOP");
+				exit(1);
+			}
+			edge2 = edge2->next;
+		}
+		edge1 = edge1->next;
+	}
+}
+
 t_edges		*restore_shortest_path(t_graph *graph)
 {
 	t_edges		*path;
@@ -22,26 +44,24 @@ t_edges		*restore_shortest_path(t_graph *graph)
 	while (vert && vert->parent)
 	{
 		if (vert->key % 2)
-		{
-			if (vert->parent->key + 1 == vert->key)
-			{
-				vert = vert->parent;
-			}
-			else
-			{
-				push_edge_front(&path, new_edge(vert->edge->to, 1));
-				vert = vert->parent;
-			}
-		}
-		else
+			push_edge_front(&path, new_edge(vert->edge->to, 1));
+		else if (!(vert->key % 2) && (vert->parent->key % 2) &&
+		vert->key == vert->parent->key - 1)
 		{
 			push_edge_front(&path, new_edge(vert, 1));
 			vert = vert->parent;
 		}
+		else
+			push_edge_front(&path, new_edge(vert, 1));
+		vert = vert->parent;
 	}
 	if (path)
+	{
 		push_edge_front(&path, new_edge(vert, 1));
-	// print_edges_struct(path);
+	print_edges_struct(path);
+	loop_check(path);
+
+	}
 	return (path);
 }
 

@@ -1,5 +1,7 @@
 #include <lem_in.h>
 
+
+
 t_edges		*cut_there_before(t_edges *vertex)
 {
 	if (vertex && vertex->prev)
@@ -10,7 +12,7 @@ t_edges		*cut_there_before(t_edges *vertex)
 	return (vertex);
 }
 
-t_edges		*current_vertex(t_edges *vert, t_edges *old)
+t_edges		*it_is_common_vertex(t_edges *vert, t_edges *old)
 {
 	t_edges		*tmp;
 
@@ -42,6 +44,11 @@ void		swap_tails(t_edges *new, t_edges *tail)
 	new_tmp = new->next;
 	push_edge_back(&new_for_insert, tail);
 
+
+	// printf("\n\n\nTHIS SHIT\n\n\n\n");
+	// print_edges_struct(old_rev);
+	// print_edges_struct(new_tmp);
+
 	while (old_rev->prev && old_rev->prev->prev && 
 	new_tmp->next && new_tmp->next->next &&
 	new_tmp->next->to == old_rev->prev->to)
@@ -66,10 +73,11 @@ void		swap_all_common_tails(t_ways *ways)
 {
 	t_edges		*new;
 	t_edges		*tail;
+	t_edges		*tmp;
 	int			n;
 	int			i;
 
-	print_ways_struct(ways);
+// print_ways_struct(ways);
 	n = ways->num_of_ways - 1;
 	new = ways->way[n]->next;
 				// print_edges_struct(new);
@@ -80,28 +88,17 @@ void		swap_all_common_tails(t_ways *ways)
 		i = 0;
 		while (i != n && i < ways->num_of_ways)
 		{
-			if ((tail = current_vertex(new, ways->way[i])))
+			if ((tail = it_is_common_vertex(new, ways->way[i]->next)))
 			{
-				printf("\n\n0000000000000 BEFORE 0000000000000\n\n");
-				printf("\n\n=========%i++++++++++++++\n", n);
-				print_edges_struct(ways->way[n]);
-				printf("\n\n=========%i++++++++++++++\n", i);
-				print_edges_struct(ways->way[i]);
-				
 				swap_tails(new, tail);
-				printf("\n\n0000000000000 AFTER 0000000000000\n\n");
-				printf("=========%i++++++++++++++\n", n);
-				print_edges_struct(ways->way[n]);
-				printf("\n\n=========%i++++++++++++++\n", i);
-				print_edges_struct(ways->way[i]);
-				n = i;
-				i = 0;
-				new = ways->way[n];
-				continue ;
+				tmp = ways->way[i];
+				ways->way[i] = ways->way[n];
+				ways->way[n] = tmp;
+				swap_all_common_tails(ways);
+				return ;
 			}
 			i++;
 		}
 		new = new->next;
 	}
-
 }

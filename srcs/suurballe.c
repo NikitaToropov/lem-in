@@ -93,6 +93,7 @@ void	suurballe(t_graph *graph)
 	t_ways		*new_ways;
 	t_edges		*new_way;
 	int			num_of_ways;
+	// int			num_lines;
 
 	
 	num_of_ways = 1;
@@ -108,11 +109,13 @@ void	suurballe(t_graph *graph)
 
 		if (current_ways)
 		{
-			if (num_of_output_lines(new_ways, graph->num_of_ants) > num_of_output_lines(current_ways, graph->num_of_ants))
-			{
-				free_ways_struct(&new_ways);
-				break ;
-			}
+			num_of_output_lines(new_ways, graph->num_of_ants);
+			num_of_output_lines(current_ways, graph->num_of_ants);
+			// if (num_of_output_lines(new_ways, graph->num_of_ants) > num_of_output_lines(current_ways, graph->num_of_ants))
+			// {
+			// 	free_ways_struct(&new_ways);
+			// 	break ;
+			// }
 			free_ways_struct(&current_ways);
 		}
 		current_ways = new_ways;
