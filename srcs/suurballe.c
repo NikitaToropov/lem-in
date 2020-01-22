@@ -1,42 +1,42 @@
 #include <lem_in.h>
 
-// // void			check_the_valid(t_graph *graph, t_ways *ways)
-// // {
-// // 	t_edges		*tmp;
-// // 	t_edges		*edges;
-// // 	t_verts		*from;
-// // 	t_verts		*to;
-// // 	int			i;
+void			check_the_valid(t_graph *graph, t_ways *ways)
+{
+	t_edges		*tmp;
+	t_edges		*edges;
+	t_verts		*from;
+	t_verts		*to;
+	int			i;
 
-// // 	i = 0;
-// // 	while (i < ways->num_of_ways)
-// // 	{
-// // 		tmp = ways->way[i];
-// // 		while (tmp->next)
-// // 		{
-// // 			from = find_vertex(graph->rooms, tmp->to->key);
-// // 			to = find_vertex(graph->rooms, tmp->next->to->key);
-// // 			edges = from->edge;
-// // 			while (edges)
-// // 			{
-// // 				if (edges->to == to)
-// // 				{
-// // 					break ;
-// // 				}
-// // 				edges = edges->next;
-// // 			}
-// // 			if (!edges)
-// // 			{
-// // 				printf("++++++++++++++++++++++ PROBLEMS ++++++++++++++++++++++\n");
-// // 				print_vertex(from);
-// // 				print_edges_struct(from->edge)
-// // 				printf("++++++++++++++++++++++ PROBLEMS ++++++++++++++++++++++\n");
-// // 			}
-// // 			tmp = tmp->next;
-// // 		}
-// // 		i++;
-// // 	}
-// // }
+	i = 0;
+	while (i < ways->num_of_ways)
+	{
+		tmp = ways->way[i];
+		while (tmp->next)
+		{
+			from = find_vertex(graph->rooms, tmp->to->key);
+			to = find_vertex(graph->rooms, tmp->next->to->key);
+			edges = from->edge;
+			while (edges)
+			{
+				if (edges->to == to)
+				{
+					break ;
+				}
+				edges = edges->next;
+			}
+			if (!edges)
+			{
+				printf("++++++++++++++++++++++ PROBLEMS ++++++++++++++++++++++\n");
+				print_vertex(from);
+				print_edges_struct(from->edge);
+				printf("++++++++++++++++++++++ PROBLEMS ++++++++++++++++++++++\n");
+			}
+			tmp = tmp->next;
+		}
+		i++;
+	}
+}
 
 static int		caclulate_moves(t_edges *way)
 {
@@ -125,6 +125,7 @@ void	suurballe(t_graph *graph)
 
 	restore_graph(graph);
 
+	check_the_valid(graph, current_ways);
 	// print_ways_struct(current_ways);
 	free_ways_struct(&current_ways);
 }

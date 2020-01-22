@@ -58,7 +58,7 @@ t_edges		*restore_shortest_path(t_graph *graph)
 	if (path)
 	{
 		push_edge_front(&path, new_edge(vert, 1));
-	print_edges_struct(path);
+	// print_edges_struct(path);
 	loop_check(path);
 
 	}

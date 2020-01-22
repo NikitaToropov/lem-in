@@ -1,5 +1,57 @@
 #include <lem_in.h>
 
+// void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
+// {
+// 	t_edges		*current;
+// 	t_edges		*tmp;
+// 	t_verts		*from;
+// 	t_verts		*psevdo;
+// 	t_verts		*to;
+
+// 	current = way;
+// 	psevdo = NULL;
+
+// 	while (current && current->next)
+// 	{
+// 		from = current->to;
+// 		to = current->next->to;
+// 		push_edge_back(&from->reserve, pull_edge(&from->edge, to));
+// 		push_edge_back(&to->reserve, pull_edge(&to->edge, from));
+// 		current = current->next;
+// 	}
+
+// 	current = way->next;
+// 	while (current && current->next)
+
+
+// 	while (current && current->next)
+// 	{
+// 		to = current->next->to;
+// 		if (psevdo)
+// 			tmp = pull_edge(&psevdo->edge, to); // tmp = from->to
+// 		else
+// 			tmp = pull_edge(&from->edge, to); // tmp = from->to
+
+// 		push_edge_back(&from->reserve, tmp);
+// 		push_edge_back(&to->reserve, pull_edge(&to->edge, from)); // take edge "to -> from"
+// 		if (!current->next->next)
+// 			break ;
+// 		if (!psevdo)
+// 			tmp = new_edge(from, -1); // tmp = from->to
+// 		else
+// 			tmp = new_edge(psevdo, -1); // tmp = from->to
+
+// 		psevdo = find_vertex(root, (to->key + 1));
+// 		push_edge_back(&psevdo->edge, to->edge);
+
+// 		// psevdo->edge->next = to->edge; // add all edges from "from" to "psevdo" edge "from -> to" excluded
+// 		to->edge = tmp;
+// 		from = to;
+// 		current = current->next;
+// 	}
+// 	push_edge_front(&to->edge, new_edge(psevdo, -1));
+// }
+
 void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 {
 	t_edges		*current;
@@ -10,8 +62,9 @@ void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 
 	current = way;
 	psevdo = NULL;
-	if (current)
-		from = current->to;
+	// if (!current || !current->next || !current->next->next)
+		// return ;
+	from = current->to;
 	while (current && current->next)
 	{
 		to = current->next->to;

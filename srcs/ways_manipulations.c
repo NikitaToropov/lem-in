@@ -1,7 +1,5 @@
 #include <lem_in.h>
 
-
-
 t_edges		*cut_there_before(t_edges *vertex)
 {
 	if (vertex && vertex->prev)
