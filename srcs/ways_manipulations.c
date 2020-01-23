@@ -54,7 +54,7 @@ void		swap_tails(t_edges *new_tail, t_edges *old_tail)
 	t_edges		*new_for_insertion;
 	t_edges		*for_del;
 
-	new_for_insertion = new_tail->prev;
+	new_for_insertion = new_tail->prev;	
 	cut_there(new_tail);
 	old_for_insertion = old_tail->prev;
 	cut_there(old_tail);
@@ -75,12 +75,17 @@ void		swap_tails(t_edges *new_tail, t_edges *old_tail)
 	push_edge_back(&old, new);
 }
 
-t_edges		*find_first_common_vert(t_edges *way)
+t_edges		*find_first_and_last_common_verts(t_edges *way, t_ways **first, t_ways **last)
 {
 	t_edges		*tmp;
 
 	tmp = way;
-	while (tmp)
+	while (tmp && !(tmp->to->key % 2))
+		tmp = tmp->next;
+	*first = tmp->prev;
+	while (tmp && tmp->next && tmp->to->key == (tmp->next->to->key + 1))
+		tmp = tmp->next->next;
+	*last = tmp;
 }
 
 
