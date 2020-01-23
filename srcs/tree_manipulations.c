@@ -62,8 +62,6 @@ void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 
 	current = way;
 	psevdo = NULL;
-	// if (!current || !current->next || !current->next->next)
-		// return ;
 	from = current->to;
 	while (current && current->next)
 	{
@@ -72,8 +70,21 @@ void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 			tmp = pull_edge(&psevdo->edge, to); // tmp = from->to
 		else
 			tmp = pull_edge(&from->edge, to); // tmp = from->to
-		push_edge_back(&from->reserve, tmp);
-		push_edge_back(&to->reserve, pull_edge(&to->edge, from)); // take edge "to -> from"
+		push_edge_front(&from->reserve, tmp);
+		if (!(tmp = pull_edge(&to->edge, from)))
+		{
+	// printf("\n\n\nproblems with taking to->from\n\n\n\n");
+	// print_vertex(to);
+	// print_vertex(from);
+	// print_vertex(psevdo);
+	
+	printf("\n\n\nTHIS SHIT\n\n\n\n");
+	print_edges_struct(way);
+
+			exit(1);
+		}
+		push_edge_front(&to->reserve, tmp); // take edge "to -> from"
+		// push_edge_front(&to->reserve, pull_edge(&to->edge, from)); // take edge "to -> from"
 		if (!current->next->next)
 			break ;
 		if (!psevdo)
@@ -81,7 +92,9 @@ void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 		else
 			tmp = new_edge(psevdo, -1); // tmp = from->to
 		psevdo = find_vertex(root, (to->key + 1));
-		psevdo->edge->next = to->edge; // add all edges from "from" to "psevdo" edge "from -> to" excluded
+		push_edge_back(&psevdo->edge, to->edge);
+		// psevdo->edge->next = to->edge; // add all edges from "from" to "psevdo" edge "from -> to" excluded
+		// push_edge_front(&to->edge, tmp);
 		to->edge = tmp;
 		from = to;
 		current = current->next;
@@ -97,10 +110,11 @@ void		restore_vertex(t_verts *vert)
 		vert->edge = vert->reserve;
 		vert->reserve = NULL;
 	}
-	else if (vert->edge && vert->edge->next && vert->key % 2)
+	else if (vert->key % 2 && vert->edge && vert->edge->next)
 	{
-		push_edge_back(&vert->edge->to->edge, vert->edge->next);
-		vert->edge->next = NULL;
+		push_edge_back(&vert->edge->to->edge, cut_there(vert->edge->next));
+		// push_edge_back(&vert->edge->to->edge, vert->edge->next);
+		// vert->edge->next = NULL;
 	}
 	vert->visit = 0;
 	vert->distance = MAXIMUM;
@@ -113,9 +127,6 @@ void		restore_graph(t_graph *graph)
 	t_verts		*finish;
 	t_edges		*real;
 	t_edges		*for_del;
-
-
-
 
 	start = find_vertex(graph->rooms, graph->start);
 	push_edge_back(&start->edge, start->reserve);
@@ -143,7 +154,10 @@ void		custom_graph(t_graph *graph, t_ways *ways)
 	i = 0;
 	while (i < ways->num_of_ways)
 	{
+		// print_edges_struct(ways->way[i]);
 		reverse_the_way_in_graph(graph->rooms, ways->way[i]);
+
 		i++;
 	}
+	// tree_traversal(graph, print_vertex);
 }

@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:00:44 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/21 17:30:55 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/23 15:45:15 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_edges		*pull_edge(t_edges **first_edge, t_verts *vertex)
 
 void		push_edge_front(t_edges **first_edge, t_edges *new_edge)
 {
-	if (*first_edge)
+	if (*first_edge && new_edge)
 	{
 		new_edge->next = *first_edge;
 		(*first_edge)->prev = new_edge;

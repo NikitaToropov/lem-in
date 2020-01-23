@@ -1,6 +1,28 @@
 #include <lem_in.h>
 
-t_edges		*cut_there_before(t_edges *vertex)
+// void		loop_check(t_edges *way)
+// {
+// 	t_edges		*edge1;
+// 	t_edges		*edge2;
+
+// 	edge1 = way;
+// 	while (edge1->next)
+// 	{
+// 		edge2 = edge1->next;
+// 		while (edge2)
+// 		{
+// 			if (edge2 == edge1)
+// 			{
+// 				printf("LOOOOOOOP");
+// 				exit(1);
+// 			}
+// 			edge2 = edge2->next;
+// 		}
+// 		edge1 = edge1->next;
+// 	}
+// }
+
+t_edges		*cut_there(t_edges *vertex)
 {
 	if (vertex && vertex->prev)
 	{
@@ -24,79 +46,80 @@ t_edges		*it_is_common_vertex(t_edges *vert, t_edges *old)
 	return (NULL);
 }
 
-void		swap_tails(t_edges *new, t_edges *tail)
+void		swap_tails(t_edges *new_tail, t_edges *old_tail)
 {
-	t_edges		*new_for_insert;
-	t_edges		*old_for_insert;
-	t_edges		*new_tmp;
-	t_edges		*old_rev;
-	// t_edges		*new_for_del;
-	// t_edges		*old_for_del;
+	t_edges		*new;
+	t_edges		*old;
+	t_edges		*old_for_insertion;
+	t_edges		*new_for_insertion;
+	t_edges		*for_del;
 
+	new_for_insertion = new_tail->prev;
+	cut_there(new_tail);
+	old_for_insertion = old_tail->prev;
+	cut_there(old_tail);
+	push_edge_back(&new_for_insertion, old_tail);
+	push_edge_back(&old_for_insertion, new_tail);
+	old = old_for_insertion;
+	new = new_tail->next;
 
-	old_rev = tail->prev;
-	cut_there_before(tail);
-
-	new_for_insert = new->prev;
-	cut_there_before(new);
-	new_tmp = new->next;
-	push_edge_back(&new_for_insert, tail);
-
-
-	// printf("\n\n\nTHIS SHIT\n\n\n\n");
-	// print_edges_struct(old_rev);
-	// print_edges_struct(new_tmp);
-
-	while (old_rev->prev && old_rev->prev->prev && 
-	new_tmp->next && new_tmp->next->next &&
-	new_tmp->next->to == old_rev->prev->to)
+	while (new->to == old->to)
 	{
-		new_tmp = new_tmp->next;
-		old_rev = old_rev->prev;
+		old = old->prev;
+		new = new->next;
 	}
-	// print_edges_struct(old_rev);
-	// print_edges_struct_reverse(old_rev);
-	// print_edges_struct(new_tmp);
+	old = old->next;
+	for_del = cut_there(old->next);
+	cut_there(new);
+	free_edges_struct(&for_del);
+	push_edge_back(&old, new);
+}
 
-	old_for_insert = old_rev->prev;
-	cut_there_before(new_tmp);
-	cut_there_before(old_rev);
-	push_edge_back(&old_for_insert, new_tmp);
-	free_edges_struct(&new);
-	free_edges_struct(&old_rev);
+t_edges		*find_first_common_vert(t_edges *way)
+{
+	t_edges		*tmp;
+
+	tmp = way;
+	while (tmp)
 }
 
 
 void		swap_all_common_tails(t_ways *ways)
 {
-	t_edges		*new;
-	t_edges		*tail;
+	t_edges		*new_tail;
+	t_edges		*old_tail;
 	t_edges		*tmp;
 	int			n;
 	int			i;
 
-// print_ways_struct(ways);
 	n = ways->num_of_ways - 1;
-	new = ways->way[n]->next;
-				// print_edges_struct(new);
-				// print_edges_struct(ways->way[n]);
-	tail = NULL;
-	while (new->next)
+	new_tail = ways->way[n]->next;
+	old_tail = NULL;
+	while (new_tail->next)
 	{
 		i = 0;
 		while (i != n && i < ways->num_of_ways)
 		{
-			if ((tail = it_is_common_vertex(new, ways->way[i]->next)))
+			if ((old_tail = it_is_common_vertex(new_tail, ways->way[i]->next)))
 			{
-				swap_tails(new, tail);
+				print_edges_struct(ways->way[i]);
+				print_edges_struct(ways->way[n]);
+				swap_tails(new_tail, old_tail);
+				print_edges_struct(ways->way[i]);
+				print_edges_struct(ways->way[n]);
+				// print_edges_struct(ways->way[n]);
 				tmp = ways->way[i];
 				ways->way[i] = ways->way[n];
 				ways->way[n] = tmp;
+				loop_check(ways->way[i]);
+				loop_check(ways->way[n]);
+	printf("\n\n\nTHIS SHIT\n\n\n\n");
 				swap_all_common_tails(ways);
+
 				return ;
 			}
 			i++;
 		}
-		new = new->next;
+		new_tail = new_tail->next;
 	}
 }

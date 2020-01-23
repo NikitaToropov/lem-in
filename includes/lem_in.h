@@ -77,7 +77,10 @@ void	suurballe(t_graph *graph);
 void		custom_graph(t_graph *graph, t_ways *ways);
 
 void		swap_all_common_tails(t_ways *ways);
-t_edges		*dijkstra(t_graph *graph);
+t_edges		*belman_ford(t_graph *graph);
+t_edges		*cut_there(t_edges *vertex);
+void		loop_check(t_edges *way);
+
 
 
 

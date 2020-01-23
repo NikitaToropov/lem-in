@@ -60,8 +60,8 @@ static int		num_of_output_lines(t_ways *ways, int num_of_ants)
 
 
 	arr_len[0] = caclulate_moves(ways->way[0]);
-	result = arr_len[1];
-	i = 1;
+	result = arr_len[0];
+	i = 0;
 	while (i < ways->num_of_ways)
 	{
 		if ((arr_len[i] = caclulate_moves(ways->way[i])) < result)
@@ -91,43 +91,45 @@ void	suurballe(t_graph *graph)
 {
 	t_ways		*current_ways;
 	t_ways		*new_ways;
+	t_ways		*best;
 	t_edges		*new_way;
 	int			num_of_ways;
-	// int			num_lines;
 
-	
 	num_of_ways = 1;
 	current_ways = NULL;
-
-	while ((new_way = dijkstra(graph)))
+	best = NULL;
+	// print_vertex(find_vertex(graph->rooms, 2688));
+	// print_vertex(find_vertex(graph->rooms, 2686));
+	// exit(1);
+	while ((new_way = belman_ford(graph)))
 	{
-		printf("num_of_ways %i\n", num_of_ways);
-		// print_edges_struct(new_way);
-
+		printf("++++++++++++++++++++ num_of_ways = %i ++++++++++++++++++++", num_of_ways);
 		new_ways = new_ways_struct(new_way, current_ways, num_of_ways);
-		num_of_ways++;
 
-		if (current_ways)
+		num_of_ways++;
+		if (!best)
+			best = new_ways;
+
+		if (num_of_output_lines(new_ways, graph->num_of_ants) < num_of_output_lines(best, graph->num_of_ants))
 		{
-			num_of_output_lines(new_ways, graph->num_of_ants);
-			num_of_output_lines(current_ways, graph->num_of_ants);
-			// if (num_of_output_lines(new_ways, graph->num_of_ants) > num_of_output_lines(current_ways, graph->num_of_ants))
-			// {
-			// 	free_ways_struct(&new_ways);
-			// 	break ;
-			// }
-			free_ways_struct(&current_ways);
+			if (current_ways != best)
+				free_ways_struct(&best);
+			best = new_ways;
 		}
+
+		if (current_ways != best)
+			free_ways_struct(&current_ways);
 		current_ways = new_ways;
 		restore_graph(graph);
 		custom_graph(graph, current_ways);
+	// print_vertex(find_vertex(graph->rooms, 2686));
+	
 	}
 
-	restore_graph(graph);
-
-	check_the_valid(graph, current_ways);
-	// print_ways_struct(current_ways);
-	free_ways_struct(&current_ways);
+	if (current_ways != best)
+		free_ways_struct(&current_ways);
+	if (best)
+		free_ways_struct(&best);
 }
 
 
