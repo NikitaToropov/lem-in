@@ -99,7 +99,7 @@ void	suurballe(t_graph *graph)
 	current_ways = NULL;
 	best = NULL;
 	// print_vertex(find_vertex(graph->rooms, 2688));
-	// print_vertex(find_vertex(graph->rooms, 2686));
+	print_vertex(find_vertex(graph->rooms, 2686));
 	// exit(1);
 	while ((new_way = belman_ford(graph)))
 	{

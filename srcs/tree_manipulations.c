@@ -74,8 +74,8 @@ void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 		if (!(tmp = pull_edge(&to->edge, from)))
 		{
 	// printf("\n\n\nproblems with taking to->from\n\n\n\n");
-	// print_vertex(to);
-	// print_vertex(from);
+	print_vertex(to);
+	print_vertex(from);
 	// print_vertex(psevdo);
 	
 	printf("\n\n\nTHIS SHIT\n\n\n\n");
@@ -152,6 +152,7 @@ void		custom_graph(t_graph *graph, t_ways *ways)
 	int		i;
 
 	i = 0;
+	print_ways_struct(ways);
 	while (i < ways->num_of_ways)
 	{
 		// print_edges_struct(ways->way[i]);

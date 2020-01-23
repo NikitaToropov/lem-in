@@ -32,99 +32,81 @@ t_edges		*cut_there(t_edges *vertex)
 	return (vertex);
 }
 
-t_edges		*it_is_common_vertex(t_edges *vert, t_edges *old)
+int			swap_tails(t_edges *old, t_edges *first_new, t_edges *last_new)
 {
-	t_edges		*tmp;
+	t_edges		*current;
+	t_edges		*first_old;
+	t_edges		*last_old;
+	t_edges		*old_for_insert;
+	t_edges		*new_for_insert;
 
-	tmp = old->next;
-	while (old && old->next)
+	current = old->next;
+	while(current->next && current->to->key != (last_new->to->key - 1))
+		current = current->next;
+	if (current->to->key != (last_new->to->key - 1))
+		return (0);
+	first_old = current;
+	while(current->next && current->to != first_new->to)
+		current = current->next;
+	if (current->to != first_new->to)
 	{
-		if (vert->to == old->to)
-			return (old);
-		old = old->next;
+		printf("\n\n\nPROBLEMS WITH last_old\n\n\n\n");
 	}
-	return (NULL);
+	last_old = current;
+	old_for_insert = first_old;
+	new_for_insert = first_new;
+	first_old = cut_there(first_old->next);
+	first_new = cut_there(first_new->next);
+	push_edge_back(&old_for_insert, cut_there(last_new->next));
+	push_edge_back(&new_for_insert, cut_there(last_old->next));
+	free_edges_struct(&first_new);
+	free_edges_struct(&first_old);
+	return (1);
 }
 
-void		swap_tails(t_edges *new_tail, t_edges *old_tail)
-{
-	t_edges		*new;
-	t_edges		*old;
-	t_edges		*old_for_insertion;
-	t_edges		*new_for_insertion;
-	t_edges		*for_del;
-
-	new_for_insertion = new_tail->prev;	
-	cut_there(new_tail);
-	old_for_insertion = old_tail->prev;
-	cut_there(old_tail);
-	push_edge_back(&new_for_insertion, old_tail);
-	push_edge_back(&old_for_insertion, new_tail);
-	old = old_for_insertion;
-	new = new_tail->next;
-
-	while (new->to == old->to)
-	{
-		old = old->prev;
-		new = new->next;
-	}
-	old = old->next;
-	for_del = cut_there(old->next);
-	cut_there(new);
-	free_edges_struct(&for_del);
-	push_edge_back(&old, new);
-}
-
-t_edges		*find_first_and_last_common_verts(t_edges *way, t_ways **first, t_ways **last)
+int			find_first_and_last_common_verts(t_edges *way, t_edges **first, t_edges **last)
 {
 	t_edges		*tmp;
 
 	tmp = way;
 	while (tmp && !(tmp->to->key % 2))
 		tmp = tmp->next;
+	if (!tmp)
+		return (0);
 	*first = tmp->prev;
 	while (tmp && tmp->next && tmp->to->key == (tmp->next->to->key + 1))
 		tmp = tmp->next->next;
 	*last = tmp;
+	if (!tmp || !(tmp->to->key %2))
+		printf("\n\n\nPROBLEMS WITH last\n\n\n\n");
+	return (1);
 }
 
 
 void		swap_all_common_tails(t_ways *ways)
 {
-	t_edges		*new_tail;
-	t_edges		*old_tail;
+	t_edges		*first_common;
+	t_edges		*last_common;
 	t_edges		*tmp;
-	int			n;
 	int			i;
+	int			last_way_num;
 
-	n = ways->num_of_ways - 1;
-	new_tail = ways->way[n]->next;
-	old_tail = NULL;
-	while (new_tail->next)
+	last_way_num = ways->num_of_ways - 1;
+	if (find_first_and_last_common_verts(ways->way[last_way_num], &first_common, &last_common))
 	{
 		i = 0;
-		while (i != n && i < ways->num_of_ways)
+		while (i < last_way_num)
 		{
-			if ((old_tail = it_is_common_vertex(new_tail, ways->way[i]->next)))
+			if (i != last_way_num &&
+			swap_tails(ways->way[i], first_common, last_common))
 			{
-				print_edges_struct(ways->way[i]);
-				print_edges_struct(ways->way[n]);
-				swap_tails(new_tail, old_tail);
-				print_edges_struct(ways->way[i]);
-				print_edges_struct(ways->way[n]);
-				// print_edges_struct(ways->way[n]);
 				tmp = ways->way[i];
-				ways->way[i] = ways->way[n];
-				ways->way[n] = tmp;
-				loop_check(ways->way[i]);
-				loop_check(ways->way[n]);
-	printf("\n\n\nTHIS SHIT\n\n\n\n");
+				ways->way[i] = ways->way[last_way_num];
+				ways->way[last_way_num] = tmp;
 				swap_all_common_tails(ways);
-
 				return ;
 			}
 			i++;
 		}
-		new_tail = new_tail->next;
 	}
 }
