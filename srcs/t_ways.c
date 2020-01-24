@@ -125,23 +125,12 @@ void		copy_ways_by_the_edges(t_ways *old, t_ways *new)
 	}
 }
 
-t_ways		*new_ways_struct(t_edges *new, t_ways *old_ways, int number)
+t_ways		*new_ways_struct(int number)
 {
 	t_ways		*new_ways;
-
 
 	new_ways = ft_memalloc(sizeof(t_ways));
 	new_ways->way = ft_memalloc(sizeof(t_edges) * number);
 	new_ways->num_of_ways = number;
-	new_ways->way[number - 1] = new;
-
-	if (number > 1)
-	{
-		copy_ways_by_the_edges(old_ways, new_ways);
-		print_ways_struct(new_ways);
-		swap_all_common_tails(new_ways);
-		print_ways_struct(new_ways);
-		// check_valid(new_ways);
-	}
 	return (new_ways);
 }

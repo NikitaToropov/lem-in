@@ -6,34 +6,49 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/23 21:07:24 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/24 20:51:11 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
-
-
-t_edges		*restore_shortest_path(t_graph *graph)
+int		it_is_real(t_verts *vertex)
 {
-	t_edges		*path;
-	t_verts		*vert;
+	if (vertex->key % 2)
+		return (0);
+	return (1);
+}
 
-	path = NULL;
+int		reverse_way_in_graph(t_graph *graph)
+{
+	t_verts		*vert;
+	t_edges		*tmp;
+	t_verts		*from;
+	t_verts		*new_psevdo;
+	t_verts		*to;
+
 	vert = find_vertex(graph->rooms, graph->finish);
-	while (vert && vert->parent)
+	if (!(vert->parent))
+		return (0);
+	to = vert;
+	new_psevdo = NULL;
+	while (vert->parent)
 	{
+		from = vert->parent;
+		push_back(&from->reserve, pull_edge(&from->edge, to));
+		if (it_is_real(to) && it_is_real(from))
+		{
+			new_psevdo = find_vertex(graph->rooms, from->key + 1);
+			push_edge_back(&new_psevdo->edge, from->edge);
+			push_edge_back(&to->edge, new_edge(new_psevdo, -1));
+		}
+		else if (!it_is_real(vert)
+		{
+			
+		}
 		
-		push_edge_front(&path, new_edge(vert, 1));
-		vert = vert->parent;
 	}
-	if (path)
-	{
-		push_edge_front(&path, new_edge(vert, 1));
-		// print_edges_struct(path);
-		loop_check(path);
-	}
-	return (path);
+	return (1);
 }
 
 t_verts		*next_vert(t_verts *root)
@@ -67,7 +82,7 @@ void		relaxation_by_edges(t_verts *from)
 	}
 }
 
-t_edges		*belman_ford(t_graph *graph)
+int			belman_ford_for_reverse_way(t_graph *graph)
 {
 	t_verts		*vertex;
 
@@ -79,5 +94,5 @@ t_edges		*belman_ford(t_graph *graph)
 		relaxation_by_edges(vertex);
 		vertex = next_vert(graph->rooms);
 	}
-	return (restore_shortest_path(graph));
+	return (reverse_way_in_graph(graph));
 }

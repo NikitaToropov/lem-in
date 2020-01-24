@@ -77,7 +77,7 @@ void	suurballe(t_graph *graph);
 void		custom_graph(t_graph *graph, t_ways *ways);
 
 void		swap_all_common_tails(t_ways *ways);
-t_edges		*belman_ford(t_graph *graph);
+int			belman_ford_for_reverse_way_in_graph(t_graph *graph);
 t_edges		*cut_there(t_edges *vertex);
 void		loop_check(t_edges *way);
 
@@ -135,7 +135,7 @@ void		print_input_struct(t_input *first_line);
 
 
 /* t_ways: */
-t_ways		*new_ways_struct(t_edges *new, t_ways *old_struct, int number);
+t_ways		*new_ways_struct(int number);
 void		copy_ways_by_the_edges(t_ways *old, t_ways *new);
 void		free_ways_struct(t_ways **old_struct);	
 void		print_ways_struct(t_ways *way_struct);
