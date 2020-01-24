@@ -145,8 +145,7 @@ void		swap_all_common_tails(t_ways *ways)
 	last_way_num = ways->num_of_ways - 1;
 	n = last_way_num;
 
-	// if (find_first_and_last_common_verts(ways->way[n], &first_common, &last_common))
-	while (find_first_and_last_common_verts(ways->way[n], &first_common, &last_common))
+	if (find_first_and_last_common_verts(ways->way[n], &first_common, &last_common))
 	{
 		i = 0;
 		while (i <= last_way_num && first_common && last_common)
@@ -156,31 +155,32 @@ void		swap_all_common_tails(t_ways *ways)
 				print_edges_struct(ways->way[n]);
 				print_edges_struct(ways->way[i]);
 				n = i;
-				break ;
-				// find_loop_and_cut(ways->way[n]);
-				// i = 0;
-				// find_first_and_last_common_verts(ways->way[n], &first_common, &last_common);
-				// continue ;
-				// swap_all_common_tails(ways);
+				i = 0;
+				find_first_and_last_common_verts(ways->way[n], &first_common, &last_common);
+				continue ;
 			}
 			i++;
 		}
+		if (first_common)
+		{
+			while (find_loop_and_cut(ways->way[n]))
+				;
+			print_edges_struct(ways->way[n]);
+		}
 	}
-
-	// i = 0;// find_loop_and_cut(ways->way[last_way_num]);
-	// while (i <= last_way_num)
+	// while (find_first_and_last_common_verts(ways->way[n], &first_common, &last_common))
 	// {
-	// 	find_loop_and_cut(ways->way[i]);
-	// 	i++;
-
+	// 	i = 0;
+	// 	while (i <= last_way_num && first_common && last_common)
+	// 	{
+	// 		if (i != n && swap_tails(ways->way[i], first_common, last_common))
+	// 		{
+	// 			print_edges_struct(ways->way[n]);
+	// 			print_edges_struct(ways->way[i]);
+	// 			n = i;
+	// 			break ;
+	// 		}
+	// 		i++;
+	// 	}
 	// }
-					// ;
-	// if (first_common && last_common)
-	// {
-	// printf("first\n");
-	// print_edges_struct(first_common);
-	// printf("last\n");
-	// print_edges_struct(last_common);
-	// }
-	// find_loop_and_cut(ways->way[last_way_num]);
 }

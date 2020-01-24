@@ -125,7 +125,7 @@ void	suurballe(t_graph *graph)
 	// print_vertex(find_vertex(graph->rooms, 2686));
 	
 	}
-
+	print_ways_struct(best);
 	if (current_ways != best)
 		free_ways_struct(&current_ways);
 	if (best)
