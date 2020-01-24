@@ -140,6 +140,7 @@ t_ways		*new_ways_struct(t_edges *new, t_ways *old_ways, int number)
 		copy_ways_by_the_edges(old_ways, new_ways);
 		print_ways_struct(new_ways);
 		swap_all_common_tails(new_ways);
+		print_ways_struct(new_ways);
 		// check_valid(new_ways);
 	}
 	return (new_ways);
