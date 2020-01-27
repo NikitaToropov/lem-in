@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:03:33 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/23 14:42:02 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/27 15:52:48 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	put_the_room(t_graph *graph, char *line, int *num_room, t_match **room)
 	graph->rooms = insert(graph->rooms, *num_room + 1, ft_strdup("psevdo"));
 	psevdo = find_vertex(graph->rooms, *num_room + 1);
 	real = find_vertex(graph->rooms, *num_room);
-	push_edge_front(&psevdo->edge, new_edge(real, 0));
 	push_back_t_match(room, name, *num_room);
 	*num_room += 2;
 }

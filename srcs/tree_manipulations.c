@@ -52,18 +52,6 @@ void		reverse_the_way_in_graph(t_verts *root, t_edges *way)
 
 void		restore_vertex(t_verts *vert)
 {
-	if (vert->reserve && !(vert->key % 2))
-	{
-		free_edges_struct(&vert->edge);
-		vert->edge = vert->reserve;
-		vert->reserve = NULL;
-	}
-	else if (vert->key % 2 && vert->edge && vert->edge->next)
-	{
-		push_edge_back(&vert->edge->to->edge, cut_there(vert->edge->next));
-		// push_edge_back(&vert->edge->to->edge, vert->edge->next);
-		// vert->edge->next = NULL;
-	}
 	vert->visit = 0;
 	vert->distance = MAXIMUM;
 	vert->parent = NULL;

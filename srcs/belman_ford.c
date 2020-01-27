@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:29:25 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/24 20:51:11 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/27 19:04:24 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,65 @@ int		it_is_real(t_verts *vertex)
 
 int		reverse_way_in_graph(t_graph *graph)
 {
-	t_verts		*vert;
-	t_edges		*tmp;
-	t_verts		*from;
-	t_verts		*new_psevdo;
-	t_verts		*to;
+	t_verts		*current_vert;
+	t_verts		*psevdo;
+	t_verts		*prev_vert;
+	t_edges		*for_del;
+	int			weight;
 
-	vert = find_vertex(graph->rooms, graph->finish);
-	if (!(vert->parent))
+	current_vert = find_vertex(graph->rooms, graph->finish);
+	if (!(current_vert->parent))
 		return (0);
-	to = vert;
-	new_psevdo = NULL;
-	while (vert->parent)
+	// del all rev edges for change the weights
+	while (current_vert->parent)
 	{
-		from = vert->parent;
-		push_back(&from->reserve, pull_edge(&from->edge, to));
-		if (it_is_real(to) && it_is_real(from))
-		{
-			new_psevdo = find_vertex(graph->rooms, from->key + 1);
-			push_edge_back(&new_psevdo->edge, from->edge);
-			push_edge_back(&to->edge, new_edge(new_psevdo, -1));
-		}
-		else if (!it_is_real(vert)
-		{
-			
-		}
-		
+		prev_vert = current_vert->parent;
+		if ((for_del = pull_edge(&current_vert->edge, prev_vert)))
+			free_edge(&for_del);
+		current_vert = prev_vert;
 	}
+
+
+
+	// current_vert = find_vertex(graph->rooms, graph->finish);
+	// prev_vert = current_vert->parent;
+	// for_del = pull_edge(&prev_vert->edge, current_vert);
+	// free_edge(&for_del);
+	// push_edge_front(&current_vert->edge, new_edge(prev_vert, -1));
+	// current_vert = prev_vert;
+	current_vert = find_vertex(graph->rooms, graph->finish);
+	weight = 1;
+	psevdo = NULL;
+	prev_vert = current_vert->parent;
+	while (prev_vert->parent)
+	{
+		// if (for_del->weight == 0)
+		// 	weight = 0;
+		// else if (for_del->weight == -1)
+		// 	weight = -1;
+		// else
+		// 	weight = 1;
+		for_del = pull_edge(&prev_vert->edge, current_vert);
+		free_edge(&for_del);
+
+		if (it_is_real(current_vert) && it_is_real(prev_vert))
+		{
+			psevdo = find_vertex(graph->rooms, (prev_vert->key + 1));
+			psevdo->edge = prev_vert->edge;
+			prev_vert->edge = NULL;
+			push_edge_back(&psevdo->edge, new_edge(prev_vert, 0));
+			push_edge_back(&current_vert->edge, new_edge(psevdo, -1));
+		}
+		else if (it_is_real(current_vert) && !it_is_real(prev_vert))
+		current_vert = prev_vert;
+		prev_vert = current_vert->parent;
+	}
+	for_del = pull_edge(&prev_vert->edge, current_vert);
+	free_edge(&for_del);
+	push_edge_front(&current_vert->edge, new_edge(prev_vert, -1));
+	
+printf("\n\n\nTHIS SHIT\n\n\n\n");
+
 	return (1);
 }
 
@@ -82,7 +114,7 @@ void		relaxation_by_edges(t_verts *from)
 	}
 }
 
-int			belman_ford_for_reverse_way(t_graph *graph)
+int			belman_ford_for_reverse_way_in_graph(t_graph *graph)
 {
 	t_verts		*vertex;
 
@@ -94,5 +126,8 @@ int			belman_ford_for_reverse_way(t_graph *graph)
 		relaxation_by_edges(vertex);
 		vertex = next_vert(graph->rooms);
 	}
-	return (reverse_way_in_graph(graph));
+	if (!reverse_way_in_graph(graph))
+		return (0);
+	tree_traversal(graph->rooms, *print_vertex);
+	return (1);
 }

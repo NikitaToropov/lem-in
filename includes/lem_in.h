@@ -72,12 +72,10 @@ typedef struct		s_match
 ///////////////* TESTING */////////////////////
 
 void	suurballe(t_graph *graph);
-// void		upgrade_ways(t_ways *ways);
-
-void		custom_graph(t_graph *graph, t_ways *ways);
-
-void		swap_all_common_tails(t_ways *ways);
 int			belman_ford_for_reverse_way_in_graph(t_graph *graph);
+t_ways		*new_ways_struct(t_graph *graph, int number);
+
+
 t_edges		*cut_there(t_edges *vertex);
 void		loop_check(t_edges *way);
 
@@ -135,7 +133,6 @@ void		print_input_struct(t_input *first_line);
 
 
 /* t_ways: */
-t_ways		*new_ways_struct(int number);
 void		copy_ways_by_the_edges(t_ways *old, t_ways *new);
 void		free_ways_struct(t_ways **old_struct);	
 void		print_ways_struct(t_ways *way_struct);
