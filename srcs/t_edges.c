@@ -24,6 +24,16 @@ void		print_edges_struct_reverse(t_edges *tail)
 	}	
 }
 
+t_edges		*cut_there(t_edges *vertex)
+{
+	if (vertex && vertex->prev)
+	{
+		vertex->prev->next = NULL;
+		vertex->prev = NULL;
+	}
+	return (vertex);
+}
+
 void		print_edges_struct(t_edges *head)
 {
 	t_edges		*edge;
