@@ -72,12 +72,16 @@ void	reverse_common_part(t_graph *graph, t_verts *curr, t_verts *prev, t_verts *
 
 	if (!prev->parent)
 		return ;
-	real = find_vertex(graph->rooms, prev->key - 1);
-	tmp = cut_there(prev->edge->next);
-	push_edge_back(&real->edge, tmp);
+	real = prev->parent;
+	push_edge_front(&real->reserve , pull_edge(&psevdo->edge, prev));
 	tmp = pull_edge(&psevdo->edge, real);
 	tmp->weight = -1;
-	push_edge_front(&psevdo->edge, tmp);
+	push_edge_back(&psevdo->edge, tmp);
+
+////////////////////////////// test it later
+	curr = real;
+	prev = curr->parent;
+
 	while (!it_is_real(prev) && prev->parent)
 	{
 	}
