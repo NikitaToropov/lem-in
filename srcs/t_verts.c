@@ -6,7 +6,7 @@
 /*   By: cmissy <cmissy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:59:40 by cmissy            #+#    #+#             */
-/*   Updated: 2020/01/20 20:35:09 by cmissy           ###   ########.fr       */
+/*   Updated: 2020/01/28 15:18:24 by cmissy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void		print_vertex(t_verts *vert)
 		printf("REAL edges to:      ");
 		while (tmp_edge)
 		{
-			printf(" %i,", tmp_edge->to->key);
+			// printf(" %i,", tmp_edge->to->key);
+			printf(" %i:%i,", tmp_edge->weight,  tmp_edge->to->key);
+
 			tmp_edge = tmp_edge->next;
 		}
 		printf("\n");
@@ -43,7 +45,7 @@ void		print_vertex(t_verts *vert)
 		printf("RSRVD edges to:     ");
 		while (tmp_edge)
 		{
-			printf(" %i,", tmp_edge->to->key);
+			printf(" %i:%i,", tmp_edge->weight,  tmp_edge->to->key);
 			tmp_edge = tmp_edge->next;
 		}
 		printf("\n");
@@ -99,6 +101,13 @@ t_verts		*find_vertex(t_verts *root, int num)
 			vertex = vertex->left;
 	}
 	return (vertex);
+}
+
+void		restore_vertex(t_verts *vert)
+{
+	vert->visit = 0;
+	vert->distance = MAXIMUM;
+	vert->parent = NULL;
 }
 
 void		tree_traversal(t_verts *root, void f(t_verts *vertex))

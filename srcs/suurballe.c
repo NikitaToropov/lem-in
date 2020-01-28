@@ -55,6 +55,7 @@ void	suurballe(t_graph *graph)
 	t_ways		*new_ways;
 	int			num_of_ways;
 
+
 	if ((belman_ford_for_reverse_way_in_graph(graph)))
 		current_ways = new_ways_struct(graph, 1);
 	else

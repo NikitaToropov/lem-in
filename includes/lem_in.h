@@ -95,9 +95,9 @@ t_verts		*insert(t_verts *node, int key, char *str);
 /* to(real)->edge:			new_edge(to->psevdo(froom))     !!!PSEVDO */
 /* to(real)->reserved:		to->from | to(next_from)->next_to */
 /* from(real)->edge:		new_edge(to->psevdo(froom)) | to-> | */
-void	reverse_the_way_in_graph(t_verts *root, t_edges *way);
-void		restore_graph(t_graph *graph);
-int			clean_the_way(t_edges *way);
+// void	reverse_the_way_in_graph(t_verts *root, t_edges *way);
+// void		restore_graph(t_graph *graph);
+// int			clean_the_way(t_edges *way);
 
 /* t_graph: */
 t_graph		*init_graph(char *line);
