@@ -19,72 +19,67 @@ int		it_is_real(t_verts *vertex)
 	return (1);
 }
 
-void	reverse_wo_psevdo(t_graph *graph, t_verts *curr, t_verts *psevdo,
-							t_verts *real)
+// void	reverse_common_part(t_graph *graph, t_verts *curr, t_verts *prev, t_verts *psevdo)
+// {
+// 	t_verts		*real;
+// 	t_edges		*tmp;
+
+// 	if (!prev->parent)
+// 		return ;
+// 	real = prev->parent;
+// 	push_edge_front(&real->reserve , pull_edge(&psevdo->edge, prev));
+// 	tmp = pull_edge(&psevdo->edge, real);
+// 	tmp->weight = -1;
+// 	push_edge_back(&psevdo->edge, tmp);
+
+// ////////////////////////////// test it later
+// 	curr = real;
+// 	prev = curr->parent;
+
+// 	while (!it_is_real(prev) && prev->parent)
+// 	{
+// 	}
+// }
+
+// void	reverse_original_part(t_graph *graph, t_verts *curr, t_verts *prev, t_verts *psevdo, t_verts *real)
+void	reverse_original_part(t_graph *graph, t_verts **curr, t_verts **prev, t_verts **psevdo)
 {
-	t_verts		*prev;
 	t_edges		*tmp;
 
-	prev = curr->parent;
-	while (prev && prev->parent && it_is_real(prev) && it_is_real(curr))	
-	{
-		// достал из 16 связь 14-16 положил в резерв 14
-		push_edge_back(&prev->reserve, pull_edge(&prev->edge, curr));
-
-		
-		// достал из 17 связь 17-14 положил сделал вес -1 положил обратано
-		if (psevdo)
-			tmp = pull_edge(&psevdo->edge, prev);
-		else
-			tmp = pull_edge(&curr->edge, prev);
-		tmp->weight = -1;
-		push_edge_front(&curr->edge, tmp);
-
-		// нашел 15, положил в нее все вершины из 14
-		psevdo = find_vertex(graph->rooms, prev->key + 1);
-		push_edge_back(&psevdo->edge, prev->edge);
-		// в 14 положил вершщину к 15 весом 0
-		prev->edge = new_edge(psevdo, 0);
-		
-
-		psevdo = find_vertex(graph->rooms, prev->key + 1);
-
-
-
-
-
-
-		psevdo = find_vertex(graph->rooms, (prev->key + 1));
-		psevdo->edge = prev->edge;
-		prev->edge = new_edge(psevdo, 0);
-		curr = prev;
-		prev = curr->parent;
-
-
-		prev = curr->parent;
-	}
-}
-
-void	reverse_common_part(t_graph *graph, t_verts *curr, t_verts *prev, t_verts *psevdo)
-{
-	t_verts		*real;
-	t_edges		*tmp;
-
-	if (!prev->parent)
+	if (!(*prev)->parent)
 		return ;
-	real = prev->parent;
-	push_edge_front(&real->reserve , pull_edge(&psevdo->edge, prev));
-	tmp = pull_edge(&psevdo->edge, real);
-	tmp->weight = -1;
-	push_edge_back(&psevdo->edge, tmp);
+	while ((*prev)->parent && it_is_real(*prev))
+ 	{
 
-////////////////////////////// test it later
-	curr = real;
-	prev = curr->parent;
+// check it later for good working with "reverse_common_part" mby want add "real" vars
+		push_edge_back(&(*prev)->reserve, pull_edge(&(*prev)->edge, (*curr)));
 
-	while (!it_is_real(prev) && prev->parent)
-	{
+
+		if (*psevdo)
+			tmp = pull_edge(&(*psevdo)->edge, (*prev));
+		// else if (real)
+		// 	tmp = pull_edge(&real->edge, prev);
+		else
+			tmp = pull_edge(&(*curr)->edge, (*prev));
+		push_edge_back(&(*curr)->reserve, tmp);
+		(*psevdo) = find_vertex(graph->rooms, (*prev)->key + 1);
+		push_edge_back(&(*psevdo)->edge, (*prev)->edge);
+// same shitn like earlier
+		// if (real)
+		// {
+		// 	// push_edge_back(&real->edge, new_edge(psevdo, -1));
+		// 	real = NULL;
+		// }
+		// else
+		push_edge_back(&(*curr)->edge, new_edge((*psevdo), -1));
+		(*prev)->edge = NULL;
+		(*curr) = (*prev);
+		(*prev) = (*curr)->parent;
 	}
+	push_edge_back(&(*prev)->reserve, pull_edge(&(*prev)->edge, (*curr)));
+	tmp = pull_edge(&(*psevdo)->edge, (*prev));
+	tmp->weight = -1;
+	push_edge_back(&(*curr)->edge, tmp);
 }
 
 int		reverse_way_in_graph(t_graph *graph)
@@ -92,60 +87,19 @@ int		reverse_way_in_graph(t_graph *graph)
 	t_verts		*curr;
 	t_verts		*psevdo;
 	t_verts		*prev;
-	t_edges		*for_del;
 
-	curr = find_vertex(graph->rooms, graph->finish);
-	if (!(curr->parent))
-		return (0);
 	curr = find_vertex(graph->rooms, graph->finish);
 	prev = curr->parent;
+	if (!prev)
+		return (0);
+	psevdo = NULL;
 	while (prev && prev->parent)
 	{
-		reverse_wo_psevdo(curr);
-		// reverse_w_psevdo()
-		while (prev && prev->parent && it_is_real(prev))
-		{
-			if (psevdo)
-				push_edge_back(&psevdo->edge, new_edge(prev, -1));
-			else
-				push_edge_back(&curr->edge, new_edge(prev, -1));
-			psevdo = find_vertex(graph->rooms, (prev->key + 1));
-			psevdo->edge = prev->edge;
-			prev->edge = new_edge(psevdo, 0);
-			curr = prev;
-			prev = curr->parent;
-		}
 
-		// if (prev && prev->parent && prev->key == prev->parent->key + 1 && psevdo)
-		// {
-		// 	curr = prev;
-		// 	prev = prev->parent;
-		// 	if (for_del = pull_edge(&psevdo->edge, prev))
-		// 		free_edge(&for_del);
-		// 	push_edge_back(&psevdo->edge, new_edge(prev, -1));
-		// 	push_edge_back(&prev->edge, new_edge(curr, 0));
-		// 	psevdo = NULL;
-		// 	if (!prev->parent)
-		// 	{
-		// 		printf("problems  reverse_way_in_graph/reverse \n");
-		// 		exit(1);
-		// 	}
-			
-		// 	prev = curr;
-		// 	prev = prev->parent;
-		// 	push_edge_back(&prev->edge, new_edge(curr, 1));
-			
-		// 	prev = curr;
-		// 	prev = prev->parent;
-		// }
-
-		// while (prev && prev->parent && !it_is_real(curr) &&
-		// prev->key == curr->key - 1 && !it_is_real(prev->parent))
-		// {
-		// }
-		
+		print_vertex(prev);
+		reverse_original_part(graph, &curr, &prev, &psevdo);
 	}
-	push_edge_back(&psevdo->edge, new_edge(prev, -1));
+	tree_traversal(graph->rooms, *print_vertex);
 	return (1);
 }
 
